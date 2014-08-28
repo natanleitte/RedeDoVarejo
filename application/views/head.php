@@ -66,7 +66,7 @@
                             <a class="page-scroll" href="<?php echo base_url() . 'index.php/categoria/categoria'?>">Categoria</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#about">About</a>
+                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/item/item'?>">Item</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#team">Team</a>
