@@ -23,7 +23,10 @@ class CategoriaModel extends CI_Model {
         return $this->db->get('categoria');
     }
     
-
+    function obterConsulta($consulta){
+        $this->load->database();
+        return $this->db->query($consulta);
+    }
 }
 
 ?>
