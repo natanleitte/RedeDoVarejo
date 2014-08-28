@@ -23,11 +23,10 @@ class Categoria extends CI_Controller {
 //        $this->load->helper('url_helper');
 //        $this->load->library('form_validation');
 //        $this->load->library('session');
-          $this->load->model('categoriaModel');
-          
-         
+        $this->load->model('categoriaModel');
+
         $data['query'] = $this->categoriaModel->obterTodos();
-        
+
         $this->load->helper('url');
         $this->load->view('head');
         $this->load->view('categoria', $data);
@@ -40,6 +39,7 @@ class Categoria extends CI_Controller {
 
         //recebe quantidade de Elementos inseridos na página
         $qtd = $this->input->post('qtdElementos');
+
         //pega o post de cat_nome
         $data['cat_nome'] = $this->input->post('cat_nome');
         //pega post do status
@@ -51,10 +51,14 @@ class Categoria extends CI_Controller {
         } else {
             $data['cat_status'] = 0;
         }
+
+        // Realiza a inserção da pasta com o nome da nova categoria
+        mkdir("assets/img/categoria/" . $data['cat_nome'], 0700);
+
         // invoca método da model que insere no banco
         $this->categoriaModel->inserir($data);
 
-        //pega outros elementos da página pra gravar no anco 
+        //pega outros elementos da página pra gravar no banco 
         for ($i = 2; $i <= $qtd; $i++) {
 //            echo "'cat_nome" . $i . "'";
             $elemento = "cat_nome" . $i . "";
@@ -70,18 +74,34 @@ class Categoria extends CI_Controller {
                 $data['cat_status'] = 0;
             }
 
+            // Realiza a inserção da pasta com o nome da nova categoria
+            mkdir("assets/img/categoria/" . $data['cat_nome'], 0700);
+
+            // invoca método da model que insere no banco
             $this->categoriaModel->inserir($data);
         }
-//        $this->load->view('head');
-//        $this->load->view('categoria');
+        
+        function excluir(){
+            // Load nas Model
+            $this->load->model('categoriaModel');
+            
+            //Pega o número do código
+            $data['cat_codigo'] = $this->input->post('cat_codigo');
+            
+            //Realiza a exlusão em banco
+            $this->categoriaModel->obterConsulta('DELETE FROM produto WHERE pro_codigo = '.$data['cat_codigo']);
+            
+            //Deleta pasta dos produtos
+            rmdir($data['cat_nome']);
+        }
+
         redirect(base_url() . 'index.php/categoria/categoria');
     }
 
-    function excluir($cat_codigo)
-    {
-       echo "ja era";
-       
+    function excluir($cat_codigo) {
+        echo "ja era";
     }
+
 //
 //    public function inserirCategoria() {
 //        $this->load->library('form_validation');
