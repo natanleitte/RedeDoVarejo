@@ -26,6 +26,11 @@ class ProdutoModel extends CI_Model {
         $this->load->database();
         return $this->db->query($consulta);
     }
+    
+    function obter($pro_codigo1) {
+        $this->load->database();
+        return $this->db->query('SELECT * FROM produto WHERE pro_codigo = ' . $pro_codigo1);
+    }
 
 }
 

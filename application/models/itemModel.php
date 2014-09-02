@@ -29,6 +29,11 @@ class itemModel extends CI_Model {
         $this->load->database();
         return $this->db->get('item');
     }
+    
+    function obter($item_codigo) {
+        $this->load->database();
+        return $this->db->query('SELECT * FROM item WHERE item_codigo = ' . $item_codigo);
+    }
 
 }
 
