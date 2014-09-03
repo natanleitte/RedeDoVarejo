@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<?php $prefixLayout = "assets/site/" ?> <!-- prefixo da URL do Layout -->
+<?php $prefixLayout = "assets/site/"; 
+      $get_url = "index.php/site/index/produto";
+?> <!-- prefixo da URL do Layout -->
 
 <html lang="en">
     <head>
@@ -410,7 +412,7 @@
                                         foreach ($produtos->result() as $produto) {
                                             //se o produto pertencer a categoria
                                             if ($produto->cat_codigo == $categoria->cat_codigo) {
-                                                echo "<li> <a href='index.html'>". $produto->pro_nome . "</a> </li>";
+                                                echo "<li> <a href='" . base_url() . $get_url . "/?pro_codigo=" . $produto->pro_codigo . "'>". $produto->pro_nome . "</a> </li>";
                                             }
                                         }
 //                                       

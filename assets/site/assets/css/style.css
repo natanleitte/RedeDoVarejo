@@ -2264,7 +2264,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 	-o-transition: all 0.3s ease 0s;
 	-ms-transition: all 0.3s ease 0s;
 	margin-bottom: 15px;
-	height: 480px;
+	height: 420px; //alterado de 480px em 03/09/2014
 }
 #SimilarProductSlider .item {
 	height: auto !important;
@@ -2474,7 +2474,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 }
 .description {
 	margin: 0 4px 0 5px;
-	min-height: 107px;
+	min-height: 47px; //alterado de 107 - 03/09/2014
 }
 .promotion {
 	line-height: 18px;

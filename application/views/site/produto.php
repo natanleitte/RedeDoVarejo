@@ -579,7 +579,7 @@ $urlImg = "assets/site/images/imgProdutos/" . $cat_nome;
 
     <!-- Main component call to action -->
 
-    <div class="row">
+<!--    <div class="row">
         <div class="breadcrumbDiv col-lg-12">
             <ul class="breadcrumb">
                 <li> <a href="index.html">Home</a> </li>
@@ -587,7 +587,7 @@ $urlImg = "assets/site/images/imgProdutos/" . $cat_nome;
                 <li class="active">TSHIRT  </li>
             </ul>
         </div>
-    </div>  <!-- /.row  --> 
+    </div>   /.row   -->
 
     <div class="row">
 
@@ -645,13 +645,13 @@ echo "</ul>";
                     </div>
                 </div> <!--/Category menu end--> 
 
-                <div class="panel panel-default">
+<!--                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"> <a class="collapseWill" data-toggle="collapse"  href="#collapsePrice"> Price <span class="pull-left"> <i class="fa fa-caret-right"></i></span> </a> <span class="pull-right clearFilter  label-danger"> Clear </span> </h4>
                     </div>
                     <div id="collapsePrice" class="panel-collapse collapse in">
                         <div class="panel-body priceFilterBody"> 
-                            <!-- -->
+                             
                             <label>
                                 <input type="radio" name="agree" value="0"  />
                                 100$ - 500$</label>
@@ -693,7 +693,7 @@ echo "</ul>";
                             </form>
                         </div>
                     </div>
-                </div> <!--/price panel end--> 
+                </div> /price panel end 
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -797,14 +797,14 @@ echo "</ul>";
                                     Mulberry </label>
                             </div>
                             <div class="block-element">
-                                <label> &nbsp; </label> <!-- keep it blank // -->
+                                <label> &nbsp; </label>  keep it blank // 
                             </div>
 
                         </div>
                     </div>
-                </div> <!--/brand panel end-->
+                </div> /brand panel end-->
 
-                <div class="panel panel-default">
+<!--                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseColor" class="collapseWill"> Color <span class="pull-left"> <i class="fa fa-caret-right"></i></span> </a> </h4>
                     </div>
@@ -895,8 +895,8 @@ echo "</ul>";
                             </div>
                         </div>
                     </div>
-                </div><!--/color panel end-->
-                <div class="panel panel-default">
+                </div>/color panel end-->
+<!--                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseThree" class="collapseWill"> Discount <span class="pull-left"> <i class="fa fa-caret-right"></i></span> </a> </h4>
                     </div>
@@ -914,7 +914,7 @@ echo "</ul>";
                             </div>
                         </div>
                     </div>
-                </div><!--/discount  panel end-->
+                </div>/discount  panel end-->
             </div>
         </div>
 
@@ -958,7 +958,6 @@ foreach ($prod->result() as $pro) {
                     {
                         if($item->pro_codigo == $pro_codigo)
                         {
-                            echo base_url() . $urlImg . "/" . $item->item_img;
                           echo "<div class='item col-sm-4 col-lg-4 col-md-4 col-xs-6'>";
                           echo "<div class='product'>";
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
@@ -972,14 +971,23 @@ foreach ($prod->result() as $pro) {
                           echo "</div>";
                           echo "<div class='description'>";
                           echo "<h4><a href='product-details.html'>" . $item->item_nome . "</a></h4>";
-                          echo "<div class='grid-description'>";
-                          echo "<p>" . $item->item_descricao . "</p>";
+//                          echo "<div class='grid-description'>";
+//                          echo "<p>" . $item->item_descricao . "</p>";
+//                          echo "</div>";
+//                          echo "<div class='list-description'>";
+//                          echo "<p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>";
+//                          echo "</div>";
+//                          echo "<span class='size'>XL / XXL / S </span>";
                           echo "</div>";
-                          echo "<div class='list-description'>";
-                          echo "<p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>";
-                          echo "</div>";
-                          echo "<span class='size'>XL / XXL / S </span> </div>";
-                          echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
+                          if($item->item_preco_antigo != null)
+                          {
+                            echo "<div class='price'> <span> De: R$" . $item->item_preco_antigo . "</span> </div>";
+                            echo "<div class='price'> <span> Por: R$" . $item->item_preco_atual . "</span> </div>";
+                          }
+                          else
+                          {
+                            echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
+                          }
                           echo "<div class='action-control'> <a class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
                           echo "</div>";
                           echo "</div>";
@@ -987,7 +995,7 @@ foreach ($prod->result() as $pro) {
                         }
                     }
                     ?>
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
+<!--                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
                             <i class="glyphicon glyphicon-heart"></i>
@@ -1009,7 +1017,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1032,7 +1040,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1055,7 +1063,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1076,7 +1084,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1097,7 +1105,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1118,7 +1126,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1139,7 +1147,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1160,7 +1168,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1181,7 +1189,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1204,7 +1212,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1227,7 +1235,7 @@ foreach ($prod->result() as $pro) {
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
                 </div>
-                <!--/.item-->
+                /.item
                 <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
                     <div class="product">
                         <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
@@ -1249,7 +1257,7 @@ foreach ($prod->result() as $pro) {
                         <div class="price"> <span>$25</span> </div>
                         <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
                     </div>
-                </div>
+                </div>-->
                 <!--/.item--> 
             </div> <!--/.categoryProduct || product content end-->
 
