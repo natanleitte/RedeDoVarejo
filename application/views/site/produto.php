@@ -13,6 +13,7 @@ foreach ($categorias->result() as $categoria) {
 }
 
 $urlImg = "assets/site/images/imgProdutos/" . $cat_nome;
+$urlCarrinho = "index.php/site/index/addAoCarrinho"
 ?> <!-- prefixo da URL do Layout -->
 <!DOCTYPE html>
 <html lang="en">
@@ -988,7 +989,12 @@ foreach ($prod->result() as $pro) {
                           {
                             echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
                           }
-                          echo "<div class='action-control'> <a class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
+                              
+                          echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
+                                  "&item_preco=" . $item->item_preco_atual . 
+                                  "&item_nome=" . $item->item_nome .
+                                  "&item_img=" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "' "
+                                  . "class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
                           echo "</div>";
                           echo "</div>";
 

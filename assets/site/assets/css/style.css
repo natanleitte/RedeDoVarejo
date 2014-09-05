@@ -2264,7 +2264,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 	-o-transition: all 0.3s ease 0s;
 	-ms-transition: all 0.3s ease 0s;
 	margin-bottom: 15px;
-	height: 420px; //alterado de 480px em 03/09/2014
+	height: 395px; //alterado de 480px em 03/09/2014
 }
 #SimilarProductSlider .item {
 	height: auto !important;
@@ -2508,7 +2508,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 	overflow: hidden;
 	display: block;
 	line-height: 20px;
-	margin: 25px 0 0;
+	margin: 0px 0 0; //alterado de 25px para 0px em 03/09/2014
 	padding: 0;
 }
 .item h4 a {

@@ -1,0 +1,4 @@
+function removeDoCarrinho()
+{
+    $( "#removeDoCarrinhoForm" ).submit();
+}

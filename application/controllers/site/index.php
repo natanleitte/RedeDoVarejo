@@ -7,6 +7,9 @@ class Index extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->library('session');
+        $this->load->library('cart');
+
 //        $this->load->model('Categoria','',TRUE);
     }
 
@@ -40,11 +43,84 @@ class Index extends CI_Controller {
         $data['itens'] = $this->itemModel->obterTodos();
 
 //        $data['itens'] = $this->itemModel->obterTodos();
-        
-        
-        
+
+
+
         $this->load->view('site/header', $data);
         $this->load->view('site/produto', $data);
+    }
+
+    //método que adiciona ao carrinho
+    function addAoCarrinho() {
+//        $this->load->library('session');
+        $item_codigo = $this->input->get('item_codigo'); // recupera a informação via get
+        $item_preco = $this->input->get('item_preco'); // recupera a informação via get
+        $item_nome = $this->input->get('item_nome'); // recupera a informação via get
+        $item_img = $this->input->get('item_img'); // recupera a informação via get
+
+        echo $item_codigo . $item_img . $item_nome . $item_preco;
+
+        $item = array(
+            'id' => $item_codigo,
+            'qty' => 1,
+            'price' => $item_preco,
+            'name' => $item_nome,
+            'options' => array('img' => $item_img)
+        );
+
+        //verifica se o item já está no carrinho
+        $qty = $this->contemItem($item_codigo); // retorna 0 se não tem ninguém com o mesmo id
+        if ($qty != 0) {
+            $item = array(
+                'id' => $item_codigo,
+                'qty' => $qty + 1,
+                'price' => $item_preco,
+                'name' => $item_nome,
+                'options' => array('img' => $item_img)
+            );
+        }
+        
+        $this->cart->insert($item);
+
+        redirect(base_url() . 'index.php/site/index/carrinho');
+    }
+
+    function carrinho() {
+
+        //load models para a header
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+
+        $this->load->view('site/header', $data);
+        $this->load->view('site/carrinho', $data);
+    }
+
+    function removeDoCarrinho() {
+        $rowid = $this->input->post('rowid');
+        //rowid com qty 0 remove o produto da sessão
+        $item = array(
+            'rowid' => $rowid,
+            'qty' => 0
+        );
+
+        $this->cart->update($item);
+        echo "removeDoCarrinho";
+
+        redirect(base_url() . 'index.php/site/index/carrinho');
+    }
+
+    function contemItem($item_codigo) {
+        echo "contemItem";
+        foreach ($this->cart->contents() as $item) {
+            if ($item['id'] == $item_codigo) {
+                return $item['qty'];
+            }
+        }
+        return 0;
     }
 
 }

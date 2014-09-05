@@ -474,7 +474,32 @@
                                 <div class="w100 miniCartTable scroll-pane">
                                     <table>
                                         <tbody>
-                                            <tr class="miniCartProduct">
+                                             <?php
+                                             $totalCompra = 0;
+                                             foreach ($this->cart->contents() as $item) {
+                                             echo "<tr class='miniCartProduct'>";
+                                             if ($this->cart->has_options($item['rowid']) == TRUE)
+                                             {
+                                                foreach ($this->cart->product_options($item['rowid']) as $option_name => $option_value)
+                                                {
+                                                    echo "<td style='20' class='miniCartProductThumb'><div> <a href='product-details.html'> <img src='". $option_value . "' alt='img'> </a> </div></td>";
+                                                }
+                                            }
+                                            echo "<td style='40%'><div class='miniCartDescription'>";
+                                            echo "<h4> <a href='product-details.html'>" . $item['name'] . "</a> </h4>";
+                                            echo "<span class='size'> 12 x 1.5 L </span>";
+                                            echo "<div class='price'> <span> R$ " . $item['price'] . "</span> </div>";
+                                            echo "</div></td>";
+                                            echo "<td  style='10%' class='miniCartQuantity'><a > X" . $item['qty'] . "</a></td>";
+                                            echo "<td  style='15%' class='miniCartSubtotal'><span>" . $item['price'] * $item['qty'] . "</span></td>";
+                                            //echo "<td  style='5%' class='delete'><a > x </a></td>";
+                                            echo "<td  style='5%' class='delete'><a > <i class = 'glyphicon glyphicon-trash fa-1x'></i> </a></td>";
+
+                                            echo "</tr>";
+                                            $totalCompra += $item['price'] * $item['qty'];
+                                            }
+                                            ?>
+<!--                                            <tr class="miniCartProduct">
                                                 <td style="width:20%" class="miniCartProductThumb"><div> <a href="product-details.html"> <img src="images/product/3.jpg" alt="img"> </a> </div></td>
                                                 <td style="width:40%"><div class="miniCartDescription">
                                                         <h4> <a href="product-details.html"> Denim Tshirt DO9 </a> </h4>
@@ -539,17 +564,17 @@
                                                 <td   style="width:10%" class="miniCartQuantity"><a > X 1 </a></td>
                                                 <td  style="width:15%" class="miniCartSubtotal"><span> $8.80 </span></td>
                                                 <td  style="width:5%" class="delete"><a > x </a></td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div> <!--/.miniCartTable-->
 
 
                                 <div class="miniCartFooter text-right">
-                                    <h3 class="text-right subtotal"> Subtotal: $210 </h3>
+                                    <h3 class="text-right subtotal"> Subtotal: R$ <?php echo $totalCompra ?> </h3>
                                     <a class="btn btn-sm btn-danger"> 
-                                        <i class="fa fa-shopping-cart"> </i> VIEW CART </a> 
-                                    <a class="btn btn-sm btn-primary"> CHECKOUT </a> 
+                                        <i class="fa fa-shopping-cart"> </i> VER </a> 
+                                    <a class="btn btn-sm btn-primary"> FINALIZAR </a> 
                                 </div> <!--/.miniCartFooter-->
 
 
