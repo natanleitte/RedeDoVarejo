@@ -62,17 +62,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                        <h3 class="modal-title-site text-center" > Login  to TSHOP </h3>
+                        <h3 class="modal-title-site text-center" > Login </h3>
                     </div>
                     <div class="modal-body">
+                        <?php echo form_open('index.php/site/cliente/login'); ?>
+
                         <div class="form-group login-username">
                             <div >
-                                <input name="log" id="login-user" class="form-control input"  size="20" placeholder="Enter Username" type="text">
+                                <input name="email" id="login-user" class="form-control input"  size="20" placeholder="Email" type="text">
                             </div>
                         </div>
                         <div class="form-group login-password">
                             <div >
-                                <input name="Password" id="login-password" class="form-control input"  size="20" placeholder="Password" type="password">
+                                <input name="senha" id="login-password" class="form-control input"  size="20" placeholder="Senha" type="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -90,6 +92,7 @@
                             </div>
                         </div>
                         <!--userForm--> 
+                        <?php echo form_close(); ?>
 
                     </div>
                     <div class="modal-footer">
@@ -116,19 +119,21 @@
                     <div class="modal-body">
                         <div class="control-group"> <a class="fb_button btn  btn-block btn-lg " href="#"> SIGNUP WITH FACEBOOK </a> </div>
                         <h5 style="padding:10px 0 10px 0;" class="text-center"> OR </h5>
+                        <?php echo form_open('index.php/site/cliente/inserir'); ?>
+
                         <div class="form-group reg-username">
                             <div >
-                                <input name="login"  class="form-control input"  size="20" placeholder="Enter Username" type="text">
+                                <input name="login"  class="form-control input"  size="20" placeholder="Login" type="text">
                             </div>
                         </div>
                         <div class="form-group reg-email">
                             <div >
-                                <input name="reg"  class="form-control input"  size="20" placeholder="Enter Email" type="text">
+                                <input name="email"  class="form-control input"  size="20" placeholder="Email" type="text">
                             </div>
                         </div>
                         <div class="form-group reg-password">
                             <div >
-                                <input name="password"  class="form-control input"  size="20" placeholder="Password" type="password">
+                                <input name="senha"  class="form-control input"  size="20" placeholder="Senha" type="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -146,6 +151,7 @@
                             </div>
                         </div>
                         <!--userForm--> 
+                        <?php echo form_close(); ?>
 
                     </div>
                     <div class="modal-footer">
@@ -458,14 +464,19 @@
                             </ul>
                         </li>
                     </ul>
-
+                    
                     <!--- this part will be hidden for mobile version -->
                     <div class="nav navbar-nav navbar-right hidden-xs">
-
+                       <?php 
+                       $totalCompra = 0;
+                       foreach ($this->cart->contents() as $item) {
+                           $totalCompra += $item['price'] * $item['qty'];
+                       }
+                       ?>
                         <div class="dropdown  cartMenu "> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
                                 <i class="fa fa-shopping-cart"> </i>
-                                <span class="cartRespons"> Cart ($210.00) </span> 
+                                <span class="cartRespons"> Cart R$ <?php echo $totalCompra; ?> </span> 
                                 <b class="caret"> </b> 
                             </a>
 
@@ -572,7 +583,7 @@
 
                                 <div class="miniCartFooter text-right">
                                     <h3 class="text-right subtotal"> Subtotal: R$ <?php echo $totalCompra ?> </h3>
-                                    <a class="btn btn-sm btn-danger"> 
+                                    <a class="btn btn-sm btn-danger" href="<?php echo base_url()?>index.php/site/index/carrinho"> 
                                         <i class="fa fa-shopping-cart"> </i> VER </a> 
                                     <a class="btn btn-sm btn-primary"> FINALIZAR </a> 
                                 </div> <!--/.miniCartFooter-->

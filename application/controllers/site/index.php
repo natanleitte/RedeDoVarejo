@@ -9,7 +9,6 @@ class Index extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->library('cart');
-
 //        $this->load->model('Categoria','',TRUE);
     }
 
@@ -52,6 +51,8 @@ class Index extends CI_Controller {
 
     //método que adiciona ao carrinho
     function addAoCarrinho() {
+        $this->is_logged_in();
+
 //        $this->load->library('session');
         $item_codigo = $this->input->get('item_codigo'); // recupera a informação via get
         $item_preco = $this->input->get('item_preco'); // recupera a informação via get
@@ -79,7 +80,7 @@ class Index extends CI_Controller {
                 'options' => array('img' => $item_img)
             );
         }
-        
+
         $this->cart->insert($item);
 
         redirect(base_url() . 'index.php/site/index/carrinho');
@@ -121,6 +122,23 @@ class Index extends CI_Controller {
             }
         }
         return 0;
+    }
+
+    function conta() {
+        
+    }
+
+    function is_logged_in() {
+        $is_logged_in = $this->session->userdata('is_logged_in');
+        echo $is_logged_in;
+        if (!isset($is_logged_in) || $is_logged_in != true) {
+            echo 'You don\'t have permission to access this page.';
+            die();
+            //$this->load->view('login_form');
+        } else {
+
+            return true;
+        }
     }
 
 }
