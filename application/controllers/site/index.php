@@ -140,5 +140,47 @@ class Index extends CI_Controller {
             return true;
         }
     }
+    
+    function finalizar_compra1(){
+         //load models para a header
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/finalizar_compra1');
+        
+    }
+    
+    function finalizar_compra2(){
+         //load models para a header
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/finalizar_compra2');
+        
+    }
+    
+    function finalizar_compra3(){
+         //load models para a header
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/finalizar_compra3');
+        
+    }
 
 }

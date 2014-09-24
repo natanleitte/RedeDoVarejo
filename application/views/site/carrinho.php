@@ -154,7 +154,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     <div class = "col-lg-3 col-md-3 col-sm-5 rightSidebar">
                                     <div class = "contentBox" >
                                     <div class = "w100 costDetails">
-                                    <div class = "table-block" id = "order-detail-content"> <a class = "btn btn-primary btn-lg btn-block " title = "checkout" href = "checkout-0.html" style = "margin-bottom:20px"> Finalizar compra &nbsp;
+                                    <div class = "table-block" id = "order-detail-content"> <a class = "btn btn-primary btn-lg btn-block " title = "checkout" href = "<?php echo base_url() . "index.php/site/index/finalizar_compra1" ?>" style = "margin-bottom:20px"> Finalizar compra &nbsp;
                                     <i class = "fa fa-arrow-right"></i> </a>
                                     <div class = "w100 cartMiniTable">
                                     <table id = "cart-summary" class = "std table">
