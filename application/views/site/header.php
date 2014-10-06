@@ -178,10 +178,10 @@
                         <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
                             <div class="pull-right">
                                 <ul class="userMenu">
-                                    <li> <a href="account-1.html"> My Account </a> </li>
-                                    <li> <a href="checkout-1.html"> Checkout </a> </li>
-                                    <li> <a  data-toggle="modal" data-target="#ModalLogin"> Sign In </a> </li>
-                                    <li> <a  data-toggle="modal" data-target="#ModalSignup"> Create Account </a> </li>
+                                    <li> <a href="account-1.html"> Minha Conta </a> </li>
+                                    <li> <a href="checkout-1.html"> Finalizar Compra </a> </li>
+                                    <li> <a  data-toggle="modal" data-target="#ModalLogin"> Entrar </a> </li>
+                                    <li> <a  data-toggle="modal" data-target="#ModalSignup"> Criar Conta </a> </li>
                                 </ul>
                             </div>
                         </div>

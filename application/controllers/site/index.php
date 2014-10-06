@@ -25,7 +25,7 @@ class Index extends CI_Controller {
         $data['produtos'] = $this->produtoModel->obterTodos();
 
         $this->load->view('site/header', $data);
-//        $this->load->view('site/index');
+        $this->load->view('site/index');
     }
 
     function produto() {
@@ -181,6 +181,21 @@ class Index extends CI_Controller {
          $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra3');
         
+    }
+    
+    function adicionarEndereco()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/adicionarEndereco');
+        
+
     }
 
 }
