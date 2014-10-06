@@ -42,9 +42,9 @@
               <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->  
 
+       
+        
         <!-- include pace script for automatic web page progress bar  -->
-
-
         <script>
             paceOptions = {
                 elements: true
@@ -52,6 +52,9 @@
         </script>
 
         <script src="<?php echo base_url() . $prefixLayout . 'assets/js/pace.min.js' ?>"></script>
+        
+        
+        
     </head>
     <body>
 
@@ -65,11 +68,15 @@
                         <h3 class="modal-title-site text-center" > Login </h3>
                     </div>
                     <div class="modal-body">
-                        <?php echo form_open('index.php/site/cliente/login'); ?>
+                        <?php
+                        $attributes = array('id' => 'loginForm');
+                        echo form_open('index.php/site/cliente/login', $attributes); ?>
+                        
+                        <!--<form action="index.php/site/cliente/login" id='loginFormt' method="post">-->
 
                         <div class="form-group login-username">
                             <div >
-                                <input name="email" id="login-user" class="form-control input"  size="20" placeholder="Email" type="text">
+                                <input name="email" id="email" class="form-control input"  size="20" placeholder="Email" type="text">
                             </div>
                         </div>
                         <div class="form-group login-password">
@@ -88,7 +95,7 @@
                         </div>
                         <div >
                             <div >
-                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="LOGIN" type="submit">
+                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="LOGIN" onclick="entrar();">
                             </div>
                         </div>
                         <!--userForm--> 
@@ -660,5 +667,13 @@
 
         <!-- include custom script for site  --> 
         <script src="<?php echo base_url() . $prefixLayout . 'assets/js/script.js' ?>"></script>
+        
+         <!-- Para as notificações e mensagens de alerta -->
+        <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>-->
+        <script type="text/javascript" src="<?php echo base_url() . 'assets/noty/js/noty/packaged/jquery.noty.packaged.min.js' ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url() . $prefixLayout . 'assets/js/login.js' ?>"></script>
+        
+        
+
     </body>
 </html>
