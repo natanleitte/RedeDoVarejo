@@ -19,6 +19,9 @@
     </div>
   </div> <!--/.row-->
   
+   <?php
+                        $attributes = array('id' => 'loginForm');
+                        echo form_open('index.php/site/cliente/finalizaCompra1', $attributes); ?>
   <div class="row">
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="row userInfo">
@@ -26,7 +29,7 @@
           <div class="w100 clearfix">
             <ul class="orderStep ">
               <li class="active"> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra1" ?>"> <i class="fa fa-map-marker "></i> <span> Endereço</span> </a> </li>
-              <li> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra2" ?>"><i class="fa fa-check-square "> </i><span>Ordem</span></a> </li>
+              <li><a href="<?php echo base_url() . "index.php/site/index/finalizar_compra2" ?>" ><i class="fa fa-check-square "> </i><span>Ordem</span></a></li>
               <li> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra3" ?>"><i class="fa fa-money  "> </i><span>Pagamento</span> </a> </li>
             </ul>
             <!--/.orderStep end--> 
@@ -39,40 +42,40 @@
                 <h2 class="block-title-2"> Você deseja adicionar um novo endereço? </h2>
               </div>
               
-              <form>
+              <!--<form>-->
                 <div class="col-xs-12 col-sm-6">
                   <div class="form-group required">
                       <label for="InputName"> Nome <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="InputName" placeholder="Nome">
+                    <input required type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
                   </div>
                   <div class="form-group required">
                     <label for="InputLastName">Sobrenome <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="InputLastName" placeholder="Sobrenome">
+                    <input required type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome">
                   </div>
                   <div class="form-group">
                     <label for="InputEmail">Email </label>
-                    <input type="text" class="form-control" id="InputEmail" placeholder="Email">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                   </div>
                   <div class="form-group required">
                     <label for="InputAddress">Endereço <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="InputAddress" placeholder="Endereço">
+                    <input required type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço">
                   </div>
                   <div class="form-group">
                     <label for="InputAddress2">Número</label>
-                    <input type="text" class="form-control" id="InputAddress2" placeholder="Número" style="width: 20%;">
+                    <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" style="width: 20%;">
                   </div>
                   <div class="form-group">
                     <label for="InputAddress2">Bairro</label>
-                    <input type="text" class="form-control" id="InputAddress2" placeholder="Bairro">
+                    <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">
                   </div>
                   <div class="form-group required">
                     <label for="InputCity">Cidade <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="InputCity" placeholder="Cidade">
+                    <input required type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade">
                   </div>
                   <div class="form-group required">
                     <label for="InputState">Estado <sup>*</sup> </label>
               
-                      <select class="form-control" required aria-required="true" id="InputState" name="InputState">
+                      <select class="form-control" required aria-required="true" id="estado" name="estado">
                       <option value="estado">Selecione o Estado</option> 
 		<option value="ac">Acre</option> 
 		<option value="al">Alagoas</option> 
@@ -107,22 +110,22 @@
                 <div class="col-xs-12 col-sm-6">
                   <div class="form-group required">
                     <label for="InputZip">CEP <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="InputZip" placeholder="CEP">
+                    <input required type="text" class="form-control" id="cep" name="cep" placeholder="CEP">
                   </div>
                   <div class="form-group">
                     <label for="InputAdditionalInformation">Observação</label>
-                    <textarea rows="3" cols="26" name="InputAdditionalInformation" class="form-control" id="InputAdditionalInformation"></textarea>
+                    <textarea rows="3" cols="26" name="InputAdditionalInformation" class="form-control" id="observacao" name="observacao"></textarea>
                   </div>
                   <div class="form-group required">
                     <label for="InputMobile">Telefone <sup>*</sup></label>
-                    <input  required type="tel"  name="InputMobile" class="form-control" id="InputMobile">
+                    <input  required type="tel"  name="telefone" class="form-control" id="InputMobile">
                   </div>
                   <div class="form-group required">
                     <label for="addressAlias">Please assign an address title for future reference. <sup>*</sup></label>
                     <input required type="text" value="My address" name="addressAlias" class="form-control" id="addressAlias">
                   </div>
                 </div>
-              </form>
+              <!--</form>-->
             </div>
             <!--/row end--> 
             
@@ -130,11 +133,11 @@
           <div class="cartFooter w100">
             <div class="box-footer">
               <div class="pull-left"> <a class="btn btn-default" href="index.html"> <i class="fa fa-arrow-left"></i> &nbsp; Continuar Comprando </a> </div>
-              <div class="pull-right"> <a class="btn btn-primary btn-small "  href="checkout-2.html"> Próximo &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+              <div class="pull-right"> <button class="btn btn-primary btn-small " type="submit" > Próximo &nbsp; <i class="fa fa-arrow-circle-right"></i> </button> </div>
             </div>
           </div>
           <!--/ cartFooter --> 
-          
+          <?php echo form_close(); ?>
         </div>
       </div>
       <!--/row end--> 

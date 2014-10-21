@@ -95,7 +95,7 @@
                         </div>
                         <div >
                             <div >
-                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="LOGIN" onclick="entrar();">
+                                <input name="submit" type="submit" class="btn  btn-block btn-lg btn-primary" value="LOGIN">
                             </div>
                         </div>
                         <!--userForm--> 

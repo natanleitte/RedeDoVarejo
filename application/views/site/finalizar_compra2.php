@@ -169,7 +169,7 @@
                
                
                <div class="pull-right">
-                <a href="#" class="btn btn-primary btn-small " > 
+                <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra3" ?>" class="btn btn-primary btn-small " > 
 					Confirmar Ordem &nbsp; <i class="fa fa-check"></i>
                  </a>
               </div>

@@ -57,7 +57,8 @@ class Cliente extends CI_Controller {
         $novoUsuario = array(
                    'username'  => $cli_nome,
                    'email'     => $email,
-                   'is_logged_in' => TRUE
+                   'is_logged_in' => TRUE,
+                   'cli_codigo' => $cli_codigo
                );
 
         $this->session->set_userdata($novoUsuario);
@@ -69,4 +70,31 @@ class Cliente extends CI_Controller {
     {
         $this->session->sess_destroy();
     }
+    
+    //recebe e processa informações da tela de finalizar compra 1
+    function finalizaCompra1()
+    {
+        $cli_codigo = $this->session->userdata('cli_codigo');
+        $data['cli_codigo'] = $cli_codigo;
+//        $data['end_nome'] = $this->input->post('nome');
+//        $data['end_sobrenome'] = $this->input->post('sobrenome');
+//        $data['end_email'] = $this->input->post('email');
+        $data['end_logradouro'] = $this->input->post('endereco');
+        $data['end_numero'] = $this->input->post('numero');
+        $data['end_bairro'] = $this->input->post('bairro');
+        $data['end_cidade'] = $this->input->post('cidade');
+        $data['end_tipo_logradouro'] = $this->input->post('estado');
+        $data['end_cep'] = $this->input->post('cep');
+        $data['end_referencia'] = $this->input->post('observacao');
+        $data['end_complemento'] = $this->input->post('observacao');
+
+//        $data['end_telefone'] = $this->input->post('telefone');
+        
+        $this->load->model('enderecoModel');
+        $this->enderecoModel->inserir($data);
+        
+        redirect(base_url() . 'index.php/site/index/finalizar_compra2');
+        
+    }
+   
 }
