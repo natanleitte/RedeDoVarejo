@@ -23,6 +23,17 @@ class EnderecoModel extends CI_Model {
         $this->load->database();
         return $this->db->query($consulta);
     }
+    
+    function obterPorCliente($cli_codigo)
+    {
+        $this->load->database();
+        $this->db->limit(1);
+        $this->db->where('cli_codigo', $cli_codigo); 
+        return $this->db->get('endereco');
+//        echo "cheguei";
+//        return $query->row();
+
+    }
 }
 
 ?>

@@ -1,3 +1,17 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+	$("#cep").mask("99999-999");
+});
+</script>
+
+<?php
+       $totalCompra = 0;
+       foreach ($this->cart->contents() as $item) {
+           $totalCompra += ($item['price'] * $item['qty']);
+       }
+?>
+
+
 <!-- /.Fixed navbar  --><div class="container main-container headerOffset">
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
@@ -8,9 +22,11 @@
       </ul>
     </div>
   </div>
-  <!--/.row-->
+    
   
-  <div class="row">
+    
+    <!--/.row-->
+      <div class="row">
     <div class="col-lg-9 col-md-9 col-sm-7">
       <h1 class="section-title-inner"><span><i class="glyphicon glyphicon-shopping-cart"></i> Finalizar Compra</span></h1>
     </div>
@@ -18,6 +34,42 @@
       <h4 class="caps"><a href="category.html"><i class="fa fa-chevron-left"></i> Continuar Comprando </a></h4>
     </div>
   </div> <!--/.row-->
+  
+  <div class="row">
+    <div class="w100 clearfix">
+        
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><strong>Endereço Atual</strong></h3>
+              </div>
+              <div class="panel-body">
+                <ul >
+                <?php
+                foreach ($endereco->result() as $end) {
+                    echo "<li> <span class='address-name'> <strong>Endereço: </strong>" . $end->end_logradouro
+                            . ", " . $end->end_numero . ", " . $end->end_bairro . "</span></li>";
+                    echo "<li> <span class='address-name'> <strong>CEP: </strong>" . $end->end_cep . "</span></li>";
+                    echo "<li> <span class='address-name'> <strong>Cidade: </strong>" . $end->end_cidade . "</span></li>";
+                    echo "<li> <span class='address-name'> <strong>Estado: </strong>" . $end->end_uf . "</span></li>";
+
+////                    <li> <span class="address-company"> TanimDesign & Development </span></li>
+//                    echo "<li> <span class='address-line1'>" Gulshan 2 , Road 50, House FO12EO </span></li>";
+//                  <li> <span class="address-line2"> Dhaka, Bangladesh </span></li>
+//                  <li> <span> <strong>Mobile</strong> : 01670531352 </span></li>
+//                  <li> <span> <strong>Phone</strong> : 020904 - 85882 </span></li>
+        
+                }
+                ?>
+                  
+                  
+                </ul>
+              </div>
+              <div class="panel-footer panel-footer-address"> <a href="add-address.html" class="btn btn-sm btn-success"> <i class="fa fa-edit"> </i> Edit </a> <a class="btn btn-sm btn-danger"> <i class="fa fa-minus-circle"></i> Delete </a> </div>
+            </div>
+          </div>
+    </div>
+</div>
   
    <?php
                         $attributes = array('id' => 'loginForm');
@@ -44,34 +96,40 @@
               
               <!--<form>-->
                 <div class="col-xs-12 col-sm-6">
-                  <div class="form-group required">
-                      <label for="InputName"> Nome <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
-                  </div>
-                  <div class="form-group required">
-                    <label for="InputLastName">Sobrenome <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome">
-                  </div>
-                  <div class="form-group">
-                    <label for="InputEmail">Email </label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                  </div>
+                    
                   <div class="form-group required">
                     <label for="InputAddress">Endereço <sup>*</sup> </label>
                     <input required type="text" class="form-control" id="endereco" name="endereco" placeholder="Endereço">
                   </div>
-                  <div class="form-group">
-                    <label for="InputAddress2">Número</label>
-                    <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" style="width: 20%;">
+                    
+                  <div class="form-group required">
+                    <label for="InputAddress2">Número <sup>*</sup> </label>
+                    <input required type="text" class="form-control" id="numero" name="numero" placeholder="Número" style="width: 20%;">
                   </div>
-                  <div class="form-group">
-                    <label for="InputAddress2">Bairro</label>
-                    <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">
-                  </div>
+                 
                   <div class="form-group required">
                     <label for="InputCity">Cidade <sup>*</sup> </label>
                     <input required type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade">
                   </div>
+                  
+                  <div class="form-group">
+                      <label for="InputName"> Complemento</label>
+                    <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento">
+                  </div>
+                    
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    
+                  <div class="form-group required">
+                    <label for="InputAddress2">Bairro</label>
+                    <input required type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">
+                  </div>
+                    
+                   <div class="form-group required">
+                    <label for="cep">CEP <sup>*</sup> </label>
+                    <input required type="text" class="form-control" id="cep" name="cep" placeholder="CEP" style="width: 30%">
+                  </div>
+                    
                   <div class="form-group required">
                     <label for="InputState">Estado <sup>*</sup> </label>
               
@@ -106,24 +164,16 @@
 		<option value="to">Tocantins</option> 
                     </select>
                   </div>
+                <div class="form-group">
+                    <label for="InputLastName">Referência</label>
+                    <input type="text" class="form-control" id="referencia" name="referencia" placeholder="Referênncia">
                 </div>
-                <div class="col-xs-12 col-sm-6">
-                  <div class="form-group required">
-                    <label for="InputZip">CEP <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="cep" name="cep" placeholder="CEP">
-                  </div>
+                    
                   <div class="form-group">
                     <label for="InputAdditionalInformation">Observação</label>
                     <textarea rows="3" cols="26" name="InputAdditionalInformation" class="form-control" id="observacao" name="observacao"></textarea>
                   </div>
-                  <div class="form-group required">
-                    <label for="InputMobile">Telefone <sup>*</sup></label>
-                    <input  required type="tel"  name="telefone" class="form-control" id="InputMobile">
-                  </div>
-                  <div class="form-group required">
-                    <label for="addressAlias">Please assign an address title for future reference. <sup>*</sup></label>
-                    <input required type="text" value="My address" name="addressAlias" class="form-control" id="addressAlias">
-                  </div>
+                  
                 </div>
               <!--</form>-->
             </div>
@@ -147,25 +197,25 @@
       <div class="w100 cartMiniTable">
         <table id="cart-summary" class="std table">
           <tbody>
-            <tr >
-              <td>Total products</td>
-              <td class="price" >$216.51</td>
-            </tr>
+<!--            <tr >
+              <td>Total</td>
+              <td class = "price" > R$ <?php echo $totalCompra ?></td>
+            </tr>-->
             <tr  style="">
-              <td>Shipping</td>
-              <td class="price" ><span class="success">Free shipping!</span></td>
+              <td>Frete</td>
+              <td class="price" ><span class="success">À calcular!</span></td>
             </tr>
-            <tr class="cart-total-price ">
+<!--            <tr class="cart-total-price ">
               <td>Total (tax excl.)</td>
               <td class="price" >$216.51</td>
             </tr>
             <tr >
               <td>Total tax</td>
               <td class="price" id="total-tax">$0.00</td>
-            </tr>
+            </tr>-->
             <tr >
               <td > Total </td>
-              <td class=" site-color" id="total-price">$216.51</td>
+              <td class=" site-color" id="total-price">R$ <?php echo $totalCompra ?></td>
             </tr>
           </tbody>
           <tbody>

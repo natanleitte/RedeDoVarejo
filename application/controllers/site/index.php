@@ -48,10 +48,49 @@ class Index extends CI_Controller {
         $this->load->view('site/header', $data);
         $this->load->view('site/produto', $data);
     }
+    
+    function buscarItem() {
+//        $pro_codigo = $this->input->get('pro_codigo'); // recupera a informação via get
+        $item_nome = $this->input->post('item_nome'); // recupera a informação via get
+
+        $this->load->model('itemModel');
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+
+        $data['prod'] = $this->produtoModel->obterTodos();
+        $data['itens'] = $this->itemModel->obterTodos();
+        
+        //data para fazer a pesquisa dos itens
+        echo $item_nome;
+        $data['busca'] = $this->itemModel->obterItensPorNome($item_nome);
+        $data['buscaNome'] = $item_nome;
+//        $busca = $this->itemModel->obterItensPorNome($item_nome);
+//        
+//        foreach($busca->result() as $row)
+//        {
+//          echo $row->item_nome;
+//        }
+        
+
+
+        $this->load->view('site/header', $data);
+        $this->load->view('site/busca', $data);
+    }
 
     //método que adiciona ao carrinho
     function addAoCarrinho() {
-        $this->is_logged_in();
+        
+        //se não estiver logado
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+//            $this->login();
+        }
+        else
+        {
 
 //        $this->load->library('session');
         $item_codigo = $this->input->get('item_codigo'); // recupera a informação via get
@@ -84,6 +123,7 @@ class Index extends CI_Controller {
         $this->cart->insert($item);
 
         redirect(base_url() . 'index.php/site/index/carrinho');
+        }
     }
 
     function carrinho() {
@@ -132,8 +172,12 @@ class Index extends CI_Controller {
         $is_logged_in = $this->session->userdata('is_logged_in');
         echo $is_logged_in;
         if (!isset($is_logged_in) || $is_logged_in != true) {
-            echo 'You don\'t have permission to access this page.';
-            die();
+//            echo 'You don\'t have permission to access this page.';
+//            die();
+            
+            return false;
+//            die();
+
             //$this->load->view('login_form');
         } else {
 
@@ -145,10 +189,21 @@ class Index extends CI_Controller {
          //load models para a header
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
+        $this->load->model('enderecoModel');
 
+        
+        //Para buuscar o endereço do cliente
+        $cli_codigo = $this->session->userdata('cli_codigo');
+        
         //data para header
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
+        $data['endereco'] = $this->enderecoModel->obterPorCliente($cli_codigo);
+//        $endereco = $this->enderecoModel->obterPorCliente($cli_codigo);
+
+//        foreach ($endereco->result() as $end) {
+//           echo $end->end_logradouro;
+//        }
         
          $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra1');
@@ -197,5 +252,53 @@ class Index extends CI_Controller {
         
 
     }
+    
+    function login(){
+         //load models para a header
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/login');
+        
+    }
+    
+    function dados_pessoais()
+    {
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+//            $this->login();
+        }
+        else
+        {
+            //load models para a header
+            $this->load->model('categoriaModel');
+            $this->load->model('produtoModel');
+            $this->load->model('clienteModel');
+            
+
+            //data para header
+            $data['categorias'] = $this->categoriaModel->obterTodos();
+            $data['produtos'] = $this->produtoModel->obterTodos();
+            
+            //data para dados pessoais
+            $cli_codigo = $this->session->userdata('cli_codigo');
+            $cliente = $this->clienteModel->obter($cli_codigo);
+            $data['cliente'] = $cliente->first_row();
+            
+//            $row = $data['cliente']->first_row();       
+//            echo $row->cli_email;
+            
+            $this->load->view('site/header', $data);
+            $this->load->view('site/dados-pessoais', $data);
+        }
+    }
+    
+    
 
 }

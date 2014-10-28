@@ -13,7 +13,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
         <link rel="shortcut icon" href="assets/ico/favicon.png">
-        <title>TSHOP - Bootstrap E-Commerce Parallax Theme </title>
+        <title>.: REDE DO VAREJO :. </title>
         <!-- Bootstrap core CSS -->
         <link href="<?php echo base_url() . $prefixLayout . 'assets/bootstrap/css/bootstrap.css' ?>" rel="stylesheet">
 
@@ -178,14 +178,23 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
-                            <div class="pull-left">
-                                <div class="helpMenu"> <a> HELP </a> <a> <i class="fa fa-phone"></i> CALL 88 01680 53 1352 </a> </div>
+<!--                            <div class="pull-left">
+                                <div class="helpMenu"> <a> SAC </a> <a> <i class="fa fa-phone"></i> (67) 3026-3200 </a> </div>
+                            </div>-->
+                            <div class="pull-left ">
+                                <ul class="userMenu ">
+                                    <li> <a href="#"> <span class="hidden-xs">SAC</span><i class="glyphicon glyphicon-info-sign hide visible-xs "></i> </a> </li>
+                                    <li class="phone-number"> 
+                                        <a  href="callto:+8801680531352"> 
+                                            <span> <i class="fa fa-phone "></i></span> 
+                                            <span class="hidden-xs" style="margin-left:5px"> (67) 3026-3200 </span> </a> </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
                             <div class="pull-right">
                                 <ul class="userMenu">
-                                    <li> <a href="account-1.html"> Minha Conta </a> </li>
+                                    <li> <a href="<?php echo base_url() . "index.php/site/index/dados_pessoais" ?>"> Minha Conta </a> </li>
                                     <li> <a href="checkout-1.html"> Finalizar Compra </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalLogin"> Entrar </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalSignup"> Criar Conta </a> </li>
@@ -483,7 +492,7 @@
                         <div class="dropdown  cartMenu "> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
                                 <i class="fa fa-shopping-cart"> </i>
-                                <span class="cartRespons"> Cart R$ <?php echo $totalCompra; ?> </span> 
+                                <span class="cartRespons"> Compra R$ <?php echo $totalCompra; ?> </span> 
                                 <b class="caret"> </b> 
                             </a>
 
@@ -612,13 +621,18 @@
                 </div><!--/.nav-collapse --> 
 
             </div> <!--/.container -->
-
+            <?php
+            $attributes = array('id' => 'buscarItem');
+            echo form_open('index.php/site/index/buscarItem', $attributes); ?>
+            
             <div class="search-full text-right"> <a class="pull-right search-close"> <i class=" fa fa-times-circle"> </i> </a>
                 <div class="searchInputBox pull-right">
-                    <input type="search"  data-searchurl="search?=" name="q" placeholder="start typing and hit enter to search" class="search-input">
+                    <input type="search"  data-searchurl="search?=" name="item_nome" placeholder="BUSCAR" class="search-input">
                     <button class="btn-nobg search-btn" type="submit"> <i class="fa fa-search"> </i> </button>
                 </div>
             </div>
+            
+            <?php echo form_close(); ?>
             <!--/.search-full--> 
 
         </div>
@@ -672,6 +686,12 @@
         <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>-->
         <script type="text/javascript" src="<?php echo base_url() . 'assets/noty/js/noty/packaged/jquery.noty.packaged.min.js' ?>"></script>
         <script type="text/javascript" src="<?php echo base_url() . $prefixLayout . 'assets/js/login.js' ?>"></script>
+        
+<!--        <script type="text/javascript">
+    $(document).ready(function(){
+	$("#cep").mask("99999-999");
+});
+</script>-->
         
         
 

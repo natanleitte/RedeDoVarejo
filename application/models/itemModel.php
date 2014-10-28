@@ -34,6 +34,16 @@ class itemModel extends CI_Model {
         $this->load->database();
         return $this->db->query('SELECT * FROM item WHERE item_codigo = ' . $item_codigo);
     }
+    
+    //Faz uma busca de itens que contem a string passada
+    function obterItensPorNome($item_nome)
+    {
+        $this->load->database();       
+        $this->db->like('item_nome', $item_nome);
+        return $this->db->get('item');
+
+        
+    }
 
 }
 

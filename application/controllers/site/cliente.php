@@ -43,6 +43,8 @@ class Cliente extends CI_Controller {
                     $cli_codigo = $cliente->cli_codigo;
                     $cli_nome = $cliente->cli_nome;
                     $this->insereNaSessao($email, $senha, $cli_codigo, $cli_nome);
+                    redirect(base_url() . 'index.php/site/index/');
+
                     return;
                 }
             }
@@ -76,17 +78,14 @@ class Cliente extends CI_Controller {
     {
         $cli_codigo = $this->session->userdata('cli_codigo');
         $data['cli_codigo'] = $cli_codigo;
-//        $data['end_nome'] = $this->input->post('nome');
-//        $data['end_sobrenome'] = $this->input->post('sobrenome');
-//        $data['end_email'] = $this->input->post('email');
         $data['end_logradouro'] = $this->input->post('endereco');
         $data['end_numero'] = $this->input->post('numero');
-        $data['end_bairro'] = $this->input->post('bairro');
         $data['end_cidade'] = $this->input->post('cidade');
-        $data['end_tipo_logradouro'] = $this->input->post('estado');
+        $data['end_complemento'] = $this->input->post('complemento');
+        $data['end_bairro'] = $this->input->post('bairro');
         $data['end_cep'] = $this->input->post('cep');
-        $data['end_referencia'] = $this->input->post('observacao');
-        $data['end_complemento'] = $this->input->post('observacao');
+        $data['end_uf'] = $this->input->post('estado');
+        $data['end_referencia'] = $this->input->post('referencia');
 
 //        $data['end_telefone'] = $this->input->post('telefone');
         
@@ -95,6 +94,22 @@ class Cliente extends CI_Controller {
         
         redirect(base_url() . 'index.php/site/index/finalizar_compra2');
         
+    }
+    
+    function atualizaDadosPessoais()
+    {
+        $cli_codigo = $this->session->userdata('cli_codigo');
+//        $data['cli_codigo'] = $cli_codigo;
+        $data['cli_nome'] = $this->input->post('nome');
+        $data['cli_sobrenome'] = $this->input->post('sobrenome');
+        $data['cli_cpf_cnpj'] = $this->input->post('cpf');
+        $data['cli_sexo'] = $this->input->post('sexo');
+        $data['cli_divulgacao'] = $this->input->post('newsletter');
+        
+        $this->load->model('clienteModel');
+        $this->clienteModel->atualizar($cli_codigo, $data);
+        
+        redirect(base_url() . 'index.php/site/index/');
     }
    
 }

@@ -202,25 +202,26 @@
       
   <div class="w100 cartMiniTable">
                             <table id="cart-summary" class="std table">
-                                    <tbody><tr >
+                                    <tbody>
+<!--                                        <tr >
                                       <td>Total products</td>
                                       <td class="price" >$216.51</td>
-                                    </tr>
+                                    </tr>-->
                                     <tr  style="">
-                                      <td>Shipping</td>
-                                      <td class="price" ><span class="success">Free shipping!</span></td>
+                                      <td>Frete</td>
+                                      <td class="price" ><span class="success">À calcular!</span></td>
                                     </tr>
-                                    <tr class="cart-total-price ">
+<!--                                    <tr class="cart-total-price ">
                                       <td>Total (tax excl.)</td>
                                       <td class="price" >$216.51</td>
                                     </tr>
                                     <tr >
                                       <td>Total tax</td>
                                       <td class="price" id="total-tax">$0.00</td>
-                                    </tr>
+                                    </tr>-->
                                     <tr >
                                       <td > Total </td>
-                                      <td class=" site-color" id="total-price">$216.51</td>
+                                      <td class=" site-color" id="total-price"> R$ <?php echo $totalCompra ?></td>
                                     </tr>
                                     
                                                                          

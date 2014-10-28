@@ -44,9 +44,21 @@
                   <div class="panel-group paymentMethod" id="accordion">
                     <div class="panel panel-default">
                       <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a class="cashOnDelivery" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <span class="numberCircuil">Opção 1</span> <strong> Transferência Bancária/Depósito</strong> </a> </h4>
+                        <h4 class="panel-title"> <a class="cashOnDelivery" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <span class="numberCircuil">Opção 1</span> <strong> Pagamento na entrega</strong> </a> </h4>
                       </div>
                       <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <p>Desejo pagar na entrega.</p>
+                          <br>
+                          <div class="pull-right"> <a href="checkout-5.html" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading panel-heading-custom">
+                        <h4 class="panel-title"> <a class="cashOnDelivery" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> <span class="numberCircuil">Opção 2</span> <strong> Transferência Bancária/Depósito</strong> </a> </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
                           <p>Faça a transferência bancária ou depósito para a conta abaixo.</p>
                           <br>
@@ -62,9 +74,9 @@
                     </div>
                     <div class="panel panel-default">
                       <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> <span class="numberCircuil">Opção 2</span><strong> PagSeguro</strong> </a> </h4>
+                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> <span class="numberCircuil">Opção 3</span><strong> PagSeguro</strong> </a> </h4>
                       </div>
-                      <div id="collapseTwo" class="panel-collapse collapse">
+                      <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
                           <p>All transactions are secure and encrypted, and we neverstor To learn more, please view our privacy policy.</p>
                           <br>
@@ -80,11 +92,32 @@
                               <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
                               I have read and agree to the <a href="terms-conditions.html">Terms & Conditions</a> </label>
                           </div>
-                          <div class="pull-right"> <a href="checkout-5.html" class="btn btn-primary btn-small " > Order &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+                          
+                          <form id="pagseguro" target="pagseguro" method="post" action="https://pagseguro.uol.com.br/checkout/checkout.jhtml">
+                            <input type="hidden" name="email_cobranca" value="natanleitte@gmail.com">
+                            <input type="hidden" name="tipo" value="CP">
+                            <input type="hidden" name="moeda" value="BRL">
+
+                            <?php
+                                $num = 1;
+                                foreach ($this->cart->contents() as $item) {
+                                echo "<input type='hidden' name='item_id_". $num ."' value='12345'>";
+                                echo "<input type='hidden' name='item_descr_". $num ."' value='" . $item['name'] . "'>";
+                                echo "<input type='hidden' name='item_quant_". $num ."' value='" . $item['qty'] . "'>";
+                                echo "<input type='hidden' name='item_valor_". $num ."' value='" . $item['price'] . "'>";
+                                echo "<input type='hidden' name='item_frete_". $num ."' value='0'>";
+                                echo "<input type='hidden' name='item_peso_". $num ."' value='0'>";
+                                $num++;
+                                }
+                            ?>
+                            
+                            <div class="pull-right"> <a onclick="$(this).closest('form').submit()" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+                            </form>
+                          
                         </div>
                       </div>
                     </div>
-                    <div class="panel panel-default">
+<!--                    <div class="panel panel-default">
                       <div class="panel-heading panel-heading-custom">
                         <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> <span class="numberCircuil">Option 3</span> <strong> MasterCard</strong> </a> </h4>
                       </div>
@@ -102,13 +135,13 @@
                                 <br>
                                 <input id="CardNumber" type="text" name="Number">
                               </div>
-                              <!--paymentInput-->
+                              paymentInput
                               <div class="paymentInput">
                                 <label for="CardNumber2">Name on Credit Card *</label>
                                 <br>
                                 <input type="text" name="CardNumber2" id="CardNumber2">
                               </div>
-                              <!--paymentInput-->
+                              paymentInput
                               <div class="paymentInput">
                                 <div class="form-group">
                                   <label>Expiration date *</label>
@@ -148,7 +181,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <!--paymentInput-->
+                              paymentInput
                               
                               <div style="clear:both"></div>
                               <div class="paymentInput clearfix">
@@ -157,45 +190,31 @@
                                 <input type="text" id="VerificationCode" name="VerificationCode" style="width:90px;">
                                 <br>
                               </div>
-                              <!--paymentInput-->
+                              paymentInput
                               
                               <div>
                                 <input type="checkbox" name="saveInfo" id="saveInfoid">
                                 <label for="saveInfoid">&nbsp;Save my Card information</label>
                               </div>
                             </div>
-                            <!--creditCard-->
+                            creditCard
                             
                             <div class="pull-right"> <a href="checkout-5.html" class="btn btn-primary btn-small " > Order &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
                 <!--Será editado para mandar os dados corretos ao Pag seguro-->
-<form target="pagseguro" method="post" action="https://pagseguro.uol.com.br/checkout/checkout.jhtml">
-  <input type="hidden" name="email_cobranca" value="suporte@lojamodelo.com.br">
-  <input type="hidden" name="tipo" value="CP">
-  <input type="hidden" name="moeda" value="BRL">
 
-  <input type="hidden" name="item_id_1" value="12345">
-  <input type="hidden" name="item_descr_1" value="Descrição do item a ser vendido">
-  <input type="hidden" name="item_quant_1" value="1">
-  <input type="hidden" name="item_valor_1" value="100">
-  <input type="hidden" name="item_frete_1" value="0">
-  <input type="hidden" name="item_peso_1" value="0">
-
-  <input type="hidden" name="item_id_2" value="67890">
-  <input type="hidden" name="item_descr_2" value="Descrição do item 2 a ser vendido">
-  <input type="hidden" name="item_quant_2" value="1">
-  <input type="hidden" name="item_valor_2" value="199">
-  <input type="hidden" name="item_frete_2" value="0">
-  <input type="hidden" name="item_peso_2" value="0">
-
-  <input type="hidden" name="tipo_frete" value="EN">
-  <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/99x61-pagar-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!">
-</form>
+                <div class="alert alert-warning alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Warning!</strong> Better check yourself, you're not looking too good.
+  <br>
+  -Falta mais coisa<br>
+  -Ainda mais
+</div>
                 <!--/row--> 
                 
               </div>

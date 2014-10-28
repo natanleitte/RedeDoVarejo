@@ -137,7 +137,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
 
                                     <div class = "cartFooter w100">
                                     <div class = "box-footer">
-                                    <div class = "pull-left"> <a href = "index.html" class = "btn btn-default"> <i class = "fa fa-arrow-left"></i> &nbsp;
+                                    <div class = "pull-left"> <a onclick="history.go(-1)" class = "btn btn-default"> <i class = "fa fa-arrow-left"></i> &nbsp;
                                     Continuar comprando </a> </div>
                                     <div class = "pull-right">
                                     <button type = "submit" class = "btn btn-default"> <i class = "fa fa-undo"></i> &nbsp;
@@ -161,9 +161,9 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     <tbody>
                                     <tr >
                                     <td>Total</td>
-                                    <td class = "price" > <?php echo $totalCompra ?></td>
+                                    <td class = "price" > R$ <?php echo $totalCompra ?></td>
                                     </tr>
-                                    <tr style = "">
+<!--                                    <tr style = "">
                                     <td>Shipping</td>
                                     <td class = "price" ><span class = "success">Free shipping!</span></td>
                                     </tr>
@@ -184,7 +184,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     <input class = "col-lg-8" id = "appendedInputButton" type = "text" placeholder = "Coupon code" >
                                     <button class = "col-lg-4 btn btn-success" type = "button">Apply!</button>
                                     </div></td>
-                                    </tr>
+                                    </tr>-->
                                     </tbody>
                                     <tbody>
                                     </tbody>

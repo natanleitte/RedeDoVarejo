@@ -1,19 +1,19 @@
 <?php
 //pega o nome da categoria pra formar a url 
-foreach ($prod->result() as $pro) {
-    $cat_codigo = $pro->cat_codigo;
-    $pro_codigo = $pro->pro_codigo;
-    $pro_nome = $pro->pro_nome;
-}
-foreach ($categorias->result() as $categoria) {
-    if ($cat_codigo == $categoria->cat_codigo)
-    {
-        $cat_nome = $categoria->cat_nome;
+//foreach ($prod->result() as $pro) {
+//    $cat_codigo = $pro->cat_codigo;
+//    $pro_codigo = $pro->pro_codigo;
+//    $pro_nome = $pro->pro_nome;
+//}
+//foreach ($categorias->result() as $categoria) {
+//    if ($cat_codigo == $categoria->cat_codigo)
+//    {
+//        $cat_nome = $categoria->cat_nome;
+//
+//    }
+//}
 
-    }
-}
-
-$urlImg = "assets/site/images/imgProdutos/" . $cat_nome . "/" . $pro_nome;
+$urlImg = "assets/site/images/imgProdutos/";
 $urlCarrinho = "index.php/site/index/addAoCarrinho"
 ?> <!-- prefixo da URL do Layout -->
 <!DOCTYPE html>
@@ -926,11 +926,7 @@ echo "</ul>";
 
             <div class="w100 clearfix category-top">
                 <h2>
-<?php
-foreach ($prod->result() as $pro) {
-    echo $pro->pro_nome;
-}
-?>
+                Busca por <?php echo $buscaNome;?>
                 </h2>
                 <div class="categoryImage"> <img src="images/site/subcategory.jpg" class="img-responsive" alt="img"> </div>
             </div><!--/.category-top-->
@@ -956,16 +952,28 @@ foreach ($prod->result() as $pro) {
 
             <div class="row  categoryProduct xsResponse clearfix">
                 <?php
-                    foreach($itens->result() as $item)
+                    foreach($busca->result() as $item)
                     {
-                        if($item->pro_codigo == $pro_codigo)
-                        {
+                        foreach ($prod->result() as $pro) {
+                           if($pro->pro_codigo == $item->pro_codigo)
+                           {
+                              $cat_codigo = $pro->cat_codigo;
+                              $pro_nome = $pro->pro_nome;
+                           }
+                          }
+                          foreach ($categorias->result() as $categoria) {
+                            if ($cat_codigo == $categoria->cat_codigo)
+                            {
+                                $cat_nome = $categoria->cat_nome;
+                            }
+                           }
+                           
                           echo "<div class='item col-sm-4 col-lg-4 col-md-4 col-xs-6'>";
                           echo "<div class='product'>";
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
                           echo "<i class='glyphicon glyphicon-heart'></i>";
                           echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "'</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/". $pro_nome . "/" . $item->item_img . ".jpg" . "'</a>";
                           if($item->item_novo == 1)
                           {
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
@@ -990,16 +998,18 @@ foreach ($prod->result() as $pro) {
                           {
                             echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
                           }
-                              
+                          
+                          
+                          
                           echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
                                   "&item_preco=" . $item->item_preco_atual . 
                                   "&item_nome=" . $item->item_nome .
-                                  "&item_img=" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "' "
+                                  "&item_img=" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . ".jpg" . "' "
                                   . "class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
                           echo "</div>";
                           echo "</div>";
 
-                        }
+                        
                     }
                     ?>
 <!--                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
