@@ -1,5 +1,4 @@
-<?php form_open('index.php/login/segurancaPagina');
-?>
+<?php form_open('index.php/login/segurancaPagina'); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,45 +8,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center bg-light-gray">
-                    <?php echo form_open('index.php/produto/inserir'); ?>
-                    <h2 class="section-heading">Inserir Produto</h2>
+                    <?php echo form_open('index.php/usuario/insere'); ?>
+                    <h2 class="section-heading">Inserir novo usuário</h2>
+                    <input type='hidden' name='qtdElementos' id='qtdElementos' value="1"/>
                     <?php
                     if (isset($_GET['error'])) {
                         echo "<div class=\"alert alert-danger\">" . $_GET['error'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/produto/produto" />';
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/usuario/usuario" />';
                     }
 
-                    if (isset($_GET['sucess'])) {
-                        echo "<div class=\"alert alert-success\">" . $_GET['sucess'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/produto/produto" />';
+                    if (isset($_GET['success'])) {
+                        echo "<div class=\"alert alert-success\">" . $_GET['success'] . "</div>";
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/usuario/usuario" />';
                     }
                     ?>
-                    <div class='form-inline'>
-                        <span class="fa-stack fa-2x" id="adicionar" onclick="adicionarProduto();">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-plus-circle fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <select class="form-control" name="cat_codigo">
-                            <?php
-                            foreach ($query1->result() as $row) {
-                                echo "<option value='" . $row->cat_codigo . "'>" . $row->cat_nome . "</option>";
-                            }
-                            ?> 
-                        </select>
-                    </div>
-                    <input type='hidden' name='qtdElementos' id='qtdElementos' value="1"/>
                     <div class="row">
                         <div class="col-lg-offset-2"></div>
                         <div class="col-lg-offset-3 col-lg-6">
                             <div class="form-group">
                                 <div class='form-inline'>
-                                    <label for="pro_nome">Nome do Produto</label>
-                                    <input type="text" name="pro_nome" class="form-control" placeholder="Produto" id="pro_nome" >
-                                    <input type='checkbox' checked='checked' name='pro_status' id='pro_status' /> Ativo
+                                    <input type="text" name="usu_nome" class="form-control" placeholder="Nome" id="pro_nome" >
+                                    <input type="text" name="usu_sobrenome" class="form-control" placeholder="Sobrenome" id="pro_nome" >
+                                    <input type="text" name="usu_login" class="form-control" placeholder="Login" id="pro_nome" >
+                                    <input type="text" name="usu_cpf" class="form-control" placeholder="CPF" id="pro_nome" >
+                                    <input type="password" name="usu_senha" class="form-control" placeholder="Senha" id="pro_nome" >
+                                    <input type="password" name="usu_senha2" class="form-control" placeholder="Confirme a senha" id="pro_nome" >
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Aqui entrará os novos itens -->
                         <div id="novoElemento">
 
                         </div>
@@ -64,14 +53,14 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center bg-light-gray">
-                        <h2 class="section-heading">Produtos</h2>
+                        <h2 class="section-heading">Usuários</h2>
                     </div>
                 </div>
                 <br/>
                 <div class="row">
                     <input type='hidden' name='qtdElementos2' id='qtdElementos2' value="1"/>
                     <div>
-                        <?php echo form_open('index.php/produto/editar'); ?>
+                        <?php echo form_open('index.php/usuario/editar'); ?>
                         <div id='novoElemento2'>
 
                         </div>
@@ -79,7 +68,7 @@
                     </div>
 
                     <div>
-                        <?php echo form_open('index.php/produto/excluir'); ?>
+                        <?php echo form_open('index.php/usuario/excluir'); ?>
                         <div id='novoElemento3'>
 
                         </div>
@@ -89,28 +78,28 @@
                     <table class="table table-striped table-bordered table-responsive">
 
                         <tr>
-                            <td><b>Código de Categoria</b></td>
-                            <td><b>Nome da Categoria</b></td>
-                            <td><b>Código do Produto</b></td>
-                            <td><b>Nome do Produto</b></td>
-                            <td><b>Status do Produto</b></td>
+                            <td><b>Código</b></td>
+                            <td><b>Nome</b></td>
+                            <td><b>Sobrenome</b></td>
+                            <td><b>Login</b></td>
+                            <td><b>CPF</b></td>
                             <td><b>Editar</b></td>
                             <td><b>Excluir</b></td>
                         </tr>
                         <?php
-                        foreach ($consulta->result() as $row) {
+                        foreach ($query->result() as $row) {
                             echo "<tr>";
-                            echo "<td>" . $row->cat_codigo . "</td>";
-                            echo "<td>" . $row->cat_nome . "</td>";
-                            echo "<td>" . $row->pro_codigo . "</td>";
-                            echo "<td>" . $row->pro_nome . "</td>";
-                            echo "<td>" . (($row->pro_status == 1) ? 'Ativo' : 'Inativo') . "</td>";
+                            echo "<td>" . $row->usu_codigo . "</td>";
+                            echo "<td>" . $row->usu_nome . "</td>";
+                            echo "<td>" . $row->usu_sobrenome . "</td>";
+                            echo "<td>" . $row->usu_login . "</td>";
+                            echo "<td>" . $row->usu_cpf . "</td>";
                             echo "<td><span class='fa-stack'>
-                                        <i class='fa fa-pencil fa-stack-2x' onclick='editarProduto($row->pro_codigo);'></i>
+                                        <i class='fa fa-pencil fa-stack-2x' onclick='editarUsuario($row->usu_codigo);'></i>
                                         </span>
                                     </td>";
                             echo "<td><span class='fa-stack'>
-                                        <i class='fa fa-trash-o fa-stack-2x' onclick='excluir($row->pro_codigo);'></i>
+                                        <i class='fa fa-trash-o fa-stack-2x' onclick='excluirUsuario($row->usu_codigo);'></i>
                                         </span>
                                     </td>";
                             echo "</tr>";
