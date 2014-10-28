@@ -1,123 +1,151 @@
 <?php
 
-//use Categoria;
-//require '~/models/categoria.php';
-
 class Categoria extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-//        $this->load->model('Categoria','',TRUE);
     }
 
-//    function testando()
-//    {
-//        parent::Controller();
-//    }
     function index() {
-//        $categoria = new Categoria();
-//        $categoria->cat_codigo = 1;
-//        $data['categoria'] = 1;
-//        
-        //$categoria->cat_codigo = 1;
-//        $this->load->helper('url_helper');
-//        $this->load->library('form_validation');
-//        $this->load->library('session');
-        $this->load->model('categoriaModel');
 
-        $data['query'] = $this->categoriaModel->obterTodos();
+        $this->load->model('modelCategoria');
+        $tabela = "categoria";
+        $data['query'] = $this->modelCategoria->obterTodos($tabela);
 
         $this->load->helper('url');
         $this->load->view('head');
         $this->load->view('categoria', $data);
-//        $this->load->model('categoria');
+//
     }
 
-    function inserir() {
+    public function inserir() {
         //carrega model
-        $this->load->model('categoriaModel');
+        $this->load->model('modelCategoria');
+
+        // Informa a tabela
+        $tabela = "categoria";
 
         //recebe quantidade de Elementos inseridos na página
         $qtd = $this->input->post('qtdElementos');
 
-        //pega o post de cat_nome
-        $data['cat_nome'] = $this->input->post('cat_nome');
-        //pega post do status
-        $cat_status = $this->input->post('cat_status');
-
-        //verfifica se status está checado ou não e atribui 1 ou 0
-        if (!strcmp($cat_status, "on")) {
-            $data['cat_status'] = 1;
-        } else {
-            $data['cat_status'] = 0;
-        }
-
-        // Realiza a inserção da pasta com o nome da nova categoria
-        mkdir("assets/img/categoria/" . $data['cat_nome'], 0700);
-
-        // invoca método da model que insere no banco
-        $this->categoriaModel->inserir($data);
-
-        //pega outros elementos da página pra gravar no banco 
-        for ($i = 2; $i <= $qtd; $i++) {
-//            echo "'cat_nome" . $i . "'";
-            $elemento = "cat_nome" . $i . "";
-            $strStatus = "cat_status" . $i . "";
-
-            $data['cat_nome'] = $this->input->post($elemento);
-            $cat_status = $this->input->post($strStatus);
-
-            //verfifica se status está checado ou não e atribui 1 ou 0
-            if (!strcmp($cat_status, "on")) {
-                $data['cat_status'] = 1;
+        for ($i = 1; $i <= $qtd; $i++) {
+            if ($i == 1) {
+                //pega o post de cat_nome
+                $data['cat_nome'] = $this->input->post('cat_nome');
+                $valida = $this->input->post('cat_nome');
+                $cat_status = $this->input->post('cat_status');
+                $data['cat_status'] = (!strcmp($cat_status, "on")) ? 1 : 0;
             } else {
-                $data['cat_status'] = 0;
+                $elemento = "cat_nome" . $i . "";
+                $strStatus = "cat_status" . $i . "";
+
+                $data['cat_nome'] = $this->input->post($elemento);
+                $valida = $this->input->post($elemento);
+
+                $cat_status = $this->input->post($strStatus);
+
+                //verfifica se status está checado ou não e atribui 1 ou 0
+                $data['cat_status'] = (!strcmp($cat_status, "on")) ? 1 : 0;
             }
 
-            // Realiza a inserção da pasta com o nome da nova categoria
-            mkdir("assets/img/categoria/" . $data['cat_nome'], 0700);
+            // consulta para verificar se a categoria ja existe
+            $exist = $this->modelCategoria->obterConsulta("SELECT cat_nome FROM categoria WHERE cat_nome = '" . $valida . "'");
 
-            // invoca método da model que insere no banco
-            $this->categoriaModel->inserir($data);
-        }
-        
-        function excluir(){
-            // Load nas Model
-            $this->load->model('categoriaModel');
-            
-            //Pega o número do código
-            $data['cat_codigo'] = $this->input->post('cat_codigo');
-            
-            //Realiza a exlusão em banco
-            $this->categoriaModel->obterConsulta('DELETE FROM produto WHERE pro_codigo = '.$data['cat_codigo']);
-            
-            //Deleta pasta dos produtos
-            rmdir($data['cat_nome']);
-        }
+            // verifica se os campos foram inicializados
+            if ($data['cat_nome'] == '') {
+                // Retorna para a página informando o erro
+                header('Location:' . base_url() . 'index.php/categoria/categoria?error=' . urlencode('Existe(m) campo(s) vazio(s)!'));
+            } else
+            // verifica se já existe
+            if ($exist->num_rows()) {
+                // Retorna para a página informando o erro
+                header('Location:' . base_url() . 'index.php/categoria/categoria?error=' . urlencode('Categoria já existe!'));
+            } else {
+                // Realiza a inserção da pasta com o nome da nova categoria
+                mkdir("assets/img/categoria/" . $data['cat_nome'], 0777);
 
-        redirect(base_url() . 'index.php/categoria/categoria');
+                // invoca método da model que insere no banco
+                $this->modelCategoria->inserir($data, $tabela);
+
+                // Retorna para a página com a mensagem de sucesso
+                header('Location:' . base_url() . 'index.php/categoria/categoria?sucess=' . urlencode('Cadastro realizado com sucesso!'));
+            }
+        }
     }
 
-    function excluir($cat_codigo) {
-        echo "ja era";
+    public function jsonCategoria() {
+        //carrega model
+        $this->load->model('modelCategoria');
+
+        $editaCodigo = $this->input->post('var');
+
+        $query = "SELECT * FROM categoria WHERE cat_codigo = " . $editaCodigo;
+        $result = $this->modelCategoria->obterConsulta($query);
+
+        foreach ($result->result() as $row) {
+            $array = array(
+                $row->cat_codigo,
+                $row->cat_nome,
+                $row->cat_status,
+            );
+        }
+        echo json_encode($array);
     }
 
-//
-//    public function inserirCategoria() {
-//        $this->load->library('form_validation');
-//        $this->form_validation->set_rules('cat_nome', 'cat_nome', 'required');
-//        $cat_nome = $this->input->post('cat_nome');
-//        
-//        if ($this->form_validation->run() === false) {
-//            echo "problema";
-//        }
-//
-////        
-//        echo $cat_nome;
-////        }
-////        else
-////        {
-//        echo "bugou";
-////        }
-//    }
+    public function editar() {
+        //carrega model
+        $this->load->model('modelCategoria');
+
+        //Recebe os novos valores dos campos
+        $data['cat_nome'] = $this->input->post('cat_nome');
+        $pathNew = $this->input->post('cat_nome');
+        $data['cat_codigo'] = $this->input->post('cat_codigo');
+        $data['cat_status'] = $this->input->post('cat_status');
+
+        // verifica se os campos foram inicializados
+        if ($data['cat_nome'] == '' OR $data['cat_status'] == '') {
+            // Retorna para a página informando o erro
+            header('Location:' . base_url() . 'index.php/categoria/categoria?error=' . urlencode('Existe(m) campo(s) vazio(s)!'));
+        } else {
+
+            $query = "UPDATE categoria"
+                    . " SET cat_nome = '" . $data['cat_nome'] . "', cat_codigo= '" . $data['cat_codigo'] . "', cat_status= '" . $data['cat_status']
+                    . "' WHERE cat_codigo= '" . $data['cat_codigo'] . "'";
+
+            // Renomeia a pasta de categoria
+            $query2 = $this->modelCategoria->obterConsulta('SELECT cat_nome FROM categoria WHERE cat_codigo=' . $data['cat_codigo']);
+            foreach ($query2->result() as $row) {
+                $pathOld = $row->cat_nome;
+            }
+            rename("assets/img/categoria/" . $pathOld, "assets/img/categoria/" . $pathNew);
+
+            //Realiza a consulta (Editar Produto)
+            $this->modelCategoria->obterConsulta($query);
+
+            //Redireciona para a pagina principal
+            header('Location:' . base_url() . 'index.php/categoria/categoria?edit=' . urlencode('Edição realizada com sucesso!'));
+        }
+    }
+
+    public function excluir() {
+        // Load nas Model
+        $this->load->model('modelCategoria');
+
+        //Pega o número do código
+        $data['cat_codigo'] = $this->input->post('cat_codigo');
+        $data['cat_nome'] = $this->input->post('cat_nome');
+
+
+        //Realiza a exlusão em banco
+        $this->modelCategoria->obterConsulta('DELETE FROM categoria WHERE cat_codigo = ' . $data['cat_codigo']);
+
+        //Deleta pasta dos produtos
+        rmdir("assets/img/categoria/" . $data['cat_nome']);
+
+        //Redireciona para a pagina principal
+        header('Location:' . base_url() . 'index.php/categoria/categoria?edit=' . urlencode('Exclusão realizada com sucesso!'));
+    }
+
 }
+
+?>
