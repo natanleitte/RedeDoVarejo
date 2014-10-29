@@ -34,75 +34,51 @@
         </div>
         
         <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
-          <h3> Shop </h3>
+          <h3> Sessões </h3>
           <ul>
-            <li> <a href="index.html"> Home </a> </li>
-            <li> <a href="category.html"> Category </a> </li>
-            <li> <a href="sub-category.html"> Sub Category </a> </li>
-            
+            <?php
+            foreach($categorias->result() as $categoria)
+            {
+                echo "<li> <a href='index.html'>" . $categoria->cat_nome . "</a> </li>";
+
+            }
+            ?>
           </ul>
         </div>
         
         <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
           <h3>
-            Information
+            Informações
           </h3>
           <ul>
-            <li> <a href="product-details.html"> Product Details </a> </li>
-                <li> <a href="product-details-style2.html"> Product Details Version 2 </a> </li>
-                <li> <a href="cart.html"> Cart </a> </li>
-                <li> <a href="about-us.html"> About us </a> </li>
-            <li> <a href="about-us-2.html">
-                About us 2 
-              </a>
-              
-            </li>
-            <li> <a href="contact-us.html">
-                Contact us
-              </a>
-              
-            </li>
-            <li> <a href="contact-us-2.html">
-                Contact us 2 
-              </a>
-              
-            </li>
-            <li> <a href="terms-conditions.html">
-                Terms &amp; Conditions
-              </a>
-              
-            </li>
-            
+            <li> <a href="<?php echo base_url() . "index.php/site/index/quem_somos" ?>"> Quem Somos </a> </li>
+            <li> <a href="<?php echo base_url() . "index.php/site/index/temos_condicoes" ?>"> Termos &amp; Condições </a> </li>
+            <li> <a href="#"> Áreas Atendidas </a> </li>
           </ul>
         </div>
         
         <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
           <h3>
-            My Account
+            Minha Conta
           </h3>
           <ul>
-            <li> <a href="account-1.html">
-                Account Login
+            <li> <a href="<?php echo base_url() . "index.php/site/index/login" ?>">
+                Login
               </a>
               
             </li>
-            <li> <a href="account.html">
-                My Account
+            <li> <a href="<?php echo base_url() . "index.php/site/index/login" ?>">
+                Registrar
               </a>
               
             </li>
-            <li> <a href="my-address.html">
-                My Address
+            <li> <a href="<?php echo base_url() . "index.php/site/index/dados_pessoais" ?>">
+                Minha Conta
               </a>
               
             </li>
-            <li> <a href="wishlist.html">
-                Wisth list
-              </a>
-              
-            </li>
-            <li> <a href="order-list.html">
-                Order list
+            <li> <a href="<?php echo base_url() . "index.php/site/index/esqueceu_senha" ?>">
+                Esqueci minha senha
               </a>
               
             </li>
@@ -112,14 +88,14 @@
         
         <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
           <h3>
-            Stay in touch
+            Receber Notícias
           </h3>
           <ul>
             <li>
               <div class="input-append newsLatterBox text-center">
                 <input type="text" class="full text-center"  placeholder="Email ">
                 <button class="btn  bg-gray" type="button">
-                  Subscribe 
+                  Inscrever-se 
                   <i class="fa fa-long-arrow-right">
                     
                   </i>
@@ -169,16 +145,16 @@
   
     <div class="container">
       <p class="pull-left">
-        &copy; TSHOP 2014. All right reserved.
+        &copy; REDE DO VAREJO 2014. Todos os direitos reservados.
       </p>
-      <div class="pull-right paymentMethodImg">
+<!--      <div class="pull-right paymentMethodImg">
         
         <img height="30" class="pull-right" src="images/site/payment/master_card.png" alt="img" >
         <img height="30" class="pull-right" src="images/site/payment/paypal.png" alt="img" >
         <img height="30" class="pull-right" src="images/site/payment/american_express_card.png" alt="img" >
         <img  height="30" class="pull-right" src="images/site/payment/discover_network_card.png" alt="img" >
         <img  height="30" class="pull-right" src="images/site/payment/google_wallet.png" alt="img" >
-      </div>
+      </div>-->
       
       
     </div>

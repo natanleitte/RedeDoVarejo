@@ -26,6 +26,7 @@ class Index extends CI_Controller {
 
         $this->load->view('site/header', $data);
         $this->load->view('site/index');
+        $this->load->view('site/footer', $data);
     }
 
     function produto() {
@@ -47,6 +48,7 @@ class Index extends CI_Controller {
 
         $this->load->view('site/header', $data);
         $this->load->view('site/produto', $data);
+        $this->load->view('site/footer', $data);
     }
     
     function buscarItem() {
@@ -78,6 +80,7 @@ class Index extends CI_Controller {
 
         $this->load->view('site/header', $data);
         $this->load->view('site/busca', $data);
+        $this->load->view('site/footer', $data);
     }
 
     //método que adiciona ao carrinho
@@ -138,6 +141,7 @@ class Index extends CI_Controller {
 
         $this->load->view('site/header', $data);
         $this->load->view('site/carrinho', $data);
+        $this->load->view('site/footer', $data);
     }
 
     function removeDoCarrinho() {
@@ -209,8 +213,9 @@ class Index extends CI_Controller {
 //           echo $end->end_logradouro;
 //        }
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra1');
+        $this->load->view('site/footer', $data);
         
     }
     
@@ -223,8 +228,9 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra2');
+        $this->load->view('site/footer', $data);
         
     }
     
@@ -237,8 +243,9 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra3');
+        $this->load->view('site/footer', $data);
         
     }
     
@@ -251,8 +258,9 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/adicionarEndereco');
+        $this->load->view('site/footer', $data);
         
 
     }
@@ -266,8 +274,10 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/login');
+        $this->load->view('site/footer', $data);
+
         
     }
     
@@ -300,6 +310,8 @@ class Index extends CI_Controller {
             
             $this->load->view('site/header', $data);
             $this->load->view('site/dados-pessoais', $data);
+            $this->load->view('site/footer', $data);
+
         }
     }
     
@@ -312,8 +324,10 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/termos_condicoes');
+        $this->load->view('site/footer', $data);
+
     }
     
     function quem_somos()
@@ -325,8 +339,10 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/quem_somos');
+        $this->load->view('site/footer', $data);
+
     }
     
     function contato()
@@ -338,8 +354,10 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
-         $this->load->view('site/header', $data);
+        $this->load->view('site/header', $data);
         $this->load->view('site/contato');
+        $this->load->view('site/footer', $data);
+
     }
     
     function esqueceu_senha()
@@ -353,7 +371,7 @@ class Index extends CI_Controller {
         
         $this->load->view('site/header', $data);
         $this->load->view('site/esqueceu_senha');
-        $this->load->view('site/footer');
+        $this->load->view('site/footer', $data);
         
     }
 }
