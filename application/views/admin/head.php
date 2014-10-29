@@ -1,5 +1,5 @@
 <?php
-include 'application/controllers/login.php';
+include 'application/controllers/admin/login.php';
 //$this->func = new Login();
 //$this->func->segurancaPagina();
 Login::segurancaPagina();
@@ -59,22 +59,22 @@ Login::segurancaPagina();
                             <a href="#page-top"></a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/pedidos/pedidos' ?>">Pedidos</a>
+                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/admin/pedidos/pedidos' ?>">Pedidos</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/categoria/categoria' ?>">Categoria</a>
+                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/admin/categoria/categoria' ?>">Categoria</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/produto/produto' ?>">Produto</a>
+                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/admin/produto/produto' ?>">Produto</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/item/item' ?>">Item</a>
+                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/admin/item/item' ?>">Item</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/usuario/usuario' ?>">Usuários</a>
+                            <a class="page-scroll" href="<?php echo base_url() . 'index.php/admin/usuario/usuario' ?>">Usuários</a>
                         </li>
                         <li>
-                            <?php echo form_open('index.php/login/valida'); ?>
+                            <?php echo form_open('index.php/admin/login/valida'); ?>
                             <button class="btn btn-xl">Sair</button>
                             <?php echo form_close(); ?>
                         </li>

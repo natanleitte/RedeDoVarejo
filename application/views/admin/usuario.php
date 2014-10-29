@@ -1,3 +1,4 @@
+<?php form_open('index.php/admin/login/segurancaPagina'); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,43 +8,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center bg-light-gray">
-                    <h2 class="section-heading">Inserir Categoria</h2>
+                    <?php echo form_open('index.php/admin/usuario/insere'); ?>
+                    <h2 class="section-heading">Inserir novo usuário</h2>
+                    <input type='hidden' name='qtdElementos' id='qtdElementos' value="1"/>
                     <?php
                     if (isset($_GET['error'])) {
                         echo "<div class=\"alert alert-danger\">" . $_GET['error'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/categoria/categoria" />';
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/usuario/usuario" />';
                     }
 
-                    if (isset($_GET['sucess'])) {
-                        echo "<div class=\"alert alert-success\">" . $_GET['sucess'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/categoria/categoria" />';
-                    }
-
-                    if (isset($_GET['edit'])) {
-                        echo "<div class=\"alert alert-success\">" . $_GET['edit'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/categoria/categoria" />';
+                    if (isset($_GET['success'])) {
+                        echo "<div class=\"alert alert-success\">" . $_GET['success'] . "</div>";
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/usuario/usuario" />';
                     }
                     ?>
-                    <span class="fa-stack fa-2x" id="adicionar" onclick="adicionar();">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-plus-circle fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
-                    <?php echo form_open('index.php/categoria/inserir'); ?>
-                    <!--<form method="post" action="index.php/testando/inserirCategoria" name="categoriaForm" id="categoriaForm">-->
-                    <input type='hidden' name='qtdElementos' id='qtdElementos' value="1"/>
                     <div class="row">
                         <div class="col-lg-offset-2"></div>
                         <div class="col-lg-offset-3 col-lg-6">
                             <div class="form-group">
-                                <label for="cat_nome">Nome da categoria</label>
                                 <div class='form-inline'>
-                                    <input type="text" name="cat_nome" class="form-control" placeholder="Nome da Categoria" id="cat_nome" >
-                                    &nbsp <input type='checkbox' checked='checked' name='cat_status' id='cat_status' /> Ativo
+                                    <input type="text" name="usu_nome" class="form-control" placeholder="Nome" id="pro_nome" >
+                                    <input type="text" name="usu_sobrenome" class="form-control" placeholder="Sobrenome" id="pro_nome" >
+                                    <input type="text" name="usu_login" class="form-control" placeholder="Login" id="pro_nome" >
+                                    <input type="text" name="usu_cpf" class="form-control" placeholder="CPF" id="pro_nome" >
+                                    <input type="password" name="usu_senha" class="form-control" placeholder="Senha" id="pro_nome" >
+                                    <input type="password" name="usu_senha2" class="form-control" placeholder="Confirme a senha" id="pro_nome" >
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Aqui entrará os novos itens -->
                         <div id="novoElemento">
 
                         </div>
@@ -60,48 +53,55 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center bg-light-gray">
-                        <h2 class="section-heading">Categorias</h2>
+                        <h2 class="section-heading">Usuários</h2>
                     </div>
                 </div>
                 <br/>
                 <div class="row">
                     <input type='hidden' name='qtdElementos2' id='qtdElementos2' value="1"/>
                     <div>
-                        <?php echo form_open('index.php/categoria/editar'); ?>
+                        <?php echo form_open('index.php/admin/usuario/editar'); ?>
                         <div id='novoElemento2'>
 
                         </div>
                         <?php echo form_close(); ?>
                     </div>
+
                     <div>
-                        <?php echo form_open('index.php/categoria/excluir'); ?>
+                        <?php echo form_open('index.php/admin/usuario/excluir'); ?>
                         <div id='novoElemento3'>
 
                         </div>
                         <?php echo form_close(); ?>
                     </div>
+
                     <table class="table table-striped table-bordered table-responsive">
+
                         <tr>
-                            <td><b>Nome da Categoria</b></td>
-                            <td><b>Status da Categoria</b></td>
+                            <td><b>Código</b></td>
+                            <td><b>Nome</b></td>
+                            <td><b>Sobrenome</b></td>
+                            <td><b>Login</b></td>
+                            <td><b>CPF</b></td>
                             <td><b>Editar</b></td>
                             <td><b>Excluir</b></td>
-
-
                         </tr>
                         <?php
                         foreach ($query->result() as $row) {
                             echo "<tr>";
-                            echo "<td>" . $row->cat_nome . "</td>";
-                            echo "<td>" . (($row->cat_status == 1) ? 'Ativo' : 'Inativo') . "</td>";
+                            echo "<td>" . $row->usu_codigo . "</td>";
+                            echo "<td>" . $row->usu_nome . "</td>";
+                            echo "<td>" . $row->usu_sobrenome . "</td>";
+                            echo "<td>" . $row->usu_login . "</td>";
+                            echo "<td>" . $row->usu_cpf . "</td>";
                             echo "<td><span class='fa-stack'>
-                                    <i class='fa fa-pencil fa-stack-2x' onclick='editarCategoria(" . $row->cat_codigo . ");'></i>
-                                </span>
-                            </td>";
+                                        <i class='fa fa-pencil fa-stack-2x' onclick='editarUsuario($row->usu_codigo);'></i>
+                                        </span>
+                                    </td>";
                             echo "<td><span class='fa-stack'>
-                                    <i class='fa fa-trash-o fa-stack-2x' onclick='excluirCategoria(" . $row->cat_codigo . ");'></i>
-                                </span>
-                            </td>";
+                                        <i class='fa fa-trash-o fa-stack-2x' onclick='excluirUsuario($row->usu_codigo);'></i>
+                                        </span>
+                                    </td>";
                             echo "</tr>";
                         }
                         ?>
@@ -287,12 +287,15 @@
                 <script src="<?php echo base_url() . 'assets/js/classie.js' ?>"></script>
                 <script src="<?php echo base_url() . 'assets/js/cbpAnimatedHeader.js' ?>"></script>
 
+
                 <!-- Contact Form JavaScript -->
                 <script src="<?php echo base_url() . 'assets/js/jqBootstrapValidation.js' ?>"></script>
                 <script src="<?php echo base_url() . 'assets/js/contact_me.js' ?>"></script>
 
+
                 <!-- Custom Theme JavaScript -->
                 <script src="<?php echo base_url() . 'assets/js/agency.js' ?>"></script>
+
 
                 </body>
 

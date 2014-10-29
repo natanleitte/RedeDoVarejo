@@ -61,8 +61,8 @@
                 <div class="intro-text">
                     <div class="col-lg-offset-3 col-lg-6">
                         <div class="form-group">
-                            <?php echo form_open('index.php/login/valida'); ?>
-                            <img src="assets\img\logos\logo.png">
+                            <?php echo form_open('index.php/admin/login/valida'); ?>
+                            <img src="<?php echo base_url() . 'assets\img\logos\logo.png'?>">
                             <h3>área admnistrativa</h3>
                             <?php
                             if (isset($_GET['error'])) {

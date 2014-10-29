@@ -1,5 +1,3 @@
-<?php form_open('index.php/login/segurancaPagina');
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,41 +7,39 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center bg-light-gray">
-                    <?php echo form_open('index.php/produto/inserir'); ?>
-                    <h2 class="section-heading">Inserir Produto</h2>
+                    <h2 class="section-heading">Inserir Categoria</h2>
                     <?php
                     if (isset($_GET['error'])) {
                         echo "<div class=\"alert alert-danger\">" . $_GET['error'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/produto/produto" />';
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/categoria/categoria" />';
                     }
 
                     if (isset($_GET['sucess'])) {
                         echo "<div class=\"alert alert-success\">" . $_GET['sucess'] . "</div>";
-//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/produto/produto" />';
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/categoria/categoria" />';
+                    }
+
+                    if (isset($_GET['edit'])) {
+                        echo "<div class=\"alert alert-success\">" . $_GET['edit'] . "</div>";
+//                        echo '<meta http-equiv="refresh" content="2;URL=' . base_url() . 'index.php/categoria/categoria" />';
                     }
                     ?>
-                    <div class='form-inline'>
-                        <span class="fa-stack fa-2x" id="adicionar" onclick="adicionarProduto();">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-plus-circle fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <select class="form-control" name="cat_codigo">
-                            <?php
-                            foreach ($query1->result() as $row) {
-                                echo "<option value='" . $row->cat_codigo . "'>" . $row->cat_nome . "</option>";
-                            }
-                            ?> 
-                        </select>
-                    </div>
+                    <span class="fa-stack fa-2x" id="adicionar" onclick="adicionar();">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-plus-circle fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <!--<h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
+                    <?php echo form_open('index.php/admin/categoria/inserir'); ?>
+                    <!--<form method="post" action="index.php/testando/inserirCategoria" name="categoriaForm" id="categoriaForm">-->
                     <input type='hidden' name='qtdElementos' id='qtdElementos' value="1"/>
                     <div class="row">
                         <div class="col-lg-offset-2"></div>
                         <div class="col-lg-offset-3 col-lg-6">
                             <div class="form-group">
+                                <label for="cat_nome">Nome da categoria</label>
                                 <div class='form-inline'>
-                                    <label for="pro_nome">Nome do Produto</label>
-                                    <input type="text" name="pro_nome" class="form-control" placeholder="Produto" id="pro_nome" >
-                                    <input type='checkbox' checked='checked' name='pro_status' id='pro_status' /> Ativo
+                                    <input type="text" name="cat_nome" class="form-control" placeholder="Nome da Categoria" id="cat_nome" >
+                                    &nbsp <input type='checkbox' checked='checked' name='cat_status' id='cat_status' /> Ativo
                                 </div>
                             </div>
                         </div>
@@ -64,55 +60,48 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center bg-light-gray">
-                        <h2 class="section-heading">Produtos</h2>
+                        <h2 class="section-heading">Categorias</h2>
                     </div>
                 </div>
                 <br/>
                 <div class="row">
                     <input type='hidden' name='qtdElementos2' id='qtdElementos2' value="1"/>
                     <div>
-                        <?php echo form_open('index.php/produto/editar'); ?>
+                        <?php echo form_open('index.php/admin/categoria/editar'); ?>
                         <div id='novoElemento2'>
 
                         </div>
                         <?php echo form_close(); ?>
                     </div>
-
                     <div>
-                        <?php echo form_open('index.php/produto/excluir'); ?>
+                        <?php echo form_open('index.php/admin/categoria/excluir'); ?>
                         <div id='novoElemento3'>
 
                         </div>
                         <?php echo form_close(); ?>
                     </div>
-
                     <table class="table table-striped table-bordered table-responsive">
-
                         <tr>
-                            <td><b>Código de Categoria</b></td>
                             <td><b>Nome da Categoria</b></td>
-                            <td><b>Código do Produto</b></td>
-                            <td><b>Nome do Produto</b></td>
-                            <td><b>Status do Produto</b></td>
+                            <td><b>Status da Categoria</b></td>
                             <td><b>Editar</b></td>
                             <td><b>Excluir</b></td>
+
+
                         </tr>
                         <?php
-                        foreach ($consulta->result() as $row) {
+                        foreach ($query->result() as $row) {
                             echo "<tr>";
-                            echo "<td>" . $row->cat_codigo . "</td>";
                             echo "<td>" . $row->cat_nome . "</td>";
-                            echo "<td>" . $row->pro_codigo . "</td>";
-                            echo "<td>" . $row->pro_nome . "</td>";
-                            echo "<td>" . (($row->pro_status == 1) ? 'Ativo' : 'Inativo') . "</td>";
+                            echo "<td>" . (($row->cat_status == 1) ? 'Ativo' : 'Inativo') . "</td>";
                             echo "<td><span class='fa-stack'>
-                                        <i class='fa fa-pencil fa-stack-2x' onclick='editarProduto($row->pro_codigo);'></i>
-                                        </span>
-                                    </td>";
+                                    <i class='fa fa-pencil fa-stack-2x' onclick='editarCategoria(" . $row->cat_codigo . ");'></i>
+                                </span>
+                            </td>";
                             echo "<td><span class='fa-stack'>
-                                        <i class='fa fa-trash-o fa-stack-2x' onclick='excluir($row->pro_codigo);'></i>
-                                        </span>
-                                    </td>";
+                                    <i class='fa fa-trash-o fa-stack-2x' onclick='excluirCategoria(" . $row->cat_codigo . ");'></i>
+                                </span>
+                            </td>";
                             echo "</tr>";
                         }
                         ?>
@@ -298,15 +287,12 @@
                 <script src="<?php echo base_url() . 'assets/js/classie.js' ?>"></script>
                 <script src="<?php echo base_url() . 'assets/js/cbpAnimatedHeader.js' ?>"></script>
 
-
                 <!-- Contact Form JavaScript -->
                 <script src="<?php echo base_url() . 'assets/js/jqBootstrapValidation.js' ?>"></script>
                 <script src="<?php echo base_url() . 'assets/js/contact_me.js' ?>"></script>
 
-
                 <!-- Custom Theme JavaScript -->
                 <script src="<?php echo base_url() . 'assets/js/agency.js' ?>"></script>
-
 
                 </body>
 
