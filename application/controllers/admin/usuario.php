@@ -3,22 +3,17 @@
 class Usuario extends CI_Controller {
 
     public function index() {
-        $this->load->model('modelUsuario');
-// Seleciona a tabela
-        $tabela = "usuario";
+        $this->load->model('usuariomodel');
 
-        $data['query'] = $this->modelUsuario->obterTodos($tabela);
+        $data['query'] = $this->usuariomodel->obterTodos('usuario');
 
         $this->load->helper('url');
-        $this->load->view('head');
-        $this->load->view('usuario', $data);
+        $this->load->view('admin/head');
+        $this->load->view('admin/usuario', $data);
     }
 
     public function insere() {
-        $this->load->model('modelUsuario');
-
-// Seleciona a tabela
-        $tabela = "usuario";
+        $this->load->model('usuariomodel');
 
 // Campos a serem inseridos no BD
         $data['usu_nome'] = $this->input->post('usu_nome');
@@ -27,7 +22,7 @@ class Usuario extends CI_Controller {
         $data['usu_cpf'] = $this->input->post('usu_cpf');
         $data['usu_senha'] = $this->input->post('usu_senha');
         $senhaValida = $this->input->post('usu_senha2');
-        if ($this->modelUsuario->validaLogin($data['usu_login'])) {
+        if ($this->usuariomodel->validaLogin($data['usu_login'])) {
             $msgError = 'Login já existe!';
         } else if (empty($data['usu_senha']) || empty($senhaValida)) {
             $msgError = 'Informe uma senha!';
@@ -42,15 +37,15 @@ class Usuario extends CI_Controller {
         if (!$validaCPF || empty($data['usu_nome']) || empty($data['usu_login'])) {
             $msgError = 'Existe(m) campo(s) vazio(s)!';
         } else {
-            $this->modelUsuario->inserir($data, $tabela);
+            $this->usuariomodel->inserir($data);
             //Redireciona para a pagina principal
             $msgSuccess = 'Usuário cadastrado com sucesso!';
         }
 
         if (!empty($msgError)) {
-            header('Location:' . base_url() . 'index.php/usuario/usuario?error=' . urlencode($msgError));
+            header('Location:' . base_url() . 'index.php/admin/usuario/usuario?error=' . urlencode($msgError));
         } else {
-            header('Location:' . base_url() . 'index.php/usuario/usuario?success=' . urlencode($msgSuccess));
+            header('Location:' . base_url() . 'index.php/admin/usuario/usuario?success=' . urlencode($msgSuccess));
         }
     }
 
@@ -66,7 +61,7 @@ class Usuario extends CI_Controller {
             return crypt($senha, '$2a$' . $custo . '$' . $salt . '$');
         } else {
             //Redireciona para a pagina principal
-            header('Location:' . base_url() . 'index.php/usuario/usuario?error=' . urlencode('A senha tem que ter no mínimo 8 caracteres!'));
+            header('Location:' . base_url() . 'index.php/admin/usuario/usuario?error=' . urlencode('A senha tem que ter no mínimo 8 caracteres!'));
             exit();
         }
     }
@@ -90,7 +85,7 @@ class Usuario extends CI_Controller {
                 }
             }
             if (!empty($msgError)) {
-                header('Location:' . base_url() . 'index.php/usuario/usuario?error=' . urlencode($msgError));
+                header('Location:' . base_url() . 'index.php/admin/usuario/usuario?error=' . urlencode($msgError));
                 exit();
             } else {
                 return true;
@@ -100,12 +95,12 @@ class Usuario extends CI_Controller {
 
     public function jsonUsuario() {
         //carrega model
-        $this->load->model('modelUsuario');
+        $this->load->model('usuariomodel');
 
         $editaCodigo = $this->input->post('var');
 
         $query = "SELECT * FROM usuario WHERE usu_codigo = " . $editaCodigo;
-        $result = $this->modelUsuario->obterConsulta($query);
+        $result = $this->usuariomodel->obterConsulta($query);
 
         foreach ($result->result() as $row) {
             $array = array(
@@ -121,21 +116,21 @@ class Usuario extends CI_Controller {
     }
 
     public function excluir() {
-        $this->load->model('modelUsuario');
+        $this->load->model('usuariomodel');
 
         $usuCodigo = $this->input->post('usu_codigo');
 
-        $this->modelUsuario->deleteUsu($usuCodigo);
+        $this->usuariomodel->deleteUsu($usuCodigo);
 
-        header('Location:' . base_url() . 'index.php/usuario/usuario?success    =' . urlencode('Usuário excluído com sucesso!'));
+        header('Location:' . base_url() . 'index.php/admin/usuario/usuario?success    =' . urlencode('Usuário excluído com sucesso!'));
     }
 
     public function editar() {
-        $this->load->model('modelUsuario');
+        $this->load->model('usuariomodel');
 
         // Campos a serem inseridos no BD
         $data['usu_codigo'] = $this->input->post('usu_codigo');
-        $dadosOld = $this->modelUsuario->obterConsulta('select * FROM usuario WHERE usu_codigo='.$data['usu_codigo']);
+        $dadosOld = $this->usuariomodel->obterConsulta('select * FROM usuario WHERE usu_codigo='.$data['usu_codigo']);
         
         $data['usu_nome'] = $this->input->post('usu_nome');
         $data['usu_sobrenome'] = $this->input->post('usu_sobrenome');
@@ -157,15 +152,15 @@ class Usuario extends CI_Controller {
         if (empty($data['usu_nome']) || empty($data['usu_sobrenome'])) {
             $msgError = 'Existe(m) campo(s) vazio(s)!';
         } else {
-            $this->modelUsuario->upDateData($data);
+            $this->usuariomodel->upDateData($data);
             $msgSuccess = 'Usuário atualizado com sucesso!';
         }
         
         //Redireciona para a pagina principal
         if (!empty($msgError)) {
-            header('Location:' . base_url() . 'index.php/usuario/usuario?error=' . urlencode($msgError));
+            header('Location:' . base_url() . 'index.php/admin/usuario/usuario?error=' . urlencode($msgError));
         } else {
-            header('Location:' . base_url() . 'index.php/usuario/usuario?success=' . urlencode($msgSuccess));
+            header('Location:' . base_url() . 'index.php/admin/usuario/usuario?success=' . urlencode($msgSuccess));
         }
     }
 

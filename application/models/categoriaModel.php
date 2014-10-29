@@ -14,7 +14,6 @@ class CategoriaModel extends CI_Model {
     //insere elemento no banco
     function inserir($data) {
         $this->load->database();
-//        echo "chegou";
         $this->db->insert('categoria', $data);
     }
     
@@ -28,5 +27,3 @@ class CategoriaModel extends CI_Model {
         return $this->db->query($consulta);
     }
 }
-
-?>

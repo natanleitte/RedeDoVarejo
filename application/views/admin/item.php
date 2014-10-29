@@ -1,4 +1,4 @@
-<?php form_open('index.php/login/segurancaPagina'); ?>
+<?php form_open('index.php/admin/login/segurancaPagina'); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,12 +8,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center bg-light-gray">
-                    <?php echo form_open_multipart('index.php/item/insere'); ?>
+                    <?php echo form_open_multipart('index.php/admin/item/insere'); ?>
                     <h2 class="section-heading">Inserir novo item</h2>
                     <input type='hidden' name='qtdElementos' id='qtdElementos' value="1"/>
                     <div class="row">
                         <div class="col-lg-offset-2"></div>
-                        <div class="col-lg-offset-1 col-lg-10">
+                        <div class="col-lg-offset-2 col-lg-8">
                             <div class="form-group">
                                 <div class="form-inline">
                                     <label>Tipo de Produto</label>
@@ -42,6 +42,9 @@
                                     <input type="text" name="item_nome" class="form-control" placeholder="Nome Item">
                                     <input type="text" name="item_preco_atual" class="form-control" placeholder="$Preço">
                                     <input type="text" name="item_preco_antigo" class="form-control" placeholder="$Preço Antigo">
+                                </div>
+                                <div class='form-inline'>
+                                    <br>
                                     <input type="text" name="item_medida" class="form-control" placeholder="Medida/Peso/Unidade">
                                     <select class="form-control" name="tpmed_codigo">
                                         <?php
@@ -49,6 +52,11 @@
                                             echo "<option value='" . $row->tpmed_codigo . "'>" . $row->tpmed_nome . "</option>";
                                         }
                                         ?>
+                                    </select>
+                                    Mercado: <select class="form-control" name="item_mercado">
+                                        <option value="Atacadão">Atacadão</option>
+                                        <option value="Assai">Assai</option>
+                                        <option value="Forte Atacadista">Forte Atacadista</option>
                                     </select>
                                     <br>
                                     <br>
@@ -100,7 +108,7 @@
                 <div class="row">
                     <input type='hidden' name='qtdElementos2' id='qtdElementos2' value="1"/>
                     <div>
-                        <?php echo form_open_multipart('index.php/item/editar'); ?>
+                        <?php echo form_open_multipart('index.php/admin/item/editar'); ?>
                         <div id='novoElemento2'>
 
                         </div>
@@ -108,7 +116,7 @@
                     </div>
 
                     <div>
-                        <?php echo form_open('index.php/item/excluir'); ?>
+                        <?php echo form_open('index.php/admin/item/excluir'); ?>
                         <div id='novoElemento3'>
 
                         </div>
@@ -118,18 +126,20 @@
                     <table class="table table-striped table-bordered table-responsive">
 
                         <tr>
-                             <!--<td><b>Codigo Produto</b></td>-->
+                            <td><b>Nome Item</b></td>
+                            <!--<td><b>Codigo Produto</b></td>-->
                             <td><b>Nome Produto</b></td>
                             <!--<td><b>Codigo Item</b></td>-->
-                            <td><b>Nome Item</b></td>
+                            <td><b>Mercado</b></td>
                             <td><b>Descrição</b></td>
                             <td><b>Observação</b></td>
+                            <td><b>Medida</b></td>
                             <td><b>Tipo da Medida</b></td>
                             <td><b>Preço Antigo</b></td>
                             <td><b>Preço Atual</b></td>
                             <td><b>Data de Promoção</b></td>
                             <td><b>Novidade?</b></td>
-                            <td><b>Imagem</b></td>
+                            <!--<td><b>Imagem</b></td>-->
                             <td><b>Status</b></td>
                             <td><b>Editar</b></td>
                             <td><b>Excluir</b></td>
@@ -137,19 +147,21 @@
                         <?php
                         foreach ($item->result() as $row) {
                             echo "<tr>";
+                            echo "<td>" . $row->item_nome . "</td>";
                             //echo "<td>" . $row->pro_codigo . "</td>";
                             echo "<td>" . $row->pro_nome . "</td>";
+                            echo "<td>" . $row->item_mercado . "</td>";
                             //echo "<td>" . $row->item_codigo . "</td>";
-                            echo "<td>" . $row->item_nome . "</td>";
                             echo "<td>" . $row->item_descricao . "</td>";
                             echo "<td>" . $row->item_observacao . "</td>";
+                            echo "<td>" . $row->item_medida . "</td>";
                             echo "<td>" . $row->tpmed_nome . "</td>";
                             echo "<td>" . 'R$' . number_format($row->item_preco_antigo, 2, ',', '.') . "</td>";
                             echo "<td>" . 'R$' . number_format($row->item_preco_atual, 2, ',', '.') . "</td>";
                             echo "<td>" . date('d/m/Y', strtotime($row->item_dt_promocao)) . "</td>";
-                            echo "<td>" . (($row->item_novo==1)?'Sim':'Não') . "</td>";
-                            echo "<td>" . $row->item_imagem_nome . "</td>";
-                            echo "<td>" . (($row->item_status==1)?'Ativo':'Inativo') . "</td>";
+                            echo "<td>" . (($row->item_novo == 1) ? 'Sim' : 'Não') . "</td>";
+//                            echo "<td>" . $row->item_imagem_nome . "</td>";
+                            echo "<td>" . (($row->item_status == 1) ? 'Ativo' : 'Inativo') . "</td>";
                             echo "<td><span class='fa-stack'>
                                         <i class='fa fa-pencil fa-stack-2x' onclick='editarItem($row->item_codigo);'></i>
                                         </span>
