@@ -8,27 +8,25 @@ class Produto extends CI_Controller {
 
     public function index() {
         //Load na model
-        $this->load->model('modelProduto');
+        $this->load->model('produtomodel');
+        $this->load->model('categoriamodel');
 
         // Consultas
-        $data['query'] = $this->modelProduto->obterTodos('produto');
-        $data['query1'] = $this->modelProduto->obterTodos('categoria');
-        $data['consulta'] = $this->modelProduto->obterConsulta('SELECT * FROM categoria c LEFT JOIN (produto p) ON (p.cat_codigo = c.cat_codigo) WHERE NOT ISNULL(pro_codigo)');
+        $data['query'] = $this->produtomodel->obterTodos();
+        $data['query1'] = $this->categoriamodel->obterTodos();
+        $data['consulta'] = $this->produtomodel->obterConsulta('SELECT * FROM categoria c LEFT JOIN (produto p) ON (p.cat_codigo = c.cat_codigo) WHERE NOT ISNULL(pro_codigo)');
 
         $this->load->helper('url');
-        $this->load->view('head');
-        $this->load->view('produto', $data);
+        $this->load->view('admin/head');
+        $this->load->view('admin/produto', $data);
     }
 
     public function inserir() {
         //Load na model
-        $this->load->model('modelProduto');
+        $this->load->model('produtomodel');
 
         //recebe quantidade de Elementos inseridos na página
         $qtd = $this->input->post('qtdElementos');
-
-        // Informa a tabela
-        $tabela = "produto";
 
         for ($i = 1; $i <= $qtd; $i++) {
             if ($i == 1) {
@@ -49,33 +47,33 @@ class Produto extends CI_Controller {
             }
 
             // consulta para verificar se a categoria ja existe
-            $exist = $this->modelProduto->obterConsulta("SELECT pro_nome FROM produto WHERE pro_nome = '" . $valida . "' AND cat_codigo='" . $data['cat_codigo'] . "'");
+            $exist = $this->produtomodel->obterConsulta("SELECT pro_nome FROM produto WHERE pro_nome = '" . $valida . "' AND cat_codigo='" . $data['cat_codigo'] . "'");
 
             if ($data['pro_nome'] == '') {
                 // Retorna para a página informando o erro
-                header('Location:' . base_url() . 'index.php/produto/produto?error=' . urlencode('Existe(m) campo(s) vazio(s)!'));
+                header('Location:' . base_url() . 'index.php/admin/produto/produto?error=' . urlencode('Existe(m) campo(s) vazio(s)!'));
             } else
             if ($exist->num_rows()) {
                 // Retorna para a página informando o erro
-                header('Location:' . base_url() . 'index.php/produto/produto?error=' . urlencode('Produto já existe!'));
+                header('Location:' . base_url() . 'index.php/admin/produto/produto?error=' . urlencode('Produto já existe!'));
             } else {
                 // Cria a pasta com o nome do novo produto na categoria selecionada
                 $consulta = "SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo'];
-                $categoria = $this->modelProduto->obterConsulta($consulta, 'categoria');
+                $categoria = $this->produtomodel->obterConsulta($consulta);
                 mkdir("assets/img/categoria/" . $categoria->row('cat_nome') . "/" . $data['pro_nome'], 0777);
 
                 // Insere no banco
-                $this->modelProduto->inserir($data, $tabela);
+                $this->produtomodel->inserir($data);
 
                 // Retorna para a página informando o status
-                header('Location:' . base_url() . 'index.php/produto/produto?sucess=' . urlencode('Inserido(s) com sucesso!'));
+                header('Location:' . base_url() . 'index.php/admin/produto/produto?sucess=' . urlencode('Inserido(s) com sucesso!'));
             }
         }
     }
 
     function excluir() {
         // Load Model
-        $this->load->model('modelProduto');
+        $this->load->model('produtomodel');
 
         //Pega o código do produto
         $data['pro_codigo'] = $this->input->post('pro_codigo');
@@ -83,23 +81,23 @@ class Produto extends CI_Controller {
         $data['cat_codigo'] = $this->input->post('cat_codigo');
 
         //Realiza a consulta (Excluir Produto)
-        $this->modelProduto->obterConsulta('DELETE FROM produto WHERE pro_codigo = ' . $data['pro_codigo']);
+        $this->produtomodel->obterConsulta('DELETE FROM produto WHERE pro_codigo = ' . $data['pro_codigo']);
 
         //Deleta pasta dos produtos
         $consulta = "SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo'];
-        $categoria = $this->modelProduto->obterConsulta($consulta);
+        $categoria = $this->produtomodel->obterConsulta($consulta);
 
         foreach ($categoria->result() as $row) {
             rmdir("assets/img/categoria/" . $row->cat_nome . "/" . $data['pro_nome']);
         }
 
         // Retorna para a página informando o erro
-        header('Location:' . base_url() . 'index.php/produto/produto?sucess=' . urlencode('Exclusão realizada com sucesso!'));
+        header('Location:' . base_url() . 'index.php/admin/produto/produto?sucess=' . urlencode('Exclusão realizada com sucesso!'));
     }
 
     public function editar() {
         //Load Model
-        $this->load->model('modelProduto');
+        $this->load->model('produtomodel');
 
         //Pega o código do produto
         $data['pro_codigo'] = $this->input->post('pro_codigo');
@@ -116,34 +114,34 @@ class Produto extends CI_Controller {
 
         if ($data['pro_nome'] == '' || $data['cat_codigo'] == '' || $data['pro_status'] == '') {
             // Retorna para a página informando o erro
-            header('Location:' . base_url() . 'index.php/produto/produto?error=' . urlencode('Edição não realizada: Existe(m) campo(s) vazio(s)!'));
+            header('Location:' . base_url() . 'index.php/admin/produto/produto?error=' . urlencode('Edição não realizada: Existe(m) campo(s) vazio(s)!'));
         } else {
 
             //Obtem pasta dos produtos
-            $query = $this->modelProduto->obterConsulta("SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo']);
+            $query = $this->produtomodel->obterConsulta("SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo']);
             $data['categoria'] = $query->row('cat_nome');
 
             // Renomeia a pasta do produto
-            $query2 = $this->modelProduto->obterConsulta("SELECT pro_nome FROM produto WHERE pro_codigo= " . $data['pro_codigo']);
+            $query2 = $this->produtomodel->obterConsulta("SELECT pro_nome FROM produto WHERE pro_codigo= " . $data['pro_codigo']);
             $pathOld = $query2->row('pro_nome');
             rename("assets/img/categoria/" . $data['categoria'] . "/" . $pathOld, "assets/img/categoria/" . $data['categoria'] . "/" . $pathNew);
 
             //Realiza a consulta (Editar Produto)
-            $this->modelProduto->obterConsulta($consulta);
+            $this->produtomodel->obterConsulta($consulta);
 
             // Retorna para a página informando o erro
-            header('Location:' . base_url() . 'index.php/produto/produto?sucess=' . urlencode('Edição realizada com sucesso!'));
+            header('Location:' . base_url() . 'index.php/admin/produto/produto?sucess=' . urlencode('Edição realizada com sucesso!'));
         }
     }
 
     public function jsonProduto() {
         //carrega model
-        $this->load->model('modelProduto');
+        $this->load->model('produtomodel');
 
         $editaCodigo = $this->input->post('var');
 
         $query = "SELECT * FROM produto WHERE pro_codigo = " . $editaCodigo;
-        $result = $this->modelProduto->obterConsulta($query);
+        $result = $this->produtomodel->obterConsulta($query);
 
         foreach ($result->result() as $row) {
             $array = array(

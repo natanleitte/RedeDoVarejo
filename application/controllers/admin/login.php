@@ -3,7 +3,7 @@
 class Login extends CI_Controller {
 
     public function index() {
-        $this->load->view('login');
+        $this->load->view('admin/login');
     }
 
     public function valida() {
@@ -22,7 +22,7 @@ class Login extends CI_Controller {
             //Guarda as informações na sessão
             $_SESSION['loginUsuario'] = $login;
             $_SESSION['senhaUsuario'] = $senha;
-            header("Location:" . base_url() . "index.php/categoria/categoria");
+            header("Location:" . base_url() . "index.php/admin/categoria/categoria");
         } else {
             $mensagem = 'Senha ou Login incorretos!';
             Login::expulsaVisitante($mensagem);
@@ -33,11 +33,11 @@ class Login extends CI_Controller {
         if (empty($login) || empty($senha)) {
             return false;
         } else {
-            $this->load->model('modelLogin');
+            $this->load->model('loginmodel');
 
             $query = "SELECT usu_nome, usu_senha FROM usuario WHERE usu_login= '" . $login . "' AND usu_senha = '" . $senha . "'";
 
-            $resultado = $this->modelLogin->obterConsulta($query);
+            $resultado = $this->loginmodel->obterConsulta($query);
             $hash = $resultado->row('usu_senha');
             $valida = $resultado->row('usu_nome');
 
@@ -73,7 +73,7 @@ class Login extends CI_Controller {
         // Remove as variáveis da sessão (caso elas existam)
         unset($_SESSION['loginUsuario'], $_SESSION['senhaUsuario'], $_SESSION['nomeUsuario']);
         // Manda pra tela de login
-        header('Location:' . base_url() . 'index.php?error=' . urlencode($mensagem));
+        header('Location:' . base_url() . 'index.php/admin/login/login?error=' . urlencode($mensagem));
     }
 
 }
