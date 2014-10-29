@@ -89,7 +89,7 @@
                                 <div class="checkbox login-remember">
                                     <label>
                                         <input name="rememberme"  value="forever" checked="checked" type="checkbox">
-                                        Remember Me </label>
+                                        Lembre-me </label>
                                 </div>
                             </div>
                         </div>
@@ -103,8 +103,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <p class="text-center"> Not here before? <a data-toggle="modal"  data-dismiss="modal" href="#ModalSignup"> Sign Up. </a> <br>
-                            <a href="forgot-password.html" > Lost your password? </a> </p>
+                        <p class="text-center"> Novo por aqui? :-) <a data-toggle="modal"  data-dismiss="modal" href="#ModalSignup"> Registrar-se. </a> <br>
+                            <a href="forgot-password.html" > Esqueceu sua senha? </a> </p>
                     </div>
                 </div>
                 <!-- /.modal-content --> 
@@ -121,18 +121,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
-                        <h3 class="modal-title-site text-center" > REGISTER </h3>
+                        <h3 class="modal-title-site text-center" > REGISTRAR </h3>
                     </div>
                     <div class="modal-body">
-                        <div class="control-group"> <a class="fb_button btn  btn-block btn-lg " href="#"> SIGNUP WITH FACEBOOK </a> </div>
-                        <h5 style="padding:10px 0 10px 0;" class="text-center"> OR </h5>
+<!--                        <div class="control-group"> <a class="fb_button btn  btn-block btn-lg " href="#"> SIGNUP WITH FACEBOOK </a> </div>
+                        <h5 style="padding:10px 0 10px 0;" class="text-center"> OR </h5>-->
                         <?php echo form_open('index.php/site/cliente/inserir'); ?>
 
-                        <div class="form-group reg-username">
+<!--                        <div class="form-group reg-username">
                             <div >
                                 <input name="login"  class="form-control input"  size="20" placeholder="Login" type="text">
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group reg-email">
                             <div >
                                 <input name="email"  class="form-control input"  size="20" placeholder="Email" type="text">
@@ -148,7 +148,7 @@
                                 <div class="checkbox login-remember">
                                     <label>
                                         <input name="rememberme" id="rememberme" value="forever" checked="checked" type="checkbox">
-                                        Remember Me </label>
+                                        Lembre-me </label>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <p class="text-center"> Already member? <a data-toggle="modal"  data-dismiss="modal" href="#ModalLogin"> Sign in </a> </p>
+                        <p class="text-center"> Já possui conta? <a data-toggle="modal"  data-dismiss="modal" href="#ModalLogin"> Logar </a> </p>
                     </div>
                 </div>
                 <!-- /.modal-content --> 
@@ -195,7 +195,7 @@
                             <div class="pull-right">
                                 <ul class="userMenu">
                                     <li> <a href="<?php echo base_url() . "index.php/site/index/dados_pessoais" ?>"> Minha Conta </a> </li>
-                                    <li> <a href="checkout-1.html"> Finalizar Compra </a> </li>
+                                    <li> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra1" ?>"> Finalizar Compra </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalLogin"> Entrar </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalSignup"> Criar Conta </a> </li>
                                 </ul>
@@ -310,113 +310,7 @@
 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"> <a href="#"> Home </a> </li>
-                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> New Products <b class="caret"> </b> </a>
-                            <ul class="dropdown-menu">
-                                <li class="megamenu-content "> 
-
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
-                                        <li class="no-border">
-                                            <p class="promo-1"> <strong> NEW COLLECTION </strong> </p>
-                                        </li>
-                                        <li> <a href="category.html"> ALL NEW PRODUCTS </a> </li>
-                                        <li> <a href="category.html"> NEW TOPS </a> </li>
-                                        <li> <a href="category.html"> NEW SHOES </a> </li>
-                                        <li> <a href="category.html"> NEW TSHIRT </a> </li>
-                                        <li> <a href="category.html"> NEW DENIM </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3  col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/promo1.jpg' ?>" alt="product"> 
-                                                <span class="ProductMenuCaption"> 
-                                                    <i class="fa fa-caret-right"> </i> JEANS </span> </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/promo2.jpg' ?>" alt="product"> 
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> PARTY DRESS </span> 
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
-                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="images/site/promo3.jpg" alt="product">
-                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> SHOES </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
-                        <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Sessões <b class="caret"> </b> </a>
-                            <ul class="dropdown-menu">
-                                <li class="megamenu-content"> 
-
-                                    <!-- megamenu-content -->
-
-                                    <ul class="col-lg-2  col-sm-2 col-md-2  unstyled noMarginLeft">
-                                        <li>
-                                            <p> <strong> Women Collection </strong> </p>
-                                        </li>
-                                        <li> <a href="#"> Kameez </a> </li>
-                                        <li> <a href="#"> Tops </a> </li>
-                                        <li> <a href="#"> Shoes </a> </li>
-                                        <li> <a href="#"> T shirt </a> </li>
-                                        <li> <a href="#"> Denim </a> </li>
-                                        <li> <a href="#"> Party  Dress </a> </li>
-                                        <li> <a href="#"> Women Fragrances </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-2  col-sm-2 col-md-2  unstyled">
-                                        <li>
-                                            <p> <strong> Men Collection </strong> </p>
-                                        </li>
-                                        <li> <a href="#"> Panjabi </a> </li>
-                                        <li> <a href="#"> Male Fragrances </a> </li>
-                                        <li> <a href="#"> Scarf </a> </li>
-                                        <li> <a href="#"> Sandal </a> </li>
-                                        <li> <a href="#"> Underwear </a> </li>
-                                        <li> <a href="#"> Winter Collection </a> </li>
-                                        <li> <a href="#"> Men Accessories </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-2  col-sm-2 col-md-2  unstyled">
-                                        <li>
-                                            <p> <strong> Top Brands </strong> </p>
-                                        </li>
-                                        <li> <a href="#"> Diesel </a> </li>
-                                        <li> <a href="#"> Farah </a> </li>
-                                        <li> <a href="#"> G-Star RAW </a> </li>
-                                        <li> <a href="#"> Lyle & Scott </a> </li>
-                                        <li> <a href="#"> Pretty Green </a> </li>
-                                        <li> <a href="#"> DENIM </a> </li>
-                                        <li> <a href="#"> TANJIM </a> </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-6">
-                                        <li class="no-margin productPopItem "> 
-
-                                            <a href="product-details.html"> 
-                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/g4.jpg' ?>" alt="img"> 
-                                            </a> 
-
-                                            <a class="text-center productInfo alpha90" href="product-details.html"> Eodem modo typi <br>
-                                                <span> $60 </span> </a> 
-                                        </li>
-                                    </ul>
-                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-6">
-                                        <li class="no-margin productPopItem relative">
-                                            <a href="product-details.html"> 
-                                                <img class="img-responsive" src="images/site/g5.jpg" alt="img"> 
-                                            </a> 
-                                            <a class="text-center productInfo alpha90" href="product-details.html"> Eodem modo typi <br>
-                                                <span> $60 </span> </a> </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-
+                        <li class="active"> <a href="<?php echo base_url() . "index.php/site/index/" ?>"> Home </a> </li>
                         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> SESSÕES <b class="caret"> </b> </a>
                             <ul class="dropdown-menu">
                                 <li class="megamenu-content"> 
@@ -479,6 +373,66 @@
                                 
                             </ul>
                         </li>
+                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Promoções <b class="caret"> </b> </a>
+                            <ul class="dropdown-menu">
+                                <li class="megamenu-content "> 
+
+                                    <ul class="col-lg-3  col-sm-3 col-md-3 unstyled noMarginLeft newCollectionUl">
+                                        <li class="no-border">
+                                            <p class="promo-1"> <strong> PROMOÇÕES </strong> </p>
+                                        </li>
+                                        <?php
+                                        foreach ($categorias->result() as $categoria) {
+                                            echo "<li> <a href='category.html'>" . $categoria->cat_nome . "</a> </li>";
+                                        }
+                                        ?>
+                                    </ul>
+                                    <ul class="col-lg-3  col-sm-3 col-md-3  col-xs-4">
+                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
+                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/promo1.jpg' ?>" alt="product"> 
+                                                <span class="ProductMenuCaption"> 
+                                                    <i class="fa fa-caret-right"> </i> JEANS </span> </a>
+                                        </li>
+                                    </ul>
+                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
+                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
+                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/promo2.jpg' ?>" alt="product"> 
+                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> PARTY DRESS </span> 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
+                                        <li> <a class="newProductMenuBlock" href="product-details.html"> 
+                                                <img class="img-responsive" src="images/site/promo3.jpg" alt="product">
+                                                <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> SHOES </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
+                        <li class="dropdown"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Informações <b class="caret"> </b> </a>
+                            <ul class="dropdown-menu">
+                                <li class="megamenu-content"> 
+
+                                    <!-- megamenu-content -->
+
+                                    <ul>
+                                        <li> <a href="<?php echo base_url()?>index.php/site/index/quem_somos"> <strong>Quem Somos</strong> </a> </li>
+                                        <li> <a href="<?php echo base_url()?>index.php/site/index/termos_condicoes"> <strong>Termos e condições</strong> </a> </li>
+                                        <li> <a href="#"> <strong>Áreas Atendidas</strong> </a> </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li> <a href="#"> Receitas </a> </li>
+                        <li> <a href="<?php echo base_url()?>index.php/site/index/contato"> Contato </a> </li>
+
+
+                        
                     </ul>
                     
                     <!--- this part will be hidden for mobile version -->

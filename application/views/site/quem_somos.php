@@ -1,82 +1,93 @@
-<!-- /.Fixed navbar  -->
-    
 
-<div class="container main-container headerOffset">
-  <div class="row">
-    <div class="breadcrumbDiv col-lg-12">
-      <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li class="active"> Authentication </li>
-      </ul>
-    </div>
-  </div><!-- /.row -->
-  
-  
-  <div class="row">
-  
-    <div class="col-lg-12 col-md-12  col-sm-12">
+<!-- /.Fixed navbar  --> 
     
-      <h1 class="section-title-inner"><span><i class="fa fa-lock"></i> Login</span></h1>
-      
-      <div class="row userInfo">
-        <div class="col-xs-12 col-sm-4">
-          <h2 class="block-title-2"> Criar uma conta </h2>
-          <form role="form">
-            <div class="form-group">
-              <label for="exampleInputName">Nome</label>
-              <input type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
-            </div>
-            <div class="form-group">
-              <label for="InputEmail1">Email</label>
-              <input type="email" class="form-control" id="InputEmail1" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="InputPassword1">Senha</label>
-              <input type="password" class="form-control" id="InputPassword1" placeholder="Password">
-            </div>
-            <button type="submit" class="btn   btn-primary"><i class="fa fa-user"></i> Criar conta</button>
-          </form>
+	
+<div class="parallax-section parallax-fx parallax-image-aboutus parallaxOffset no-padding">
+  <div class="w100 ">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="parallax-content clearfix animated ">
+            <h1 class="x2large">
+              REDE DO VAREJO 
+            </h1>
+            <h5 class="parallaxSubtitle">
+              Sua compra a distância de um clique.
+            </h5>
+          </div>
         </div>
-        
-        <?php
-            $attributes = array('id' => 'loginForm');
-            echo form_open('index.php/site/cliente/login', $attributes); ?>
-        <div class="col-xs-12 col-sm-4">
-          <h2 class="block-title-2"><span>Já está registrado?</span></h2>
-          <form role="form">
-            <div class="form-group">
-              <label for="InputEmail2">Email</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label for="InputPassword2">Senha</label>
-              <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
-            </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="checkbox">
-                Lembre-me </label>
-            </div>
-            <div class="form-group">
-              <p><a title="Recover your forgotten password" href="<?php echo base_url()?>index.php/site/index/esqueceu_senha">Esqueceu sua senha? </a></p>
-            </div>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Entrar</button>
-          </form>
-        </div>
-        <?php echo form_close(); ?>
-          
-        <div class="col-xs-12 col-sm-4">
-          <h2 class="block-title-2"><span>Checkout as Guest</span></h2>
-          <p>Don't have an account and you don't want to register? Checkout as a guest instead!</p>
-          <a href="checkout-1.html" class="btn btn-primary"><i class="fa fa-sign-in"></i> Checkout as Guest</a> </div>
-      </div> <!--/row end--> 
-      
+      </div>
     </div>
-  </div> <!--/row-->
-  
-  <div style="clear:both"></div>
+  </div>
 </div>
-<!-- /.main-container -->
+<!-- /.parallax -->
+
+<div class="container main-container ">
+  
+  <div class="row innerPage">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="row userInfo">
+        <div class="col-xs-12 col-sm-12">
+          <h1 class="title-big text-center section-title-style2">
+            <span >
+              Quem Somos
+            </span>
+          </h1>
+          
+          <p class="lead text-center">
+            O espaço online do Supermercado Rede do Varejo foi feito para você encontrar mais do que os produtos para a sua casa. Aqui tem sempre a comodidade de fazer compras sem enfrentar trânsito, fazendo o pedido na hora que quiser e com entrega programada. Através do delivery da Rede do Varejo você leva pra casa marcas exclusivas de produtos nacionais e importados, carnes exóticas, queijos das melhores regiões, vinhos e bebidas de todo o mundo. Tudo selecionado e embalado de um jeitinho especial.
+          </p>
+          
+          
+          <hr class="hr hr30">
+          <div class="row animated">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
+              <img class="img-responsive" src="images/site/girl1.jpg" alt="img">
+              <h3 class="block-title-3">
+                Missão
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat hendrerit dictum. Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+              </p>
+              
+              
+              
+            </div>
+            
+            <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
+              <img class="img-responsive" src="images/site/girl2.jpg" alt="img">
+              <h3 class="block-title-3">
+                Visão
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat hendrerit dictum. Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+              </p>
+              
+            </div>
+            
+            <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
+              <img class="img-responsive" src="images/site/girl3.jpg" alt="img">
+              <h3 class="block-title-3">
+                Valores 
+              </h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat hendrerit dictum. Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+              </p>
+              
+            </div>
+            
+            
+            
+          </div><!--/.row-->
+          
+          <hr>
+        </div>
+      </div>  <!--/row end-->
+    </div>
+  </div> <!--/.innerPage-->
+  <div style="clear:both">  </div>
+</div><!-- /.main-container -->
+
 
 <div class="gap"> </div>
 
@@ -268,40 +279,37 @@
     
   </div><!--/.footer-bottom-->
 </footer>
+
 <!-- Le javascript
-================================================== --> 
+================================================== -->
 
-<!-- Placed at the end of the document so the pages load faster --> 
-<script type="text/javascript" src="assets/js/jquery/1.8.3/jquery.js"></script> 
-<script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="assets/js/jquery/1.8.3/jquery.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- include  parallax plugin --> 
-<script type="text/javascript"  src="assets/js/jquery.parallax-1.1.js"></script> 
+<!-- include  parallax plugin -->
+<script type="text/javascript"  src="assets/js/jquery.parallax-1.1.js"></script>
 
-<!-- optionally include helper plugins --> 
-<script type="text/javascript"  src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script> 
+<!-- optionally include helper plugins -->
+<script type="text/javascript"  src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
 
 <!-- include mCustomScrollbar plugin //Custom Scrollbar  --> 
-
 <script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.js"></script> 
 
-<!-- include checkRadio plugin //Custom check & Radio  --> 
-<script type="text/javascript" src="assets/js/ion-checkRadio/ion.checkRadio.min.js"></script> 
+<!-- include carousel slider plugin  -->
+<script src="assets/js/owl.carousel.min.js"></script>
 
-<!-- include grid.js // for equal Div height  --> 
-<script src="assets/js/grids.js"></script> 
+<!-- include smoothproducts // product zoom plugin  -->
+<script type="text/javascript" src="assets/js/smoothproducts.min.js"></script>
 
-<!-- include carousel slider plugin  --> 
-<script src="assets/js/owl.carousel.min.js"></script> 
-
-<!-- jQuery minimalect // custom select   --> 
-<script src="assets/js/jquery.minimalect.min.js"> </script> 
+<!-- jQuery minimalect // custom select   -->
+<script src="assets/js/jquery.minimalect.min.js"></script>
 
 <!-- include touchspin.js // touch friendly input spinner component   --> 
 <script src="assets/js/bootstrap.touchspin.js"></script> 
 
-<!-- include custom script for site  --> 
+<!-- include custom script for site  -->
 <script src="assets/js/script.js"></script>
+
 </body>
 </html>
-

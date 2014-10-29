@@ -64,7 +64,7 @@ class Index extends CI_Controller {
         $data['itens'] = $this->itemModel->obterTodos();
         
         //data para fazer a pesquisa dos itens
-        echo $item_nome;
+//        echo $item_nome;
         $data['busca'] = $this->itemModel->obterItensPorNome($item_nome);
         $data['buscaNome'] = $item_nome;
 //        $busca = $this->itemModel->obterItensPorNome($item_nome);
@@ -170,7 +170,7 @@ class Index extends CI_Controller {
 
     function is_logged_in() {
         $is_logged_in = $this->session->userdata('is_logged_in');
-        echo $is_logged_in;
+//        echo $is_logged_in;
         if (!isset($is_logged_in) || $is_logged_in != true) {
 //            echo 'You don\'t have permission to access this page.';
 //            die();
@@ -186,6 +186,10 @@ class Index extends CI_Controller {
     }
     
     function finalizar_compra1(){
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
          //load models para a header
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
@@ -299,6 +303,57 @@ class Index extends CI_Controller {
         }
     }
     
-    
+    function termos_condicoes()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
 
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/termos_condicoes');
+    }
+    
+    function quem_somos()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/quem_somos');
+    }
+    
+    function contato()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+         $this->load->view('site/header', $data);
+        $this->load->view('site/contato');
+    }
+    
+    function esqueceu_senha()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/esqueceu_senha');
+        $this->load->view('site/footer');
+        
+    }
 }

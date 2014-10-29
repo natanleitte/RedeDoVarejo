@@ -612,7 +612,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
 <?php
 echo "<ul class='nav nav-pills nav-stacked tree'>";
 foreach ($categorias->result() as $categoria) {
-    echo "<li class='active dropdown-tree open-tree' > <a  class='dropdown-tree-a' > <span class='badge pull-right'> 42 </span>" . $categoria->cat_nome . "</a>";
+    echo "<li class='active dropdown-tree open-tree' > <a  class='dropdown-tree-a' > " . $categoria->cat_nome . "</a>";
     echo "<ul class='category-level-2 dropdown-menu-tree'>";
     foreach ($produtos->result() as $produto) {
         if ($produto->cat_codigo == $categoria->cat_codigo) {
@@ -932,11 +932,11 @@ foreach ($prod->result() as $pro) {
 }
 ?>
                 </h2>
-                <div class="categoryImage"> <img src="images/site/subcategory.jpg" class="img-responsive" alt="img"> </div>
+                <!--<div class="categoryImage"> <img src="images/site/subcategory.jpg" class="img-responsive" alt="img"> </div>-->
             </div><!--/.category-top-->
 
             <div class="w100 productFilter clearfix">
-                <p class="pull-left"> Showing <strong>12</strong> products </p>
+<!--                <p class="pull-left"> Showing <strong>12</strong> products </p>
                 <div class="pull-right ">
                     <div class="change-order pull-right">
                         <select class="form-control" name="orderby">
@@ -951,7 +951,7 @@ foreach ($prod->result() as $pro) {
                     <div class="change-view pull-right"> 
                         <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a> 
                         <a href="#" title="List" class="list-view "><i class="fa fa-th-list"></i></a> </div>
-                </div>
+                </div>-->
             </div> <!--/.productFilter-->
 
             <div class="row  categoryProduct xsResponse clearfix">
