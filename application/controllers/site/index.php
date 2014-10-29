@@ -20,9 +20,12 @@ class Index extends CI_Controller {
         //Carrega categoriaModel
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
+        $this->load->model('itemModel');
 
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
+        $data['itens'] = $this->itemModel->obterTodos();
+
 
         $this->load->view('site/header', $data);
         $this->load->view('site/index');

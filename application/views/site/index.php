@@ -79,25 +79,57 @@
   <!-- Main component call to action -->
   
   <div class="row featuredPostContainer globalPadding style2">
-    <h3 class="section-title style2 text-center"><span>NEW ARRIVALS</span></h3>
+    <h3 class="section-title style2 text-center"><span>Novidades</span></h3>
     <div id="productslider" class="owl-carousel owl-theme">
-      <div class="item">
-        <div class="product">
-          <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-          <i class="glyphicon glyphicon-heart"></i>
-          </a>
-          
-            <div class="image"> <a href="product-details.html"><img src="images/product/34.jpg" alt="img" class="img-responsive"></a>
-            <div class="promotion"> <span class="new-product"> NEW</span> <span class="discount">15% OFF</span> </div>
-          </div>
-          <div class="description">
-            <h4><a href="product-details.html">consectetuer adipiscing </a></h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-            <span class="size">XL / XXL / S </span> </div>
-          <div class="price"> <span>$25</span> </div>
-          <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-        </div>
-      </div>
+      
+      <?php
+                    foreach($itens->result() as $item)
+                    {
+                        if($item->pro_codigo == $pro_codigo)
+                        {
+                          echo "<div class='item'>";
+                          echo "<div class='product'>";
+                          echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
+                          echo "<i class='glyphicon glyphicon-heart'></i>";
+                          echo "</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "'</a>";
+                          if($item->item_novo == 1)
+                          {
+                            echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
+                          }
+                          echo "</div>";
+                          echo "<div class='description'>";
+                          echo "<h4><a href='product-details.html'>" . $item->item_nome . "</a></h4>";
+//                          echo "<div class='grid-description'>";
+//                          echo "<p>" . $item->item_descricao . "</p>";
+//                          echo "</div>";
+//                          echo "<div class='list-description'>";
+//                          echo "<p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>";
+//                          echo "</div>";
+//                          echo "<span class='size'>XL / XXL / S </span>";
+                          echo "</div>";
+                          if($item->item_preco_antigo != null)
+                          {
+                            echo "<div class='price'> <span> De: R$" . $item->item_preco_antigo . "</span> </div>";
+                            echo "<div class='price'> <span> Por: R$" . $item->item_preco_atual . "</span> </div>";
+                          }
+                          else
+                          {
+                            echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
+                          }
+                              
+                          echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
+                                  "&item_preco=" . $item->item_preco_atual . 
+                                  "&item_nome=" . $item->item_nome .
+                                  "&item_img=" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "' "
+                                  . "class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
+                          echo "</div>";
+                          echo "</div>";
+
+                        }
+                    }
+                    ?>
+        
       <div class="item">
         <div class="product">
           <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
