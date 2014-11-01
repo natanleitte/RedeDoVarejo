@@ -104,7 +104,7 @@
                     </div>
                     <div class="modal-footer">
                         <p class="text-center"> Novo por aqui? :-) <a data-toggle="modal"  data-dismiss="modal" href="#ModalSignup"> Registrar-se. </a> <br>
-                            <a href="forgot-password.html" > Esqueceu sua senha? </a> </p>
+                            <a href="<?php echo base_url() . "index.php/site/index/esqueceu_senha" ?>" > Esqueceu sua senha? </a> </p>
                     </div>
                 </div>
                 <!-- /.modal-content --> 
@@ -555,7 +555,7 @@
                                     <h3 class="text-right subtotal"> Subtotal: R$ <?php echo $totalCompra ?> </h3>
                                     <a class="btn btn-sm btn-danger" href="<?php echo base_url()?>index.php/site/index/carrinho"> 
                                         <i class="fa fa-shopping-cart"> </i> VER </a> 
-                                    <a class="btn btn-sm btn-primary"> FINALIZAR </a> 
+                                    <a class="btn btn-sm btn-primary" href="<?php echo base_url() . "index.php/site/index/finalizar_compra1"?>"> FINALIZAR </a> 
                                 </div> <!--/.miniCartFooter-->
 
 

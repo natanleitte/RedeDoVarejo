@@ -1,3 +1,5 @@
+<?php redirect(base_url() . 'index.php/site/index/error404'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

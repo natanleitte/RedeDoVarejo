@@ -50,7 +50,7 @@
                         <div class="panel-body">
                           <p>Desejo pagar na entrega.</p>
                           <br>
-                          <div class="pull-right"> <a href="checkout-5.html" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+                          <div class="pull-right"> <a href="<?php echo base_url() . "index.php/site/index/salvarCompra" ?>" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
                         </div>
                       </div>
                     </div>
@@ -78,20 +78,20 @@
                       </div>
                       <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
-                          <p>All transactions are secure and encrypted, and we neverstor To learn more, please view our privacy policy.</p>
+                          <p>Toda transação é criptografada e segura, para saber mais verifique nossa Política de Privacidade.</p>
                           <br>
                           <label class="radio-inline" for="radios-3">
-                            <input name="radios" id="radios-3" value="4" type="radio">
-                            <img src="<?php echo base_url() . "assets/site/images/site/payment/paypal-small.png" ?>" height="18" alt="paypal"> Checkout with Paypal </label>
-                          <div class="form-group">
+                            <!--<input name="radios" id="radios-3" value="4" type="radio">-->
+                            <img src="<?php echo base_url() . "assets/site/images/site/payment/pagseguro-small.png" ?>" height="18" alt="paypal"> Pagar com PagSeguro</label>
+<!--                          <div class="form-group">
                             <label for="CommentsOrder2">Add Comments About Your Order</label>
                             <textarea id="CommentsOrder2" class="form-control" name="CommentsOrder2" cols="26" rows="3"></textarea>
-                          </div>
-                          <div class="form-group clearfix">
+                          </div>-->
+<!--                          <div class="form-group clearfix">
                             <label class="checkbox-inline" for="checkboxes-0">
                               <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
                               I have read and agree to the <a href="terms-conditions.html">Terms & Conditions</a> </label>
-                          </div>
+                          </div>-->
                           
                           <form id="pagseguro" target="pagseguro" method="post" action="https://pagseguro.uol.com.br/checkout/checkout.jhtml">
                             <input type="hidden" name="email_cobranca" value="natanleitte@gmail.com">
@@ -234,35 +234,53 @@
       </div>
     </div>
     <!--/row end-->
-    
+    <?php
+        $totalCompra = 0;
+        foreach ($this->cart->contents() as $item) {
+            $totalCompra += ($item['price'] * $item['qty']);
+        }
+    ?>
     <div class="col-lg-3 col-md-3 col-sm-12 rightSidebar">
       <div class="w100 cartMiniTable">
         <table id="cart-summary" class="std table">
-          <tbody>
-            <tr >
-              <td>Total products</td>
-              <td class="price" >$216.51</td>
-            </tr>
-            <tr  style="">
-              <td>Shipping</td>
-              <td class="price" ><span class="success">Free shipping!</span></td>
-            </tr>
-            <tr class="cart-total-price ">
-              <td>Total (tax excl.)</td>
-              <td class="price" >$216.51</td>
-            </tr>
-            <tr >
-              <td>Total tax</td>
-              <td class="price" id="total-tax">$0.00</td>
-            </tr>
-            <tr >
-              <td > Total </td>
-              <td class=" site-color" id="total-price">$216.51</td>
-            </tr>
-          </tbody>
-          <tbody>
-          </tbody>
-        </table>
+                                    <tbody>
+                                    <tr >
+                                      <td>Total da compra</td>
+                                      <td class="price" >R$ <?php echo $totalCompra ?></td>
+                                    </tr>
+                                    <tr  style="">
+                                      <?php
+                                        //calcula frete do bairro
+                                        foreach($endereco->result() as $end )
+                                        {
+                                            $end_bairro = $end->end_bairro;
+                                        }
+                                        foreach($bairros->result() as $bairro)
+                                        {
+                                           if($bairro->bairro_codigo == $end_bairro)
+                                                $bairro_frete = $bairro->bairro_valor;
+                                        }
+                                      ?>
+                                      <td>Frete</td>
+                                      <td class="price" ><span class="success">R$ <?php echo $bairro_frete; ?>.00</span></td>
+                                    </tr>
+<!--                                    <tr class="cart-total-price ">
+                                      <td>Total (tax excl.)</td>
+                                      <td class="price" >$216.51</td>
+                                    </tr>
+                                    <tr >
+                                      <td>Total tax</td>
+                                      <td class="price" id="total-tax">$0.00</td>
+                                    </tr>-->
+                                    <tr >
+                                      <td > Total </td>
+                                      <td class=" site-color" id="total-price"> R$ <?php echo $totalCompra + $bairro_frete ?></td>
+                                    </tr>
+                                    
+                                                                         
+                                    </tbody><tbody>
+                                    </tbody>
+                                  </table>
       </div>
     </div>
     <!--/rightSidebar--> 

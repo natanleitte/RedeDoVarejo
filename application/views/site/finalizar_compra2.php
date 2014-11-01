@@ -203,13 +203,25 @@
   <div class="w100 cartMiniTable">
                             <table id="cart-summary" class="std table">
                                     <tbody>
-<!--                                        <tr >
-                                      <td>Total products</td>
-                                      <td class="price" >$216.51</td>
-                                    </tr>-->
+                                    <tr >
+                                      <td>Total da compra</td>
+                                      <td class="price" >R$ <?php echo $totalCompra ?></td>
+                                    </tr>
                                     <tr  style="">
+                                      <?php
+                                        //calcula frete do bairro
+                                        foreach($endereco->result() as $end )
+                                        {
+                                            $end_bairro = $end->end_bairro;
+                                        }
+                                        foreach($bairros->result() as $bairro)
+                                        {
+                                           if($bairro->bairro_codigo == $end_bairro)
+                                                $bairro_frete = $bairro->bairro_valor;
+                                        }
+                                      ?>
                                       <td>Frete</td>
-                                      <td class="price" ><span class="success">À calcular!</span></td>
+                                      <td class="price" ><span class="success">R$ <?php echo $bairro_frete; ?>.00</span></td>
                                     </tr>
 <!--                                    <tr class="cart-total-price ">
                                       <td>Total (tax excl.)</td>
@@ -221,7 +233,7 @@
                                     </tr>-->
                                     <tr >
                                       <td > Total </td>
-                                      <td class=" site-color" id="total-price"> R$ <?php echo $totalCompra ?></td>
+                                      <td class=" site-color" id="total-price"> R$ <?php echo $totalCompra + $bairro_frete ?></td>
                                     </tr>
                                     
                                                                          

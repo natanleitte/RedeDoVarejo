@@ -109,7 +109,7 @@
                  
                   <div class="form-group required">
                     <label for="InputCity">Cidade <sup>*</sup> </label>
-                    <input required type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade">
+                    <input required type="text" value="Campo Grande" class="form-control" id="cidade" name="cidade" placeholder="Cidade" disabled="disabled">
                   </div>
                   
                   <div class="form-group">
@@ -122,7 +122,15 @@
                     
                   <div class="form-group required">
                     <label for="InputAddress2">Bairro</label>
-                    <input required type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">
+                    <!--<input required type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">-->
+                    <select class="form-control" required aria-required="true" id="bairro" name="bairro">
+                        <?php
+                            foreach($bairros->result() as $bairro)
+                            {
+                                echo "<option value='" . $bairro->bairro_codigo . "'>" . $bairro->bairro_nome . "</option>";
+                            }
+                        ?>
+                    </select>
                   </div>
                     
                    <div class="form-group required">
@@ -133,7 +141,7 @@
                   <div class="form-group required">
                     <label for="InputState">Estado <sup>*</sup> </label>
               
-                      <select class="form-control" required aria-required="true" id="estado" name="estado">
+                    <select class="form-control" required aria-required="true" id="estado" name="estado">
                       <option value="estado">Selecione o Estado</option> 
 		<option value="ac">Acre</option> 
 		<option value="al">Alagoas</option> 
@@ -146,7 +154,7 @@
 		<option value="go">Goiás</option> 
 		<option value="ma">Maranhão</option> 
 		<option value="mt">Mato Grosso</option> 
-		<option value="ms">Mato Grosso do Sul</option> 
+                <option value="ms" selected="select">Mato Grosso do Sul</option> 
 		<option value="mg">Minas Gerais</option> 
 		<option value="pa">Pará</option> 
 		<option value="pb">Paraíba</option> 
@@ -165,12 +173,12 @@
                     </select>
                   </div>
                 <div class="form-group">
-                    <label for="InputLastName">Referência</label>
-                    <input type="text" class="form-control" id="referencia" name="referencia" placeholder="Referênncia">
+                    <label for="referencia">Referência</label>
+                    <input type="text" class="form-control" id="referencia" name="referencia" placeholder="Referência">
                 </div>
                     
                   <div class="form-group">
-                    <label for="InputAdditionalInformation">Observação</label>
+                    <label for="observacao">Observação</label>
                     <textarea rows="3" cols="26" name="InputAdditionalInformation" class="form-control" id="observacao" name="observacao"></textarea>
                   </div>
                   

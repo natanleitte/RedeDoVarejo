@@ -105,7 +105,10 @@ class Index extends CI_Controller {
         $item_img = $this->input->get('item_img'); // recupera a informação via get
 
         echo $item_codigo . $item_img . $item_nome . $item_preco;
-
+        
+        //Esta linha serve para permitir que produtos com acentuação no nome sejam aceitos.
+        $this->cart->product_name_rules = "'\d\D'";
+        
         $item = array(
             'id' => $item_codigo,
             'qty' => 1,
@@ -201,6 +204,10 @@ class Index extends CI_Controller {
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
         $this->load->model('enderecoModel');
+        
+        //para fazer o select do bairro
+        $this->load->model('bairroModel');
+        $data['bairros'] = $this->bairroModel->obterTodos();
 
         
         //Para buuscar o endereço do cliente
@@ -231,6 +238,14 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
         
+        //para fazer o select do bairro
+        $cli_codigo = $this->session->userdata('cli_codigo');
+        $this->load->model('enderecoModel');
+        $this->load->model('bairroModel');
+        $data['bairros'] = $this->bairroModel->obterTodos();
+        $data['endereco'] = $this->enderecoModel->obterPorCliente($cli_codigo);
+        
+        
         $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra2');
         $this->load->view('site/footer', $data);
@@ -245,6 +260,13 @@ class Index extends CI_Controller {
         //data para header
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        //para fazer o select do bairro
+        $cli_codigo = $this->session->userdata('cli_codigo');
+        $this->load->model('enderecoModel');
+        $this->load->model('bairroModel');
+        $data['bairros'] = $this->bairroModel->obterTodos();
+        $data['endereco'] = $this->enderecoModel->obterPorCliente($cli_codigo);
         
         $this->load->view('site/header', $data);
         $this->load->view('site/finalizar_compra3');
@@ -377,4 +399,113 @@ class Index extends CI_Controller {
         $this->load->view('site/footer', $data);
         
     }
+    
+    public function error404() 
+    { 
+        //Carrega categoriaModel
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+        $this->load->model('itemModel');
+
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        $data['itens'] = $this->itemModel->obterTodos();
+
+
+        $this->load->view('site/header', $data);
+        $this->load->view('site/error404');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function salvarCompra()
+    {
+        $this->load->model('compraModel');
+//        $this->load->model('compraItemModel');
+
+        $cli_codigo = $this->session->userdata('cli_codigo');
+        $data['cli_codigo'] = $cli_codigo;
+        $com_codigo = $this->compraModel->inserir($data);
+        
+        foreach ($this->cart->contents() as $item) {
+            $this->inserirCompraItem($com_codigo, $item['id'], $item['qty']);
+        }
+//        $this->cart->destroy();
+        echo $com_codigo;
+        
+        //redireciona para visualizar a compra
+        redirect(base_url() . 'index.php/site/index/compra/?com_codigo=' . $com_codigo);
+    }
+    
+    //insere em compra_item
+    function inserirCompraItem($com_codigo, $item_codigo, $item_qtd)
+    {
+        echo "item" . $com_codigo . "<br>";
+        
+        $this->load->model('compraItemModel');
+        
+        $data['com_codigo'] = $com_codigo;
+        $data['item_codigo'] = $item_codigo;
+        $data['item_qtd'] = $item_qtd;
+        
+        $this->compraItemModel->inserir($data);
+        
+    }
+    
+    function compra()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+        $this->load->model('itemModel');
+        $this->load->model('compraItemModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        $data['itens'] = $this->itemModel->obterTodos();
+        
+        $com_codigo = $this->input->get('com_codigo'); // recupera a informação via get
+        $data['compra_itens'] = $this->compraItemModel->obterPorComCodigo($com_codigo);
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/compra');
+        $this->load->view('site/footer', $data);
+
+    }
+    
+    function minha_conta()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/minha-conta');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function minhas_compras()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+        $this->load->model('compraModel');
+
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $cli_codigo = $this->session->userdata('cli_codigo');
+
+        $data['compras'] = $this->compraModel->obterPorCliente($cli_codigo);
+
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/minhas_compras');
+        $this->load->view('site/footer', $data);
+    }
+    
+    
 }
