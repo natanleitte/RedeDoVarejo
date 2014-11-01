@@ -85,11 +85,11 @@ class itemModel extends CI_Model {
     function obtemNomeImg($itemCodigo) {
         $this->load->database();
 
-        $query = "SELECT item_imagem_nome FROM item WHERE item_codigo =" . $itemCodigo;
+        $query = "SELECT item_img FROM item WHERE item_codigo =" . $itemCodigo;
 
         $result = $this->db->query($query);
 
-        return $result->row('item_imagem_nome');
+        return $result->row('item_img');
     }
 
     function upDateData($data) {

@@ -29,7 +29,7 @@ class Item extends CI_Controller {
 
         // Caminho de onde a imagem ficará
         $queryImg = $this->itemmodel->obtemPathNew($pro_codigo);
-        $imagem_dir = "assets/img/categoria/" . $queryImg['categoria'] . "/" . $queryImg['produto'] . "/";
+        $imagem_dir = "assets/img/img-itens/" . $queryImg['categoria'] . "/" . $queryImg['produto'] . "/";
 
         //Configurações da imagem
         $config['upload_path'] = $imagem_dir;
@@ -61,7 +61,7 @@ class Item extends CI_Controller {
         $data['tpmed_codigo'] = $this->input->post('tpmed_codigo');
         $data['item_nome'] = $this->input->post('item_nome');
         $data['item_mercado'] = $this->input->post('item_mercado');
-        $data['item_imagem_nome'] = Item::insereImagem($data['pro_codigo']);
+        $data['item_img'] = Item::insereImagem($data['pro_codigo']);
         $data['item_descricao'] = $this->input->post('item_descricao');
         $data['item_preco_antigo'] = $this->input->post('item_preco_antigo');
         $data['item_preco_atual'] = $this->input->post('item_preco_atual');
@@ -107,7 +107,7 @@ class Item extends CI_Controller {
                 $row->item_preco_atual,
                 $row->item_dt_promocao,
                 $row->item_observacao,
-                $row->item_imagem_nome,
+                $row->item_img,
                 $row->item_medida,
                 $row->item_novo,
                 $row->item_mercado
@@ -152,33 +152,35 @@ class Item extends CI_Controller {
 //        }
     }
 
-    public function editarImagem($data) {
+    public function editarImagem($data)
+    {
         $this->load->model('itemmodel');
 
         $pathOld = $this->itemmodel->obtemPathOld($data['item_codigo']);
         $pathNew = $this->itemmodel->obtemPathNew($data['pro_codigo']);
 
         if ($pathOld['produto'] == $pathNew['produto']) {
-            $data['item_imagem_nome'] = Item::insereImagem($data['pro_codigo']);
+            $data['item_img'] = Item::insereImagem($data['pro_codigo']);
             return $data;
         } else {
             $imagemNome = $this->itemmodel->obtemNomeImg($data['item_codigo']);
-            $imagem_dir = "assets/img/categoria/" . $pathOld['categoria'] . "/" . $pathOld['produto'] . "/" . $imagemNome;
+            $imagem_dir = "assets/img/img-itens/" . $pathOld['categoria'] . "/" . $pathOld['produto'] . "/" . $imagemNome;
             //Remove o arquivo antigo
             unlink($imagem_dir);
-            $data['item_imagem_nome'] = Item::insereImagem($data['pro_codigo']);
+            $data['item_img'] = Item::insereImagem($data['pro_codigo']);
             return $data;
         }
     }
 
-    public function excluir() {
+    public function excluir()
+    {
         $this->load->model('itemmodel');
         
         $itemCodigo = $this->input->post('item_codigo');
         
         $pathOld = $this->itemmodel->obtemPathOld($itemCodigo);
         $imagemNome = $this->itemmodel->obtemNomeImg($itemCodigo);
-        $imagem_dir = "assets/img/categoria/" . $pathOld['categoria'] . "/" . $pathOld['produto'] . "/" . $imagemNome;
+        $imagem_dir = "assets/img/img-itens/" . $pathOld['categoria'] . "/" . $pathOld['produto'] . "/" . $imagemNome;
         
         //Remove o arquivo antigo
         unlink($imagem_dir);
