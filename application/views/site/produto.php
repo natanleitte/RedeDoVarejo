@@ -13,7 +13,7 @@ foreach ($categorias->result() as $categoria) {
     }
 }
 
-$urlImg = "assets/site/images/imgProdutos/" . $cat_nome . "/" . $pro_nome;
+$urlImg = "assets/img/img-itens/" . $cat_nome . "/" . $pro_nome;
 $urlCarrinho = "index.php/site/index/addAoCarrinho"
 ?> <!-- prefixo da URL do Layout -->
 <!DOCTYPE html>
@@ -598,6 +598,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
         <div class="col-lg-3 col-md-3 col-sm-12">
             <div class="panel-group" id="accordionNo">
                 <!--Category--> 
+                
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title"> 
@@ -612,11 +613,17 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
 <?php
 echo "<ul class='nav nav-pills nav-stacked tree'>";
 foreach ($categorias->result() as $categoria) {
-    echo "<li class='active dropdown-tree open-tree' > <a  class='dropdown-tree-a' > " . $categoria->cat_nome . "</a>";
+    if($cat_codigo == $categoria->cat_codigo)
+    {
+        echo "<li class='active dropdown-tree open-tree' > <a  class='dropdown-tree-a' > " . $categoria->cat_nome . "</a>";
+    }
+    else{
+        echo "<li class='active dropdown-tree' > <a  class='dropdown-tree-a' > " . $categoria->cat_nome . "</a>";
+    }
     echo "<ul class='category-level-2 dropdown-menu-tree'>";
     foreach ($produtos->result() as $produto) {
         if ($produto->cat_codigo == $categoria->cat_codigo) {
-            echo "<li> <a href='sub-category.html'>" . $produto->pro_nome . "</a> </li>";
+            echo "<li> <a  href='" . base_url() . "index.php/site/index/produto/?pro_codigo=" . $produto->pro_codigo . "'>" . $produto->pro_nome . "</a> </li>";
         }
     }
     echo "</ul>";
@@ -965,36 +972,43 @@ foreach ($prod->result() as $pro) {
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
                           echo "<i class='glyphicon glyphicon-heart'></i>";
                           echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "'</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . "'</a>";
                           if($item->item_novo == 1)
                           {
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
                           }
                           echo "</div>";
                           echo "<div class='description'>";
-                          echo "<h4><a href='product-details.html'>" . $item->item_nome . "</a></h4>";
-//                          echo "<div class='grid-description'>";
-//                          echo "<p>" . $item->item_descricao . "</p>";
-//                          echo "</div>";
+                          echo "<h4>" . $item->item_nome . "</h4>";
+                          echo "<div class='grid-description'>";
+                          echo "" . $item->item_descricao;
+                          echo "</div>";
 //                          echo "<div class='list-description'>";
 //                          echo "<p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>";
 //                          echo "</div>";
-//                          echo "<span class='size'>XL / XXL / S </span>";
+//                          foreach($tipo_medida->result() as $medida)
+//                          {
+//                              if($item->tpmed_codigo == $medida->tpmed_codigo)
+//                              {
+//                                echo $medida->tpmed_codigo;
+//                              }
+//                          }
+                          echo "<span class='size'>" . $item->item_medida . " "  . "</span>";
                           echo "</div>";
-                          if($item->item_preco_antigo != null)
+                          if($item->item_preco_antigo != null && $item->item_preco_antigo != 0)
                           {
-                            echo "<div class='price'> <span> De: R$" . $item->item_preco_antigo . "</span> </div>";
-                            echo "<div class='price'> <span> Por: R$" . $item->item_preco_atual . "</span> </div>";
+                            echo "<div class='price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
+                            echo "<div class='price'> <span> Por: R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                           else
                           {
-                            echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
+                            echo "<div class='price'> <span> R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                               
                           echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
                                   "&item_preco=" . $item->item_preco_atual . 
                                   "&item_nome=" . $item->item_nome .
-                                  "&item_img=" . base_url() . $urlImg . "/" . $item->item_img . ".jpg" . "' "
+                                  "&item_img=" . base_url() . $urlImg . "/" . $item->item_img . "' "
                                   . "class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
                           echo "</div>";
                           echo "</div>";
@@ -1291,3 +1305,92 @@ foreach ($prod->result() as $pro) {
 <!-- /main container -->
 
 <div class="gap"> </div>
+
+
+<!-- JAVASCRIPT ANTIGO
+ Le javascript
+================================================== 
+
+ Placed at the end of the document so the pages load faster 
+<script type="text/javascript" src="assets/js/jquery/1.8.3/jquery.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+ include  parallax plugin 
+<script type="text/javascript"  src="assets/js/jquery.parallax-1.1.js"></script>
+
+ optionally include helper plugins 
+<script type="text/javascript"  src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+
+ include mCustomScrollbar plugin //Custom Scrollbar   
+<script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.js"></script> 
+
+ include carousel slider plugin  
+<script src="assets/js/owl.carousel.min.js"></script>
+
+ include smoothproducts // product zoom plugin  
+<script type="text/javascript" src="assets/js/smoothproducts.min.js"></script>
+
+ jQuery minimalect // custom select   
+<script src="assets/js/jquery.minimalect.min.js"></script>
+
+ include touchspin.js // touch friendly input spinner component    
+<script src="assets/js/bootstrap.touchspin.js"></script> 
+
+ include custom script for site  
+<script src="assets/js/script.js"></script>-->
+
+
+<!-- Le javascript
+================================================== --> 
+
+<!-- Placed at the end of the document so the pages load faster --> 
+<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/jquery/1.8.3/jquery.js"></script> 
+<script src="<?php echo base_url();?>assets/site/assets/bootstrap/js/bootstrap.min.js"></script> 
+
+<!-- include jqueryCycle plugin --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/jquery.cycle2.min.js"></script> 
+
+<!-- include easing plugin --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/jquery.easing.1.3.js"></script> 
+
+<!-- include  parallax plugin --> 
+<script type="text/javascript"  src="<?php echo base_url();?>assets/site/assets/js/jquery.parallax-1.1.js"></script> 
+
+<!-- optionally include helper plugins --> 
+<script type="text/javascript"  src="<?php echo base_url();?>assets/site/assets/js/helper-plugins/jquery.mousewheel.min.js"></script> 
+
+<!-- include mCustomScrollbar plugin //Custom Scrollbar  --> 
+
+<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/jquery.mCustomScrollbar.js"></script> 
+
+<!-- include checkRadio plugin //Custom check & Radio  --> 
+<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/ion-checkRadio/ion.checkRadio.min.js"></script> 
+
+<!-- include grid.js // for equal Div height  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/grids.js"></script> 
+
+<!-- include carousel slider plugin  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/owl.carousel.min.js"></script> 
+
+<!-- jQuery minimalect // custom select   --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/jquery.minimalect.min.js"></script> 
+
+<!-- include touchspin.js // touch friendly input spinner component   --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/bootstrap.touchspin.js"></script> 
+
+<!-- include custom script for only homepage  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/home.js"></script> 
+<!-- include custom script for site  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/script.js"></script> 
+
+<!-- styles needed by footable  NECESSÁRIO EM minhas-compras -->
+<link href="<?php echo base_url();?>assets/site/assets/css/footable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url();?>assets/site/assets/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+
+<script>
+
+</script>
+
+</body>
+</html>
+

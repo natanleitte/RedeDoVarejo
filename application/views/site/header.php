@@ -194,7 +194,7 @@
                         <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
                             <div class="pull-right">
                                 <ul class="userMenu">
-                                    <li> <a href="<?php echo base_url() . "index.php/site/index/dados_pessoais" ?>"> Minha Conta </a> </li>
+                                    <li> <a href="<?php echo base_url() . "index.php/site/index/minha_conta" ?>"> Minha Conta </a> </li>
                                     <li> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra1" ?>"> Finalizar Compra </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalLogin"> Entrar </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalSignup"> Criar Conta </a> </li>
@@ -321,15 +321,20 @@
 
                                     <?php
                                     foreach ($categorias->result() as $categoria) {
-                                        echo "<ul class='col-lg-2  col-sm-2 col-md-2 unstyled'>";
+                                        echo "<ul class='col-lg-3  col-sm-3 col-md-3 unstyled'>";
                                         echo "<li class='no-border'>";
                                         echo "<p> <strong>" . $categoria->cat_nome . "</strong> </p>";
                                         echo "</li>";
+                                        $count = 0;
                                         foreach ($produtos->result() as $produto) {
                                             //se o produto pertencer a categoria
                                             if ($produto->cat_codigo == $categoria->cat_codigo) {
                                                 echo "<li> <a href='" . base_url() . $get_url . "/?pro_codigo=" . $produto->pro_codigo . "'>". $produto->pro_nome . "</a> </li>";
+                                                //limita o número de produtos apresentados
+                                                $count++;
+                                                if($count == 5) break;
                                             }
+                                            
                                         }
 //                                       
                                         echo "</ul>";
@@ -338,7 +343,7 @@
                                    
                                   
                                   
-                                    <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
+<!--                                    <ul class="col-lg-2  col-sm-2 col-md-2 unstyled">
                                         <li class="no-border">
                                             <p> <strong> Checkout </strong> </p>
                                         </li>
@@ -368,7 +373,7 @@
                                         <li> <a href="error-page.html"> Error Page </a> </li>
                                         <li> <a href="blank-page.html"> Blank Page </a> </li>
                                         <li> <a href="form.html"> Basic Form Element </a> </li>
-                                    </ul>
+                                    </ul>-->
                                 </li>
                                 
                             </ul>
@@ -446,7 +451,7 @@
                         <div class="dropdown  cartMenu "> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
                                 <i class="fa fa-shopping-cart"> </i>
-                                <span class="cartRespons"> Compra R$ <?php echo $totalCompra; ?> </span> 
+                                <span class="cartRespons"> Compra R$ <?php echo number_format($totalCompra, 2, ',', '.') ; ?> </span> 
                                 <b class="caret"> </b> 
                             </a>
 

@@ -86,7 +86,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     echo "<td ><div class = 'CartDescription'>";
                                     echo "<h4> <a href = 'product-details.html'>" . $item['name'] . "</a> </h4>";
                                     echo "<span class = 'size'>12 x 1.5 L</span>";
-                                    echo "<div class = 'price'> <span>". $item['price'] ."</span></div>";
+                                    echo "<div class = 'price'> <span>R$ ". number_format($item['price'], 2, ',', '.') ."</span></div>";
                                     echo "</div></td>";
                                     $attributes = array('id' => 'removeDoCarrinhoForm');
                                     echo form_open('index.php/site/index/removeDoCarrinho', $attributes); //abre form pra remover do Carrinho 
@@ -95,7 +95,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     echo form_close(); //fecha form pra remover do Carrinho 
                                     echo "<td ><input class = 'quanitySniper' type = 'text' value = '" . $item['qty'] . "' name = 'quanitySniper'></td>";
                                     echo "<td >0</td>";
-                                    echo "<td class = 'price'>" . $item['price'] * $item['qty'] . "</td>";
+                                    echo "<td class = 'price'> R$ " . number_format($item['price'] * $item['qty'], 2, ',', '.') . "</td>";
                                     echo "</tr>";
                                     $totalCompra += ($item['price'] * $item['qty']);
                                     }
@@ -161,7 +161,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     <tbody>
                                     <tr >
                                     <td>Total</td>
-                                    <td class = "price" > R$ <?php echo $totalCompra ?></td>
+                                    <td class = "price" > R$ <?php echo number_format($totalCompra, 2, ',', '.') ?></td>
                                     </tr>
 <!--                                    <tr style = "">
                                     <td>Shipping</td>

@@ -13,7 +13,7 @@
 //    }
 //}
 
-$urlImg = "assets/site/images/imgProdutos/";
+$urlImg = "assets/img/img-itens/";
 $urlCarrinho = "index.php/site/index/addAoCarrinho"
 ?> <!-- prefixo da URL do Layout -->
 <!DOCTYPE html>
@@ -612,11 +612,11 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
 <?php
 echo "<ul class='nav nav-pills nav-stacked tree'>";
 foreach ($categorias->result() as $categoria) {
-    echo "<li class='active dropdown-tree open-tree' > <a  class='dropdown-tree-a' > <span class='badge pull-right'> 42 </span>" . $categoria->cat_nome . "</a>";
+    echo "<li class='active dropdown-tree' > <a  class='dropdown-tree-a' > " . $categoria->cat_nome . "</a>";
     echo "<ul class='category-level-2 dropdown-menu-tree'>";
     foreach ($produtos->result() as $produto) {
         if ($produto->cat_codigo == $categoria->cat_codigo) {
-            echo "<li> <a href='sub-category.html'>" . $produto->pro_nome . "</a> </li>";
+            echo "<li> <a  href='" . base_url() . "index.php/site/index/produto/?pro_codigo=" . $produto->pro_codigo . "'>" . $produto->pro_nome . "</a> </li>";
         }
     }
     echo "</ul>";
@@ -928,11 +928,11 @@ echo "</ul>";
                 <h2>
                 Busca por <?php echo $buscaNome;?>
                 </h2>
-                <div class="categoryImage"> <img src="images/site/subcategory.jpg" class="img-responsive" alt="img"> </div>
+                <!--<div class="categoryImage"> <img src="images/site/subcategory.jpg" class="img-responsive" alt="img"> </div>-->
             </div><!--/.category-top-->
 
             <div class="w100 productFilter clearfix">
-                <p class="pull-left"> Showing <strong>12</strong> products </p>
+<!--                <p class="pull-left"> Showing <strong>12</strong> products </p>
                 <div class="pull-right ">
                     <div class="change-order pull-right">
                         <select class="form-control" name="orderby">
@@ -947,7 +947,7 @@ echo "</ul>";
                     <div class="change-view pull-right"> 
                         <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a> 
                         <a href="#" title="List" class="list-view "><i class="fa fa-th-list"></i></a> </div>
-                </div>
+                </div>-->
             </div> <!--/.productFilter-->
 
             <div class="row  categoryProduct xsResponse clearfix">
@@ -973,7 +973,7 @@ echo "</ul>";
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
                           echo "<i class='glyphicon glyphicon-heart'></i>";
                           echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/". $pro_nome . "/" . $item->item_img . ".jpg" . "'</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/". $pro_nome . "/" . $item->item_img . "'</a>";
                           if($item->item_novo == 1)
                           {
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
@@ -1301,3 +1301,92 @@ echo "</ul>";
 <!-- /main container -->
 
 <div class="gap"> </div>
+
+
+<!-- JAVASCRIPT ANTIGO
+ Le javascript
+================================================== 
+
+ Placed at the end of the document so the pages load faster 
+<script type="text/javascript" src="assets/js/jquery/1.8.3/jquery.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+ include  parallax plugin 
+<script type="text/javascript"  src="assets/js/jquery.parallax-1.1.js"></script>
+
+ optionally include helper plugins 
+<script type="text/javascript"  src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+
+ include mCustomScrollbar plugin //Custom Scrollbar   
+<script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.js"></script> 
+
+ include carousel slider plugin  
+<script src="assets/js/owl.carousel.min.js"></script>
+
+ include smoothproducts // product zoom plugin  
+<script type="text/javascript" src="assets/js/smoothproducts.min.js"></script>
+
+ jQuery minimalect // custom select   
+<script src="assets/js/jquery.minimalect.min.js"></script>
+
+ include touchspin.js // touch friendly input spinner component    
+<script src="assets/js/bootstrap.touchspin.js"></script> 
+
+ include custom script for site  
+<script src="assets/js/script.js"></script>-->
+
+
+<!-- Le javascript
+================================================== --> 
+
+<!-- Placed at the end of the document so the pages load faster --> 
+<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/jquery/1.8.3/jquery.js"></script> 
+<script src="<?php echo base_url();?>assets/site/assets/bootstrap/js/bootstrap.min.js"></script> 
+
+<!-- include jqueryCycle plugin --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/jquery.cycle2.min.js"></script> 
+
+<!-- include easing plugin --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/jquery.easing.1.3.js"></script> 
+
+<!-- include  parallax plugin --> 
+<script type="text/javascript"  src="<?php echo base_url();?>assets/site/assets/js/jquery.parallax-1.1.js"></script> 
+
+<!-- optionally include helper plugins --> 
+<script type="text/javascript"  src="<?php echo base_url();?>assets/site/assets/js/helper-plugins/jquery.mousewheel.min.js"></script> 
+
+<!-- include mCustomScrollbar plugin //Custom Scrollbar  --> 
+
+<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/jquery.mCustomScrollbar.js"></script> 
+
+<!-- include checkRadio plugin //Custom check & Radio  --> 
+<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/ion-checkRadio/ion.checkRadio.min.js"></script> 
+
+<!-- include grid.js // for equal Div height  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/grids.js"></script> 
+
+<!-- include carousel slider plugin  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/owl.carousel.min.js"></script> 
+
+<!-- jQuery minimalect // custom select   --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/jquery.minimalect.min.js"></script> 
+
+<!-- include touchspin.js // touch friendly input spinner component   --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/bootstrap.touchspin.js"></script> 
+
+<!-- include custom script for only homepage  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/home.js"></script> 
+<!-- include custom script for site  --> 
+<script src="<?php echo base_url();?>assets/site/assets/js/script.js"></script> 
+
+<!-- styles needed by footable  NECESSÁRIO EM minhas-compras -->
+<link href="<?php echo base_url();?>assets/site/assets/css/footable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url();?>assets/site/assets/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+
+<script>
+
+</script>
+
+</body>
+</html>
+

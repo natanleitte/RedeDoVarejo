@@ -21,10 +21,13 @@ class Index extends CI_Controller {
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
         $this->load->model('itemModel');
+        $this->load->model('tipoMedidaModel');
 
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
-        $data['itens'] = $this->itemModel->obterTodos();
+        $data['itens'] = $this->itemModel->obterTodos();        
+        $data['tipo_medida'] = $this->tipoMedidaModel->obterTodos();
+
 
 
         $this->load->view('site/header', $data);
@@ -51,7 +54,7 @@ class Index extends CI_Controller {
 
         $this->load->view('site/header', $data);
         $this->load->view('site/produto', $data);
-        $this->load->view('site/footer', $data);
+        $this->load->view('site/footer', $data); //Tirei porque estava BUGANDO
     }
     
     function buscarItem() {
@@ -420,6 +423,8 @@ class Index extends CI_Controller {
     function salvarCompra()
     {
         $this->load->model('compraModel');
+        $this->load->model('compraItemModel');
+
 //        $this->load->model('compraItemModel');
 
         $cli_codigo = $this->session->userdata('cli_codigo');
@@ -427,7 +432,12 @@ class Index extends CI_Controller {
         $com_codigo = $this->compraModel->inserir($data);
         
         foreach ($this->cart->contents() as $item) {
-            $this->inserirCompraItem($com_codigo, $item['id'], $item['qty']);
+//            $this->inserirCompraItem($com_codigo, $item['id'], $item['qty']);
+              
+//              echo "com_codigo" . $com_codigo . " item_codigo" . $item_codigo . " item_qtd" . $item_qtd . " <br>";
+              
+             $com_item_codigo = $this->compraItemModel->inserirEspec($com_codigo, $item['id'], $item['qty']);
+//             echo "com_item_codigo " . $com_item_codigo . "<br>"; 
         }
 //        $this->cart->destroy();
         echo $com_codigo;
@@ -439,13 +449,16 @@ class Index extends CI_Controller {
     //insere em compra_item
     function inserirCompraItem($com_codigo, $item_codigo, $item_qtd)
     {
-        echo "item" . $com_codigo . "<br>";
+        echo "com_codigo" . $com_codigo . " item_codigo" . $item_codigo . " item_qtd" . $item_qtd . " <br>";
+        
         
         $this->load->model('compraItemModel');
         
         $data['com_codigo'] = $com_codigo;
         $data['item_codigo'] = $item_codigo;
         $data['item_qtd'] = $item_qtd;
+        
+        
         
         $this->compraItemModel->inserir($data);
         
@@ -491,6 +504,7 @@ class Index extends CI_Controller {
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
         $this->load->model('compraModel');
+        $this->load->model('compraItemModel');
 
 
         //data para header
@@ -500,7 +514,7 @@ class Index extends CI_Controller {
         $cli_codigo = $this->session->userdata('cli_codigo');
 
         $data['compras'] = $this->compraModel->obterPorCliente($cli_codigo);
-
+        $data['compra_itens'] = $this->compraItemModel->obterTodos();
         
         $this->load->view('site/header', $data);
         $this->load->view('site/minhas_compras');

@@ -25,29 +25,31 @@
               <tr>
                 <th data-class="expand" data-sort-initial="true"> <span title="table sorted by this column on load">ID da Compra</span> </th>
                 <th data-hide="phone,tablet" data-sort-ignore="true">Num Itens</th>
-                <th data-hide="phone,tablet" data-sort-ignore="true">Invoice</th>
-                <th data-hide="phone,tablet"><strong>Payment Method</strong></th>
                 <th data-hide="default"> Total </th>
                 <th data-hide="default" data-type="numeric"> Data </th>
-                <th data-hide="phone" data-type="numeric"> Status </th>
+                <th data-hide="phone" data-type="numeric"> Status Pagamento </th>
+                <th data-hide="phone" data-type="numeric"> Status Entrega </th>
+
               </tr>
             </thead>
             <tbody>
                 <?php 
                 foreach($compras->result() as $compra)
                 {
+                                       
                     echo "<tr>";
                     echo "<td>" . $compra->com_codigo . "</td>";
                     echo "<td>5 <small>item(s)</small></td>";
-                    echo "<td><a target='_blank' >-</a></td>";
-                    echo "<td>Bank Wire</td>";
                     echo "<td>$403 </td>";
-                    echo "<td data-value='78025368997'>22 Jun 2014</td>";
+                    $date = new DateTime($compra->com_data);
+                    echo "<td data-value='78025368997'>" . $date->format('d-m-Y H:i:s') . "</td>";
                     echo "<td data-value='3'><span class='label label-success'>Done</span></td>";
+                    echo "<td data-value='3'><span class='label label-default'>À entregar</span></td>";                    
                     echo "</tr>";
+                    
                 }
                 ?>
-              <tr>
+<!--              <tr>
                 <td>#028DE</td>
                 <td>5 <small>item(s)</small></td>
                 <td><a target="_blank" >-</a></td>
@@ -154,7 +156,7 @@
                 <td>$1108</td>
                 <td data-value="550552096836">13 Jun 1987</td>
                 <td data-value="3"><span class="label label-danger">Cancel</span></td>
-              </tr>
+              </tr>-->
             </tbody>
           </table>
         </div>

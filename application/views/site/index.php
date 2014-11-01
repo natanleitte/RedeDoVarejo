@@ -1,5 +1,5 @@
 <?php
-$urlImg = "assets/site/images/imgProdutos/";
+$urlImg = "assets/img/img-itens/";
 $urlCarrinho = "index.php/site/index/addAoCarrinho" 
 ?>
 <div class="banner">
@@ -109,7 +109,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
                           echo "<i class='glyphicon glyphicon-heart'></i>";
                           echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . ".jpg" . "'</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . "'</a>";
                           
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
                           
@@ -124,14 +124,14 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
 //                          echo "</div>";
 //                          echo "<span class='size'>XL / XXL / S </span>";
                           echo "</div>";
-                          if($item->item_preco_antigo != null)
+                          if($item->item_preco_antigo != null && $item->item_preco_antigo != 0)
                           {
-                            echo "<div class='price'> <span> De: R$" . $item->item_preco_antigo . "</span> </div>";
-                            echo "<div class='price'> <span> Por: R$" . $item->item_preco_atual . "</span> </div>";
+                            echo "<div class='price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
+                            echo "<div class='price'> <span> Por: R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                           else
                           {
-                            echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
+                            echo "<div class='price'> <span> R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                               
                           echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
@@ -201,7 +201,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
                           echo "<i class='glyphicon glyphicon-heart'></i>";
                           echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . ".jpg" . "'</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . "'</a>";
                           if($item->item_novo == 1)
                           {
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
@@ -217,20 +217,21 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
 //                          echo "</div>";
 //                          echo "<span class='size'>XL / XXL / S </span>";
                           echo "</div>";
+                          
                           if($item->item_preco_antigo != null)
                           {
-                            echo "<div class='price'> <span> De: R$" . $item->item_preco_antigo . "</span> </div>";
-                            echo "<div class='price'> <span> Por: R$" . $item->item_preco_atual . "</span> </div>";
+                            echo "<div class='price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
+                            echo "<div class='price'> <span> Por: R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                           else
                           {
-                            echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
+                            echo "<div class='price'> <span> R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                               
                           echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
                                   "&item_preco=" . $item->item_preco_atual . 
                                   "&item_nome=" . $item->item_nome .
-                                 "&item_img=" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . ".jpg" . "'"
+                                 "&item_img=" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img .  "'"
                                   . "class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
                           echo "</div>";
                           echo "</div>";

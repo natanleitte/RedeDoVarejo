@@ -70,11 +70,17 @@ body {
 /* TYPOGRAPHY + GLOBAL CLASS
 /* =============================================================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h5, h6 {
 	font-family: 'Source Sans Pro', sans-serif;
 	font-weight: normal;
 	margin: 0;
 	padding-bottom: 15px;
+}
+h4{ //criado em 01/11/2014, separei dos que estão acima
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: normal;
+    margin: 0;
+    padding-bottom: 0px;
 }
 h1 {
 	font-size: 30px;
@@ -2503,7 +2509,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 }
 .item h4 {
 	margin: 0;
-	min-height: 45px;
+	min-height: 0px; //alterado de 45px para 0px em 01/11/2014
 	max-height: 80px;
 	overflow: hidden;
 	display: block;
