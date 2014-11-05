@@ -2,11 +2,6 @@
 
 class CategoriaModel extends CI_Model {
 
-    private $pro_codigo;
-    private $cat_codigo;
-    private $pro_nome;
-    private $pro_status;
-
     function __construct() {
         parent::__construct();
     }
@@ -25,5 +20,10 @@ class CategoriaModel extends CI_Model {
     function obterConsulta($consulta){
         $this->load->database();
         return $this->db->query($consulta);
+    }
+    
+     function obter($cat_codigo) {
+        $this->load->database();
+        return $this->db->query('SELECT * FROM categoria WHERE cat_codigo = ' . $cat_codigo);
     }
 }

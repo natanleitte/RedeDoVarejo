@@ -1,4 +1,3 @@
-  
 </div>
 <!-- /.Fixed navbar  --><div class="container main-container headerOffset">
   <div class="row">

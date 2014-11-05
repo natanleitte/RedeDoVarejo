@@ -1,3 +1,35 @@
+<script>
+$( document ).ready(function() {
+  // Handler for .ready() called.
+  var totalCompra = $("#totalCompra").val();
+  if(totalCompra < 50)
+  {
+  $("#msgAlerta").append("<div class='alert alert-warning alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
+<strong>Atenção!</strong> A compra precisa ter um valor total de, pelo menos, R$ 50, 00.");
+  }
+});
+
+function verificaValor()
+{
+    var totalCompra = $("#totalCompra").val();
+    
+  if(totalCompra < 50)
+  {
+  $("#msgAlerta").append("<div class='alert alert-danger alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
+<strong>Atenção!</strong> A compra precisa ter um valor total de, pelo menos, R$ 50, 00.");
+  $('html, body').scrollTop(0);
+  }
+  else
+  {
+      var urlSubmit = $("#urlSubmit").val();
+      window.location.href = urlSubmit + 'index.php/site/index/salvarCompra';
+  }
+   return false; 
+}
+
+</script>
+
+<input type="hidden" id="urlSubmit" value="<?php echo base_url();?>"
 <!-- /.Fixed navbar  --><div class="container main-container headerOffset">
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
@@ -8,6 +40,8 @@
       </ul>
     </div>
   </div>
+    
+  <div id="msgAlerta"></div>
   
   
   <div class="row">
@@ -50,7 +84,7 @@
                         <div class="panel-body">
                           <p>Desejo pagar na entrega.</p>
                           <br>
-                          <div class="pull-right"> <a href="<?php echo base_url() . "index.php/site/index/salvarCompra" ?>" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+                          <div class="pull-right"> <a onclick="javascript: verificaValor();" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
                         </div>
                       </div>
                     </div>
@@ -68,7 +102,7 @@
                             <strong>Agência:</strong> 29070-1 <br/>  
                             <strong>Conta Corrente:</strong> 31.267-3 <br/>     
                           </div>
-                          <div class="pull-right"> <a href="checkout-5.html" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
+                          <div class="pull-right"> <a onclick="javascript: verificaValor();" class="btn btn-primary btn-small " > Finalizar &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
                         </div>
                       </div>
                     </div>
@@ -117,6 +151,7 @@
                         </div>
                       </div>
                     </div>
+                      <div id="teste"></div>
 <!--                    <div class="panel panel-default">
                       <div class="panel-heading panel-heading-custom">
                         <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> <span class="numberCircuil">Option 3</span> <strong> MasterCard</strong> </a> </h4>
@@ -240,13 +275,15 @@
             $totalCompra += ($item['price'] * $item['qty']);
         }
     ?>
+    <input type="hidden" id="totalCompra" value="<?php echo $totalCompra?>">
+    
     <div class="col-lg-3 col-md-3 col-sm-12 rightSidebar">
       <div class="w100 cartMiniTable">
         <table id="cart-summary" class="std table">
                                     <tbody>
                                     <tr >
                                       <td>Total da compra</td>
-                                      <td class="price" >R$ <?php echo $totalCompra ?></td>
+                                      <td class="price" >R$ <?php echo number_format($totalCompra, 2, ',', '.') ?></td>
                                     </tr>
                                     <tr  style="">
                                       <?php
@@ -262,7 +299,7 @@
                                         }
                                       ?>
                                       <td>Frete</td>
-                                      <td class="price" ><span class="success">R$ <?php echo $bairro_frete; ?>.00</span></td>
+                                      <td class="price" ><span class="success">R$ <?php echo number_format($bairro_frete, 2, ',', '.'); ?></span></td>
                                     </tr>
 <!--                                    <tr class="cart-total-price ">
                                       <td>Total (tax excl.)</td>
@@ -274,7 +311,7 @@
                                     </tr>-->
                                     <tr >
                                       <td > Total </td>
-                                      <td class=" site-color" id="total-price"> R$ <?php echo $totalCompra + $bairro_frete ?></td>
+                                      <td class=" site-color" id="total-price"> R$ <?php echo number_format($totalCompra + $bairro_frete, 2, ',', '.') ?></td>
                                     </tr>
                                     
                                                                          

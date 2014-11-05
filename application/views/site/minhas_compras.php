@@ -23,8 +23,7 @@
           <table class="footable">
             <thead>
               <tr>
-                <th data-class="expand" data-sort-initial="true"> <span title="table sorted by this column on load">ID da Compra</span> </th>
-                <th data-hide="phone,tablet" data-sort-ignore="true">Num Itens</th>
+                <th data-class="expand" data-sort-initial="true"> <span title="table sorted by this column on load">ID</span> </th>
                 <th data-hide="default"> Total </th>
                 <th data-hide="default" data-type="numeric"> Data </th>
                 <th data-hide="phone" data-type="numeric"> Status Pagamento </th>
@@ -38,133 +37,51 @@
                 {
                                        
                     echo "<tr>";
-                    echo "<td>" . $compra->com_codigo . "</td>";
-                    echo "<td>5 <small>item(s)</small></td>";
-                    echo "<td>$403 </td>";
+                    echo "<td><a href=" . base_url() . "index.php/site/index/compra/?com_codigo=" . $compra->com_codigo . ">#" . $compra->com_codigo . "</a></td>";
+                    echo "<td>".  number_format($compra->com_valor_total, 2, ',', '.') . "</td>";
                     $date = new DateTime($compra->com_data);
                     echo "<td data-value='78025368997'>" . $date->format('d-m-Y H:i:s') . "</td>";
-                    echo "<td data-value='3'><span class='label label-success'>Done</span></td>";
-                    echo "<td data-value='3'><span class='label label-default'>À entregar</span></td>";                    
+                    //Pagamento
+                    if($compra->pag_codigo == 1)
+                    {
+                        echo "<td data-value='3'><span class='label label-primary'>Aguardando pagamento</span></td>";
+
+                    }
+                    else if($compra->pag_codigo == 2)
+                    {
+                       echo "<td data-value='3'><span class='label label-success'>Paga</span></td>"; 
+                    }
+                    else
+                    {
+                       echo "<td data-value='3'><span class='label label-danger'>Cancelada</span></td>";
+                    }
+                    //Entrega
+                    if($compra->ent_codigo == 1)
+                    {
+                        echo "<td data-value='3'><span class='label label-primary'>À entregar</span></td>";
+                    }
+                    else if($compra->ent_codigo == 2)
+                    {
+                       echo "<td data-value='3'><span class='label label-default'>Em trânsito</span></td>"; 
+                    }
+                    else
+                    {
+                       echo "<td data-value='3'><span class='label label-success'>Entregue</span></td>"; 
+                    }
+                                        
                     echo "</tr>";
                     
                 }
                 ?>
-<!--              <tr>
-                <td>#028DE</td>
-                <td>5 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Bank Wire</td>
-                <td>$403 </td>
-                <td data-value="78025368997">22 Jun 2014</td>
-                <td data-value="3"><span class="label label-success">Done</span></td>
-              </tr>
-              <tr>
-                <td>#045YU</td>
-                <td>2 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Bank Wire</td>
-                <td>$105 </td>
-                <td data-value="-100297281571">28 Oct 2014</td>
-                <td data-value="1"><span class="label label-primary">Pending</span></td>
-              </tr>
-              <tr>
-                <td>#08UJL</td>
-                <td>6 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td><a target="_blank" >PayPal</a></td>
-                <td><a target="_blank" >$550 </a></td>
-                <td data-value="370961043292">3 Oct 2014</td>
-                <td data-value="2"><span class="label label-success">Done</span></td>
-              </tr>
-              <tr>
-                <td>#09ydo</td>
-                <td>1 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Paypal</td>
-                <td>$34 </td>
-                <td data-value="-22133780420">19 Apr 2014</td>
-                <td data-value="1"><span class="label label-primary">Pending</span></td>
-              </tr>
-              <tr>
-                <td>#EC089</td>
-                <td>8 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>MasterCard</td>
-                <td>$1108</td>
-                <td data-value="250833505574">13 Dec 2014</td>
-                <td data-value="3"><span class="label label-danger">Cancel</span></td>
-              </tr>
-              <tr>
-                <td>#OH746</td>
-                <td>4 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Bank Wire</td>
-                <td>$669 </td>
-                <td data-value="694116650726">30 Dec 2014</td>
-                <td data-value="3"><span class="label label-danger">Cancel</span></td>
-              </tr>
-              <tr>
-                <td>#04628J</td>
-                <td>11 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Bank Wire</td>
-                <td>$400 </td>
-                <td data-value="561440464855">17 Oct 2014</td>
-                <td data-value="2"><span class="label label-default">Disable</span></td>
-              </tr>
-              <tr>
-                <td>#046738</td>
-                <td>2 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td><a target="_blank" >PayPal</a></td>
-                <td>$403 </td>
-                <td data-value="437400551390">11 Nov 2014</td>
-                <td data-value="3"><span class="label label-danger">Cancel</span></td>
-              </tr>
-              <tr>
-                <td>#08CRIS</td>
-                <td>3 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Paypal</td>
-                <td>$105 </td>
-                <td data-value="-257733999319">1 Nov 2014</td>
-                <td data-value="3"><span class="label label-danger">Cancel</span></td>
-              </tr>
-              <tr>
-                <td>#1939HI</td>
-                <td>5 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>MasterCard</td>
-                <td><a target="_blank" >$550 </a></td>
-                <td data-value="362134712000">23 Jun 2014</td>
-                <td data-value="1"><a target="_blank" ><span class="label label-primary">Pending</span></a></td>
-              </tr>
-              <tr>
-                <td>#518JOK</td>
-                <td>1 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Bank Wire</td>
-                <td>$34 </td>
-                <td data-value="751149063430">20 Oct 1993</td>
-                <td data-value="2"><span class="label label-default">Disable</span></td>
-              </tr>
-              <tr>
-                <td>Isidra</td>
-                <td>12 <small>item(s)</small></td>
-                <td><a target="_blank" >-</a></td>
-                <td>Bank Wire</td>
-                <td>$1108</td>
-                <td data-value="550552096836">13 Jun 1987</td>
-                <td data-value="3"><span class="label label-danger">Cancel</span></td>
-              </tr>-->
+
             </tbody>
           </table>
         </div>
         
         <div class="col-lg-12 clearfix">
           <ul class="pager">
-            <li class="previous pull-right"><a href="index.html"> <i class="fa fa-home"></i> Go to Shop </a></li>
-            <li class="next pull-left"><a href="account.html"> &larr; Back to My Account</a></li>
+            <li class="previous pull-right"><a href="<?php echo base_url() . "index.php/site/index/" ?>"> <i class="fa fa-home"></i> Home </a></li>
+            <li class="next pull-left"><a href="<?php echo base_url() . "index.php/site/index/minha_conta" ?>"> &larr; Voltar para Minha Conta</a></li>
           </ul>
         </div>
       </div>

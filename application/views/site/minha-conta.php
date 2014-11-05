@@ -24,14 +24,14 @@
               <div class="thumbnail equalheight"> <a title="My addresses" href="my-address.html"><i  class="fa fa-map-marker"></i> Endereços</a> </div>
             </li>
             <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
-              <div class="thumbnail equalheight"> <a title="Add  address" href="add-address.html"> <i  class="fa fa-edit"> </i> Add  address</a> </div>
+              <div class="thumbnail equalheight"> <a title="Add  address" href="<?php echo base_url() . "index.php/site/index/adicionarEndereco" ?>"> <i  class="fa fa-edit"> </i> Adicionar Endereço</a> </div>
             </li>
             <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
-              <div class="thumbnail equalheight"> <a title="Personal information" href="user-information.html"><i class="fa fa-cog"></i> Dados Pessoais</a> </div>
+              <div class="thumbnail equalheight"> <a title="Personal information" href="<?php echo base_url() . "index.php/site/index/dados_pessoais"?>"><i class="fa fa-cog"></i> Dados Pessoais</a> </div>
             </li>
-            <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
+<!--            <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
               <div class="thumbnail equalheight"> <a title="My wishlists" href="wishlist.html"><i class="fa fa-heart"></i> Favoritos </a> </div>
-            </li>
+            </li>-->
           </ul>
           <div class="clear clearfix"> </div>
         </div>

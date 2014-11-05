@@ -39,7 +39,7 @@
             <?php
             foreach($categorias->result() as $categoria)
             {
-                echo "<li> <a href='index.html'>" . $categoria->cat_nome . "</a> </li>";
+                echo "<li> <a href='" .base_url() . "index.php/site/index/categoria'>" . $categoria->cat_nome . "</a> </li>";
 
             }
             ?>
@@ -52,7 +52,7 @@
           </h3>
           <ul>
             <li> <a href="<?php echo base_url() . "index.php/site/index/quem_somos" ?>"> Quem Somos </a> </li>
-            <li> <a href="<?php echo base_url() . "index.php/site/index/temos_condicoes" ?>"> Termos &amp; Condições </a> </li>
+            <li> <a href="<?php echo base_url() . "index.php/site/index/termos_condicoes" ?>"> Termos &amp; Condições </a> </li>
             <li> <a href="#"> Áreas Atendidas </a> </li>
           </ul>
         </div>

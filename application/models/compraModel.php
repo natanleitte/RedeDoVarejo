@@ -33,4 +33,10 @@ class CompraModel extends CI_Model {
         $this->db->where('cli_codigo', $cli_codigo);
         return $this->db->get('compra');
     }
+    
+    function obterPorComCodigo($com_codigo){
+        $this->load->database();
+        $this->db->where('com_codigo', $com_codigo);
+        return $this->db->get('compra');
+    }
 }

@@ -42,36 +42,36 @@
           <hr class="hr hr30">
           <div class="row animated">
             <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
-              <img class="img-responsive" src="images/site/girl1.jpg" alt="img">
-              <h3 class="block-title-3">
-                Missão
-              </h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat hendrerit dictum. Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-              </p>
-              
-              
-              
-            </div>
-            
-            <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
-              <img class="img-responsive" src="images/site/girl2.jpg" alt="img">
+              <!--<img class="img-responsive" src="images/site/girl1.jpg" alt="img">-->
               <h3 class="block-title-3">
                 Visão
               </h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat hendrerit dictum. Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                Facilitar o cotidiano de nossos clientes garantindo a excelência na entrega de produtos e serviço.
+              </p>
+              
+              
+              
+            </div>
+            
+            <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
+              <!--<img class="img-responsive" src="images/site/girl2.jpg" alt="img">-->
+              <h3 class="block-title-3">
+                Missão
+              </h3>
+              <p>
+                Estar entre os principais do mercado e ser referência de excelência em produtos e serviços de varejo aumentando assim nossa rede com franquias.
               </p>
               
             </div>
             
             <div class="col-lg-4 col-md-4 col-sm-6 col-sm-6">
-              <img class="img-responsive" src="images/site/girl3.jpg" alt="img">
+              <!--<img class="img-responsive" src="images/site/girl3.jpg" alt="img">-->
               <h3 class="block-title-3">
                 Valores 
               </h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat hendrerit dictum. Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                Satisfação do Cliente - Ele é a razão da existência de qualquer negócio.
               </p>
               
             </div>

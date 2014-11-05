@@ -986,14 +986,14 @@ foreach ($prod->result() as $pro) {
 //                          echo "<div class='list-description'>";
 //                          echo "<p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>";
 //                          echo "</div>";
-//                          foreach($tipo_medida->result() as $medida)
-//                          {
-//                              if($item->tpmed_codigo == $medida->tpmed_codigo)
-//                              {
-//                                echo $medida->tpmed_codigo;
-//                              }
-//                          }
-                          echo "<span class='size'>" . $item->item_medida . " "  . "</span>";
+                          foreach($tipo_medida->result() as $medida)
+                          {
+                              if($item->tpmed_codigo == $medida->tpmed_codigo)
+                              {
+                                $med = $medida->tpmed_nome;
+                              }
+                          }
+                          echo "<span class='size'>" . $item->item_medida . " " . $med . "</span>";
                           echo "</div>";
                           if($item->item_preco_antigo != null && $item->item_preco_antigo != 0)
                           {

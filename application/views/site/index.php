@@ -115,7 +115,18 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                           
                           echo "</div>";
                           echo "<div class='description'>";
-                          echo "<h4><a href='product-details.html'>" . $item->item_nome . "</a></h4>";
+                          echo "<h4><a>" . $item->item_nome . "</a></h4>";
+                          echo "<div class='grid-description'>";
+                          echo "" . $item->item_descricao;
+                          echo "</div>";
+                          foreach($tipo_medida->result() as $medida)
+                          {
+                              if($item->tpmed_codigo == $medida->tpmed_codigo)
+                              {
+                                $med = $medida->tpmed_nome;
+                              }
+                          }
+                          echo "<span class='size'>" . $item->item_medida . " " . $med . "</span>";
 //                          echo "<div class='grid-description'>";
 //                          echo "<p>" . $item->item_descricao . "</p>";
 //                          echo "</div>";
@@ -208,7 +219,18 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                           }
                           echo "</div>";
                           echo "<div class='description'>";
-                          echo "<h4><a href='product-details.html'>" . $item->item_nome . "</a></h4>";
+                          echo "<h4><a>" . $item->item_nome . "</a></h4>";
+                          echo "<div class='grid-description'>";
+                          echo "" . $item->item_descricao;
+                          echo "</div>";
+                          foreach($tipo_medida->result() as $medida)
+                          {
+                              if($item->tpmed_codigo == $medida->tpmed_codigo)
+                              {
+                                $med = $medida->tpmed_nome;
+                              }
+                          }
+                          echo "<span class='size'>" . $item->item_medida . " " . $med . "</span>";
 //                          echo "<div class='grid-description'>";
 //                          echo "<p>" . $item->item_descricao . "</p>";
 //                          echo "</div>";

@@ -51,15 +51,78 @@
             };
         </script>
 
+        <script>
+         function validaRegistro()
+            {
+                var urlTeste = $("#urlTeste").val();
+                var senha = $("#senhaRegistro").val();
+                var confirmaSenha = $("#confirmaSenhaRegistro").val();
+                var emailRegistro = $("#emailRegistro").val();
+//                alert(emailRegistro);
+                $.ajax({
+                type: 'POST',
+                url: urlTeste + 'index.php/site/cliente/inserir',
+                data: {email: emailRegistro, senha: senha, confirmaSenha: confirmaSenha},
+                
+                success: function(data){
+                    if(data === 'senha')
+                    {
+                        $("#msgRegistro").append("<div class='alert alert-danger alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
+<strong>Atenção!</strong> As senhas são diferentes.");
+                        return;
+                    }
+                    if(data === 'email')
+                    {
+                        $("#msgRegistro").append("<div class='alert alert-danger alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
+<strong>Atenção!</strong> Email inválido.");
+                        return;
+                    }
+//                    alert(data);
+                    window.location = urlTeste + 'index.php/site/index/dados_pessoais';
+                   
+                },
+                dataType: 'text'
+            });
+            }
+            
+            function validaLogin()
+            {
+                var email = $("#emailLogin").val();
+                var senha = $("#senhaLogin").val();
+                var urlTeste = $("#urlTeste").val();
+
+                $.ajax({
+                type: 'POST',
+                url: urlTeste + 'index.php/site/cliente/login',
+                data: {email: email, senha: senha},
+                
+                success: function(data){
+                    if(data === 'erro')
+                    {
+                        $("#msgLogin").append("<div class='alert alert-danger alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
+<strong>Atenção!</strong> Email ou senha inválidos.");
+                        return;
+                    }
+                    
+//                    alert(data);
+                    window.location = urlTeste + 'index.php/site/index/';
+                   
+                },
+                dataType: 'text'
+            });
+            }
+        </script>
+        
         <script src="<?php echo base_url() . $prefixLayout . 'assets/js/pace.min.js' ?>"></script>
+        
         
         
         
     </head>
     <body>
-
+        
         <!-- Modal Login start -->
-
+        <input type="hidden" value="<?php echo base_url();?>" id="urlTeste">
         <div class="modal signUpContent fade"id="ModalLogin" tabindex="-1" role="dialog" >
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -73,15 +136,15 @@
                         echo form_open('index.php/site/cliente/login', $attributes); ?>
                         
                         <!--<form action="index.php/site/cliente/login" id='loginFormt' method="post">-->
-
+                        <div id="msgLogin"></div>
                         <div class="form-group login-username">
                             <div >
-                                <input name="email" id="email" class="form-control input"  size="20" placeholder="Email" type="text">
+                                <input name="email" id="emailLogin" id="email" class="form-control input"  size="20" placeholder="Email" type="text">
                             </div>
                         </div>
                         <div class="form-group login-password">
                             <div >
-                                <input name="senha" id="login-password" class="form-control input"  size="20" placeholder="Senha" type="password">
+                                <input name="senha" id="senhaLogin" class="form-control input"  size="20" placeholder="Senha" type="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -95,7 +158,7 @@
                         </div>
                         <div >
                             <div >
-                                <input name="submit" type="submit" class="btn  btn-block btn-lg btn-primary" value="LOGIN">
+                                <input name="submit" onclick="javascript: validaLogin();" class="btn  btn-block btn-lg btn-primary" value="LOGIN">
                             </div>
                         </div>
                         <!--userForm--> 
@@ -133,14 +196,20 @@
                                 <input name="login"  class="form-control input"  size="20" placeholder="Login" type="text">
                             </div>
                         </div>-->
+                        <div id="msgRegistro"></div>
                         <div class="form-group reg-email">
                             <div >
-                                <input name="email"  class="form-control input"  size="20" placeholder="Email" type="text">
+                                <input name="email" id="emailRegistro" class="form-control input"  size="20" placeholder="Email" type="text">
                             </div>
                         </div>
                         <div class="form-group reg-password">
                             <div >
-                                <input name="senha"  class="form-control input"  size="20" placeholder="Senha" type="password">
+                                <input name="senha" id="senhaRegistro" class="form-control input"  size="20" placeholder="Senha" type="password">
+                            </div>
+                        </div>
+                        <div class="form-group reg-password">
+                            <div >
+                                <input name="confirmaSenha" id="confirmaSenhaRegistro" class="form-control input"  size="20" placeholder="Senha" type="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -154,7 +223,7 @@
                         </div>
                         <div >
                             <div >
-                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="REGISTER" type="submit">
+                                <input name="submit" class="btn  btn-block btn-lg btn-primary" value="REGISTRAR" onclick="javascript: validaRegistro();">
                             </div>
                         </div>
                         <!--userForm--> 
@@ -198,6 +267,10 @@
                                     <li> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra1" ?>"> Finalizar Compra </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalLogin"> Entrar </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalSignup"> Criar Conta </a> </li>
+                                    <li class="phone-number"> 
+                                        <a  href="callto:+8801680531352"> 
+                                            <span> <i class="fa fa-user "></i></span> 
+                                            <span class="hidden-xs" style="margin-left:5px">asdlkfajsdlkfsjad </span> </a> </li>
                                 </ul>
                             </div>
                         </div>
@@ -558,7 +631,7 @@
 
                                 <div class="miniCartFooter text-right">
                                     <h3 class="text-right subtotal"> Subtotal: R$ <?php echo $totalCompra ?> </h3>
-                                    <a class="btn btn-sm btn-danger" href="<?php echo base_url()?>index.php/site/index/carrinho"> 
+                                    <a class="btn btn-sm btn-danger" href="<?php echo base_url() . "index.php/site/index/carrinho"?>"> 
                                         <i class="fa fa-shopping-cart"> </i> VER </a> 
                                     <a class="btn btn-sm btn-primary" href="<?php echo base_url() . "index.php/site/index/finalizar_compra1"?>"> FINALIZAR </a> 
                                 </div> <!--/.miniCartFooter-->

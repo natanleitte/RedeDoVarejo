@@ -41,6 +41,7 @@ class Index extends CI_Controller {
         $this->load->model('itemModel');
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
+        $this->load->model('tipoMedidaModel');
 
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
@@ -48,6 +49,7 @@ class Index extends CI_Controller {
         $data['prod'] = $this->produtoModel->obter($pro_codigo);
         $data['itens'] = $this->itemModel->obterTodos();
 
+        $data['tipo_medida'] = $this->tipoMedidaModel->obterTodos();
 //        $data['itens'] = $this->itemModel->obterTodos();
 
 
@@ -281,10 +283,19 @@ class Index extends CI_Controller {
     {
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
+        $this->load->model('enderecoModel');
+        
+        //para fazer o select do bairro
+        $this->load->model('bairroModel');
+        $data['bairros'] = $this->bairroModel->obterTodos();
 
+        //Para buuscar o endereço do cliente
+        $cli_codigo = $this->session->userdata('cli_codigo');
+        
         //data para header
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
+        $data['endereco'] = $this->enderecoModel->obterPorCliente($cli_codigo);
         
         $this->load->view('site/header', $data);
         $this->load->view('site/adicionarEndereco');
@@ -427,8 +438,15 @@ class Index extends CI_Controller {
 
 //        $this->load->model('compraItemModel');
 
+        $totalCompra = 0;
+        foreach ($this->cart->contents() as $item) {
+            $totalCompra += ($item['price'] * $item['qty']);
+        }
         $cli_codigo = $this->session->userdata('cli_codigo');
         $data['cli_codigo'] = $cli_codigo;
+        $data['ent_codigo'] = 1;
+        $data['pag_codigo'] = 1;
+        $data['com_valor_total'] = $totalCompra;
         $com_codigo = $this->compraModel->inserir($data);
         
         foreach ($this->cart->contents() as $item) {
@@ -439,7 +457,7 @@ class Index extends CI_Controller {
              $com_item_codigo = $this->compraItemModel->inserirEspec($com_codigo, $item['id'], $item['qty']);
 //             echo "com_item_codigo " . $com_item_codigo . "<br>"; 
         }
-//        $this->cart->destroy();
+        $this->cart->destroy();
         echo $com_codigo;
         
         //redireciona para visualizar a compra
@@ -470,6 +488,8 @@ class Index extends CI_Controller {
         $this->load->model('produtoModel');
         $this->load->model('itemModel');
         $this->load->model('compraItemModel');
+        $this->load->model('compraModel');
+        
 
         //data para header
         $data['categorias'] = $this->categoriaModel->obterTodos();
@@ -477,6 +497,7 @@ class Index extends CI_Controller {
         $data['itens'] = $this->itemModel->obterTodos();
         
         $com_codigo = $this->input->get('com_codigo'); // recupera a informação via get
+        $data['compra'] = $this->compraModel->obterPorComCodigo($com_codigo);
         $data['compra_itens'] = $this->compraItemModel->obterPorComCodigo($com_codigo);
         
         $this->load->view('site/header', $data);
@@ -521,5 +542,58 @@ class Index extends CI_Controller {
         $this->load->view('site/footer', $data);
     }
     
+    function testeJson()
+    {
+        $senha = $this->input->post('senha');
+        $confirmaSenha = $this->input->post('confirmaSenha');
+        
+        if(strcmp($senha,$confirmaSenha) != 0)
+        {
+            echo 0;
+            return;
+        }
+        
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+        $this->load->model('compraModel');
+        $this->load->model('compraItemModel');
+
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $cli_codigo = $this->session->userdata('cli_codigo');
+
+        $data['compras'] = $this->compraModel->obterPorCliente($cli_codigo);
+        $data['compra_itens'] = $this->compraItemModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/minhas_compras');
+        $this->load->view('site/footer', $data);
+//        echo "entrei";
+//        echo json_encode(array('status' => 'error'));
+    }
+    
+    function categoria()
+    {
+        $this->load->model('itemModel');
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+        $this->load->model('tipoMedidaModel');
+
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+
+//        $data['cat'] = $this->categoriaModel->obter($cat_codigo);
+        $data['itens'] = $this->itemModel->obterTodos();
+
+        $data['tipo_medida'] = $this->tipoMedidaModel->obterTodos();
+//        $data['itens'] = $this->itemModel->obterTodos();
+
+        $this->load->view('site/header', $data);
+        $this->load->view('site/categoria', $data);
+        $this->load->view('site/footer', $data); //Tirei porque estava BUGANDO
+    }
     
 }
