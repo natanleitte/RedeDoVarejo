@@ -3,11 +3,15 @@
 <div class="row">
   
    <div class="breadcrumbDiv col-lg-12">
-        <ul class="breadcrumb">
-          <li> <a href="index.html">Home</a> </li>
-          <li> <a href="account.html">My Account</a> </li>
-          <li class="active"> Add Address </li>
-        </ul>
+       <div class="row">
+    <div class="breadcrumbDiv col-lg-12">
+      <ul class="breadcrumb">
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/minha_conta"?>">Minha Conta</a> </li>
+        <li class="active"> Endereço </li>
+      </ul>
+    </div>
+  </div>
       </div>
       </div>
   

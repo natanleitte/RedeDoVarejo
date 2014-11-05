@@ -3,9 +3,9 @@
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li> <a href="account.html">My Account</a> </li>
-        <li class="active"> Order List </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/minha_conta"?>">Minha Conta</a> </li>
+        <li class="active"> Minhas Compras </li>
       </ul>
     </div>
   </div>
@@ -24,7 +24,7 @@
             <thead>
               <tr>
                 <th data-class="expand" data-sort-initial="true"> <span title="table sorted by this column on load">ID</span> </th>
-                <th data-hide="default"> Total </th>
+                <th data-hide="default"> Total</th>
                 <th data-hide="default" data-type="numeric"> Data </th>
                 <th data-hide="phone" data-type="numeric"> Status Pagamento </th>
                 <th data-hide="phone" data-type="numeric"> Status Entrega </th>
@@ -38,7 +38,7 @@
                                        
                     echo "<tr>";
                     echo "<td><a href=" . base_url() . "index.php/site/index/compra/?com_codigo=" . $compra->com_codigo . ">#" . $compra->com_codigo . "</a></td>";
-                    echo "<td>".  number_format($compra->com_valor_total, 2, ',', '.') . "</td>";
+                    echo "<td>R$ ".  number_format($compra->com_valor_total, 2, ',', '.') . "</td>";
                     $date = new DateTime($compra->com_data);
                     echo "<td data-value='78025368997'>" . $date->format('d-m-Y H:i:s') . "</td>";
                     //Pagamento

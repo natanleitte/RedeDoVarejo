@@ -16,9 +16,9 @@
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li> <a href="cart.html">Cart</a> </li>
-        <li class="active"> Checkout </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/carrinho"?>">Carrinho</a> </li>
+        <li class="active"> Finalizar Compra </li>
       </ul>
     </div>
   </div>

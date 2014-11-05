@@ -5,9 +5,9 @@
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html"> Home </a> </li>
-        <li> <a href="account-1.html"> Authentication </a> </li>
-        <li class="active"> Forgot your password </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>"> Home </a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/login"?>"> Autenticação </a> </li>
+        <li class="active"> Esqueci Minha Senha </li>
       </ul>
     </div>
   </div>

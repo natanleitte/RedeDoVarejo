@@ -36,15 +36,15 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
 
 
     <div class="container main-container headerOffset">
-        <div class="row">
-            <div class="breadcrumbDiv col-lg-12">
-                <ul class="breadcrumb">
-                    <li> <a href="index.html">Home</a> </li>
-                    <li> <a href="category.html">Category</a> </li>
-                    <li class="active">Cart </li>
-                </ul>
-            </div>
-        </div><!--/.row-->
+    <div class="row">
+    <div class="breadcrumbDiv col-lg-12">
+      <ul class="breadcrumb">
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/categoria"?>">Categorias</a> </li>
+        <li class="active"> Carrinho </li>
+      </ul>
+    </div>
+  </div><!--/.row-->
 
         <div class="row">
             <div class="col-lg-9 col-md-9 col-sm-7">

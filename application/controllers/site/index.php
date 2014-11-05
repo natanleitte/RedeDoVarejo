@@ -508,6 +508,12 @@ class Index extends CI_Controller {
     
     function minha_conta()
     {
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+//            $this->login();
+        }
+        
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
 

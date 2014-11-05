@@ -34,9 +34,9 @@ function verificaValor()
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li> <a href="cart.html">Cart</a> </li>
-        <li class="active"> Checkout </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/carrinho"?>">Carrinho</a> </li>
+        <li class="active"> Finalizar Compra </li>
       </ul>
     </div>
   </div>
@@ -152,104 +152,11 @@ function verificaValor()
                       </div>
                     </div>
                       <div id="teste"></div>
-<!--                    <div class="panel panel-default">
-                      <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> <span class="numberCircuil">Option 3</span> <strong> MasterCard</strong> </a> </h4>
-                      </div>
-                      <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                          <p>All transactions are secure and encrypted, and we neverstor To learn more, please view our privacy policy.</p>
-                          <br>
-                          <div class="panel open">
-                            <div class="creditCard">
-                              <div class="cartBottomInnerRight paymentCard"> 
-                              </div>
-                              <span>Supported</span> <span>Credit Cards</span>
-                              <div class="paymentInput">
-                                <label for="CardNumber">Credit Card Number *</label>
-                                <br>
-                                <input id="CardNumber" type="text" name="Number">
-                              </div>
-                              paymentInput
-                              <div class="paymentInput">
-                                <label for="CardNumber2">Name on Credit Card *</label>
-                                <br>
-                                <input type="text" name="CardNumber2" id="CardNumber2">
-                              </div>
-                              paymentInput
-                              <div class="paymentInput">
-                                <div class="form-group">
-                                  <label>Expiration date *</label>
-                                  <br>
-                                  <div class="col-lg-4 col-md-4 col-sm-4 no-margin-left no-padding">
-                                    <select required aria-required="true" name="expire">
-                                      <option value="">Month</option>
-                                      <option value="1">01 - January</option>
-                                      <option value="2">02 - February</option>
-                                      <option value="3">03 - March</option>
-                                      <option value="4">04 - April</option>
-                                      <option value="5">05 - May</option>
-                                      <option value="6">06 - June</option>
-                                      <option value="7">07 - July</option>
-                                      <option value="8">08 - August</option>
-                                      <option value="9">09 - September</option>
-                                      <option value="10">10 - October</option>
-                                      <option value="11">11 - November</option>
-                                      <option value="12">12 - December</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <select required aria-required="true" name="year">
-                                      <option value="">Year</option>
-                                      <option value="2013">2013</option>
-                                      <option value="2014">2014</option>
-                                      <option value="2015">2015</option>
-                                      <option value="2016">2016</option>
-                                      <option value="2017">2017</option>
-                                      <option value="2018">2018</option>
-                                      <option value="2019">2019</option>
-                                      <option value="2020">2020</option>
-                                      <option value="2021">2021</option>
-                                      <option value="2022">2022</option>
-                                      <option value="2023">2023</option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              paymentInput
-                              
-                              <div style="clear:both"></div>
-                              <div class="paymentInput clearfix">
-                                <label for="VerificationCode">Verification Code *</label>
-                                <br>
-                                <input type="text" id="VerificationCode" name="VerificationCode" style="width:90px;">
-                                <br>
-                              </div>
-                              paymentInput
-                              
-                              <div>
-                                <input type="checkbox" name="saveInfo" id="saveInfoid">
-                                <label for="saveInfoid">&nbsp;Save my Card information</label>
-                              </div>
-                            </div>
-                            creditCard
-                            
-                            <div class="pull-right"> <a href="checkout-5.html" class="btn btn-primary btn-small " > Order &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>-->
+
                   </div>
                 </div>
                 <!--Será editado para mandar os dados corretos ao Pag seguro-->
 
-                <div class="alert alert-warning alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <strong>Warning!</strong> Better check yourself, you're not looking too good.
-  <br>
-  -Falta mais coisa<br>
-  -Ainda mais
-</div>
                 <!--/row--> 
                 
               </div>

@@ -267,10 +267,16 @@
                                     <li> <a href="<?php echo base_url() . "index.php/site/index/finalizar_compra1" ?>"> Finalizar Compra </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalLogin"> Entrar </a> </li>
                                     <li> <a  data-toggle="modal" data-target="#ModalSignup"> Criar Conta </a> </li>
-                                    <li class="phone-number"> 
-                                        <a  href="callto:+8801680531352"> 
-                                            <span> <i class="fa fa-user "></i></span> 
-                                            <span class="hidden-xs" style="margin-left:5px">asdlkfajsdlkfsjad </span> </a> </li>
+                                    <?php $username = $this->session->userdata('email');
+                                    if($username != null)
+                                    {
+                                        echo "<li class='phone-number'>"; 
+                                        echo "<a href='". base_url() ."index.php/site/cliente/logout'>"; 
+                                        echo "<span> <i class='fa fa-user '></i>" . $username . " - Sair</span>";
+                                        echo "<span class='hidden-xs' style='margin-left:5px'></span</a>";
+                                        echo "</li>";
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
@@ -451,7 +457,7 @@
                                 
                             </ul>
                         </li>
-                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Promoções <b class="caret"> </b> </a>
+<!--                        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Promoções <b class="caret"> </b> </a>
                             <ul class="dropdown-menu">
                                 <li class="megamenu-content "> 
 
@@ -459,22 +465,22 @@
                                         <li class="no-border">
                                             <p class="promo-1"> <strong> PROMOÇÕES </strong> </p>
                                         </li>
-                                        <?php
-                                        foreach ($categorias->result() as $categoria) {
-                                            echo "<li> <a href='category.html'>" . $categoria->cat_nome . "</a> </li>";
-                                        }
-                                        ?>
+                                        //<?php
+//                                        foreach ($categorias->result() as $categoria) {
+//                                            echo "<li> <a href='category.html'>" . $categoria->cat_nome . "</a> </li>";
+//                                        }
+//                                        ?>
                                     </ul>
                                     <ul class="col-lg-3  col-sm-3 col-md-3  col-xs-4">
                                         <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/promo1.jpg' ?>" alt="product"> 
+                                                <img class="img-responsive" src="<?php // echo base_url() . $prefixLayout . 'images/site/promo1.jpg' ?>" alt="product"> 
                                                 <span class="ProductMenuCaption"> 
                                                     <i class="fa fa-caret-right"> </i> JEANS </span> </a>
                                         </li>
                                     </ul>
                                     <ul class="col-lg-3  col-sm-3 col-md-3 col-xs-4">
                                         <li> <a class="newProductMenuBlock" href="product-details.html"> 
-                                                <img class="img-responsive" src="<?php echo base_url() . $prefixLayout . 'images/site/promo2.jpg' ?>" alt="product"> 
+                                                <img class="img-responsive" src="<?php // echo base_url() . $prefixLayout . 'images/site/promo2.jpg' ?>" alt="product"> 
                                                 <span class="ProductMenuCaption"> <i class="fa fa-caret-right"> </i> PARTY DRESS </span> 
                                             </a>
                                         </li>
@@ -488,7 +494,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
 
                         <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
                         <li class="dropdown"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Informações <b class="caret"> </b> </a>
@@ -506,7 +512,7 @@
                             </ul>
                         </li>
                         
-                        <li> <a href="#"> Receitas </a> </li>
+                        <!--<li> <a href="#"> Receitas </a> </li>-->
                         <li> <a href="<?php echo base_url()?>index.php/site/index/contato"> Contato </a> </li>
 
 

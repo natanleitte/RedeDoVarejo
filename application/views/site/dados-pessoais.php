@@ -3,9 +3,9 @@
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li> <a href="account.html">My Account</a> </li>
-        <li class="active"> My information </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/minha_conta"?>">Minha Conta</a> </li>
+        <li class="active"> Dados Pessoais</li>
       </ul>
     </div>
   </div>
