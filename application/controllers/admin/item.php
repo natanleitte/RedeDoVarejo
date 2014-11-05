@@ -5,14 +5,20 @@ class Item extends CI_Controller {
     public function index() {
         $this->load->model('itemmodel');
         $this->load->model('produtomodel');
+        $this->load->model('categoriamodel');
 
         $data['medida'] = $this->itemmodel->obterTipoMedida();
 
+        $data['categoria'] = $this->categoriamodel->obterTodos();
         $data['produto'] = $this->produtomodel->obterTodos();
 
-        $data['item'] = $this->itemmodel->obterConsulta("SELECT *
+        $query = $this->itemmodel->obterConsulta("SELECT *
         FROM item LEFT JOIN produto ON item.pro_codigo = produto.pro_codigo
         LEFT JOIN tipo_medida ON item.tpmed_codigo = tipo_medida.tpmed_codigo");
+
+        $data['totalRegistroConsulta'] = $query->num_rows();
+
+//        $data['item'] = $query;
 
         $this->load->view('admin/head');
         $this->load->view('admin/item', $data);
@@ -29,7 +35,7 @@ class Item extends CI_Controller {
 
         // Caminho de onde a imagem ficará
         $queryImg = $this->itemmodel->obtemPathNew($pro_codigo);
-        $imagem_dir = "assets/img/img-itens/" . $queryImg['categoria'] . "/" . $queryImg['produto'] . "/";
+        $imagem_dir = "assets/img/img-itens/" . utf8_decode($queryImg['categoria']) . "/" . utf8_decode($queryImg['produto']) . "/";
 
         //Configurações da imagem
         $config['upload_path'] = $imagem_dir;
@@ -65,6 +71,7 @@ class Item extends CI_Controller {
         $data['item_descricao'] = $this->input->post('item_descricao');
         $data['item_preco_antigo'] = $this->input->post('item_preco_antigo');
         $data['item_preco_atual'] = $this->input->post('item_preco_atual');
+        $data['item_preco_compra'] = $this->input->post('precoCompra');
         $data['item_status'] = 1;
         $data['item_medida'] = $this->input->post('item_medida');
         $data['item_novo'] = $this->input->post('item_novo');
@@ -89,6 +96,7 @@ class Item extends CI_Controller {
     public function jsonItem() {
         //carrega model
         $this->load->model('itemmodel');
+        $this->load->model('produtomodel');
 
         $editaCodigo = $this->input->post('var');
 
@@ -138,22 +146,20 @@ class Item extends CI_Controller {
 //            // Existem campos obrigatórios vazios.
 //            header('Location:' . base_url() . 'index.php/admin/item/item?error=' . urlencode('Existe(m) campo(s) vazio(s)!'));
 //        } else {
-
-            //Imagem foi alterada
-            $valida = $_FILES['userfile']['name'];
-            if (!empty($valida)) {
-                $data = Item::editarImagem($data);
-                $this->itemmodel->upDateData($data);
-                header('Location:' . base_url() . 'index.php/admin/item/item?succsses=' . urlencode('Edição realizada com sucesso!'));
-            } else {
-                $this->itemmodel->upDateData($data);
-                header('Location:' . base_url() . 'index.php/admin/item/item?succsses=' . urlencode('Edição realizada com sucesso!'));
-            }
+        //Imagem foi alterada
+        $valida = $_FILES['userfile']['name'];
+        if (!empty($valida)) {
+            $data = Item::editarImagem($data);
+            $this->itemmodel->upDateData($data);
+            header('Location:' . base_url() . 'index.php/admin/item/item?succsses=' . urlencode('Edição realizada com sucesso!'));
+        } else {
+            $this->itemmodel->upDateData($data);
+            header('Location:' . base_url() . 'index.php/admin/item/item?succsses=' . urlencode('Edição realizada com sucesso!'));
+        }
 //        }
     }
 
-    public function editarImagem($data)
-    {
+    public function editarImagem($data) {
         $this->load->model('itemmodel');
 
         $pathOld = $this->itemmodel->obtemPathOld($data['item_codigo']);
@@ -164,7 +170,7 @@ class Item extends CI_Controller {
             return $data;
         } else {
             $imagemNome = $this->itemmodel->obtemNomeImg($data['item_codigo']);
-            $imagem_dir = "assets/img/img-itens/" . $pathOld['categoria'] . "/" . $pathOld['produto'] . "/" . $imagemNome;
+            $imagem_dir = "assets/img/img-itens/" . utf8_decode($pathOld['categoria']) . "/" . utf8_decode($pathOld['produto']) . "/" . $imagemNome;
             //Remove o arquivo antigo
             unlink($imagem_dir);
             $data['item_img'] = Item::insereImagem($data['pro_codigo']);
@@ -172,22 +178,132 @@ class Item extends CI_Controller {
         }
     }
 
-    public function excluir()
-    {
+    public function excluir() {
         $this->load->model('itemmodel');
-        
+
         $itemCodigo = $this->input->post('item_codigo');
-        
+
         $pathOld = $this->itemmodel->obtemPathOld($itemCodigo);
         $imagemNome = $this->itemmodel->obtemNomeImg($itemCodigo);
-        $imagem_dir = "assets/img/img-itens/" . $pathOld['categoria'] . "/" . $pathOld['produto'] . "/" . $imagemNome;
-        
+        $imagem_dir = "assets/img/img-itens/" . utf8_decode($pathOld['categoria']) . "/" . utf8_decode($pathOld['produto']) . "/" . $imagemNome;
+
         //Remove o arquivo antigo
         unlink($imagem_dir);
-        
+
         $this->itemmodel->deleteItem($itemCodigo);
         header('Location:' . base_url() . 'index.php/admin/item/item?succsses=' . urlencode('Item excluído com sucesso!'));
     }
-}
 
-?>
+    public function geraPDF() {
+        $this->load->helper(array('dompdf', 'file'));
+        $this->load->model('itemmodel');
+
+        $data['cat_codigo'] = $this->input->post('cat_codigo');
+        $data['pro_codigo'] = $this->input->post('pro_codigo');
+        $data['item_status'] = $this->input->post('cat_codigo');
+
+        if ($data['cat_codigo'] == -1 && $data['pro_codigo'] == -1 && $data['item_codigo'] == -1) {
+            $item = $this->itemmodel->obterConsulta("SELECT *
+            FROM item i LEFT JOIN produto p ON i.pro_codigo = p.pro_codigo
+            LEFT JOIN categoria c ON p.cat_codigo = c.cat_codigo");
+        } else {
+            if ($data['pro_codigo'] == -1 && $data['item_codigo'] == -1) {
+                $item = $this->itemmodel->obterConsulta("SELECT * "
+                        . "FROM item i LEFT JOIN produto p ON i.pro_codigo = p.pro_codigo "
+                        . "LEFT JOIN categoria c ON c.cat_codigo = p.cat_codigo "
+                        . "WHERE cat_codigo=" . $data['cat_codigo']);
+            } else {
+                if ($data['item_status'] == -1) {
+                    $item = $this->itemmodel->obterConsulta("SELECT * "
+                            . "FROM item i LEFT JOIN produto p ON i.pro_codigo = p.pro_codigo "
+                            . "LEFT JOIN categoria c ON c.cat_codigo = p.cat_codigo "
+                            . "WHERE cat_codigo=" . $data['cat_codigo'] . " AND pro_codigo=" . $data['pro_codigo']);
+                } else {
+                    $item = $this->itemmodel->obterConsulta("SELECT * "
+                            . "FROM item i LEFT JOIN produto p ON i.pro_codigo = p.pro_codigo "
+                            . "LEFT JOIN categoria c ON c.cat_codigo = p.cat_codigo "
+                            . "WHERE cat_codigo=" . $data['cat_codigo'] . " AND pro_codigo=" . $data['pro_codigo'] . " AND item_status=" . $data['item_status']);
+                }
+            }
+        }
+
+        $HTML = $this->geraHTML($item->result());
+        pdf_create($HTML, "Tabela de Itens");
+    }
+
+    public function geraHTML($item) {
+        foreach ($item as $row) {
+            $texto .= "<tr>"+
+            "<td>" . $row->item_nome . "</td>".
+            //echo "<td>" . $row->pro_codigo . "</td>";
+            "<td>" . $row->pro_nome . "</td>".
+            "<td>" . $row->item_mercado . "</td>".
+            //echo "<td>" . $row->item_codigo . "</td>";
+            "<td>" . $row->item_descricao . "</td>".
+            "<td>" . $row->item_observacao . "</td>".
+            "<td>" . $row->item_medida . "</td>".
+            "<td>" . $row->tpmed_nome . "</td>".
+            "<td>" . 'R$' . number_format($row->item_preco_antigo, 2, ',', '.') . "</td>".
+            "<td>" . 'R$' . number_format($row->item_preco_atual, 2, ',', '.') . "</td>".
+            "<td>" . date('d/m/Y', strtotime($row->item_dt_promocao)) . "</td>".
+            "<td>" . (($row->item_novo == 1) ? 'Sim' : 'Não') . "</td>".
+            //                            echo "<td>" . $row->item_imagem_nome . "</td>";
+            "<td>" . (($row->item_status == 1) ? 'Ativo' : 'Inativo') . "</td>".
+            "</tr>";
+        }
+        $texto2 = '<html>
+        <head>
+        <style = "text/css">
+        body {
+            font-family: Calibri, DejaVu Sans, Arial;
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-size: 10px;
+        }
+        #tabela {
+        align: center
+        }
+        #exemplo {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        padding: 5px 0;
+        text-align: center;
+        background-color: #FF3333;
+        font-size: 17px;
+        color: #FFF;
+        </style>
+        </head>
+        <body>
+
+        <label>Informações da Compra:</label>
+        <table class = "tabela">
+        <tr>
+        <td><b>Nome Item</b></td>
+        <td><b>Nome Produto</b></td>
+        <td><b>Mercado</b></td>
+        <td><b>Descrição</b></td>
+        <td><b>Observação</b></td>
+        <td><b>Medida</b></td>
+        <td><b>Tipo da Medida</b></td>
+        <td><b>Preço Antigo</b></td>
+        <td><b>Preço Atual</b></td>
+        <td><b>Data de Promoção</b></td>
+        <td><b>Novidade?</b></td>
+        <td><b>Status</b></td>
+        <td><b>Editar</b></td>
+        <td><b>Excluir</b></td>
+        </tr>' .
+                $texto
+                . '<br>
+        </table>
+        <hr>
+        </div>
+        </body>
+        </html>';
+
+        return $texto2;
+    }
+
+}

@@ -6,8 +6,12 @@ class Pedidos extends CI_Controller{
     }
     
     public function index(){
+        $this->load->model('pedidosmodel');
+        
+        $data['compra'] = $this->pedidosmodel->obterCompras();
+        
         $this->load->view('admin/head');
-        $this->load->view('admin/pedidos');
+        $this->load->view('admin/pedidos', $data);
     }
     
 }

@@ -13,29 +13,29 @@ class Categoria extends CI_Controller {
         $this->load->helper('url');
         $this->load->view('admin/head');
         $this->load->view('admin/categoria', $data);
-//
     }
 
     public function inserir() {
         //carrega model
         $this->load->model('categoriamodel');
-        
+
         //recebe quantidade de Elementos inseridos na página
         $qtd = $this->input->post('qtdElementos');
 
         for ($i = 1; $i <= $qtd; $i++) {
             if ($i == 1) {
                 //pega o post de cat_nome
-                $data['cat_nome'] = $this->input->post('cat_nome');
-                $valida = $this->input->post('cat_nome');
+                $data['cat_nome'] = trim($this->input->post('cat_nome'));
+
+                $valida = trim($this->input->post('cat_nome'));
                 $cat_status = $this->input->post('cat_status');
                 $data['cat_status'] = (!strcmp($cat_status, "on")) ? 1 : 0;
             } else {
                 $elemento = "cat_nome" . $i . "";
                 $strStatus = "cat_status" . $i . "";
 
-                $data['cat_nome'] = $this->input->post($elemento);
-                $valida = $this->input->post($elemento);
+                $data['cat_nome'] = trim($this->input->post($elemento));
+                $valida = trim($this->input->post($elemento));
 
                 $cat_status = $this->input->post($strStatus);
 
@@ -57,7 +57,9 @@ class Categoria extends CI_Controller {
                 header('Location:' . base_url() . 'index.php/admin/categoria/categoria?error=' . urlencode('Categoria já existe!'));
             } else {
                 // Realiza a inserção da pasta com o nome da nova categoria
-                mkdir("assets/img/categoria/" . $data['cat_nome'], 0777);
+                $pathNome = utf8_decode($data['cat_nome']);
+                mkdir("assets/img/img-itens/" . $pathNome, 0777);
+                
 
                 // invoca método da model que insere no banco
                 $this->categoriamodel->inserir($data);
@@ -92,8 +94,8 @@ class Categoria extends CI_Controller {
         $this->load->model('categoriamodel');
 
         //Recebe os novos valores dos campos
-        $data['cat_nome'] = $this->input->post('cat_nome');
-        $pathNew = $this->input->post('cat_nome');
+        $data['cat_nome'] = trim($this->input->post('cat_nome'));
+        $pathNew = utf8_decode(trim($this->input->post('cat_nome')));
         $data['cat_codigo'] = $this->input->post('cat_codigo');
         $data['cat_status'] = $this->input->post('cat_status');
 
@@ -110,9 +112,10 @@ class Categoria extends CI_Controller {
             // Renomeia a pasta de categoria
             $query2 = $this->categoriamodel->obterConsulta('SELECT cat_nome FROM categoria WHERE cat_codigo=' . $data['cat_codigo']);
             foreach ($query2->result() as $row) {
-                $pathOld = $row->cat_nome;
+                $pathOld = utf8_decode($row->cat_nome);
             }
-            rename("assets/img/categoria/" . $pathOld, "assets/img/categoria/" . $pathNew);
+            
+            rename("assets/img/img-itens/" . $pathOld, "assets/img/img-itens/" . $pathNew);
 
             //Realiza a consulta (Editar Produto)
             $this->categoriamodel->obterConsulta($query);
@@ -128,18 +131,45 @@ class Categoria extends CI_Controller {
 
         //Pega o número do código
         $data['cat_codigo'] = $this->input->post('cat_codigo');
-        $data['cat_nome'] = $this->input->post('cat_nome');
+        $data['cat_nome'] = trim($this->input->post('cat_nome'));
 
+        //Verifica se não existem produtos que pertencem a esta categoria
+        $queryPro = $this->categoriamodel->obterConsulta("SELECT pro_codigo, pro_nome FROM produto WHERE cat_codigo=" . $data['cat_codigo']);
+
+        if ($queryPro->num_rows() > 0) {
+            $produtoID = $queryPro->row('pro_codigo');
+
+            //Verifica se não existem itens que pertencem a esta categoria
+            $queryItem = $this->categoriamodel->obterConsulta("SELECT item_codigo, item_nome, item_img FROM item WHERE pro_codigo=" . $produtoID);
+
+            $pathOld = utf8_decode($data['cat_nome']);
+            if ($queryItem->num_rows() > 0) {
+                foreach ($queryItem->result() as $row) {
+                    $imagemNome = $row->item_img;
+                    $imagem_dir = "assets/img/img-itens/" . $pathOld . "/" . utf8_decode($queryPro->row('pro_nome')) . "/" . $imagemNome;
+                    
+                    //Remove o arquivo antigo
+                    unlink($imagem_dir);
+
+                    //Exclui do banco
+                    $this->categoriamodel->obterConsulta('DELETE FROM item WHERE item_codigo = ' . $row->item_codigo);
+                }
+            }
+
+            //Deleta pasta dos produtos
+            rmdir("assets/img/img-itens/" . $pathOld . "/" . utf8_decode($queryPro->row('pro_nome')));
+
+            //Realiza a consulta (Excluir Produto)
+            $this->categoriamodel->obterConsulta("DELETE FROM produto WHERE pro_codigo = " . $produtoID);
+        }
 
         //Realiza a exlusão em banco
         $this->categoriamodel->obterConsulta('DELETE FROM categoria WHERE cat_codigo = ' . $data['cat_codigo']);
 
         //Deleta pasta dos produtos
-        rmdir("assets/img/categoria/" . $data['cat_nome']);
+        rmdir("assets/img/img-itens/" . utf8_decode($data['cat_nome']));
 
         //Redireciona para a pagina principal
         header('Location:' . base_url() . 'index.php/admin/categoria/categoria?edit=' . urlencode('Exclusão realizada com sucesso!'));
     }
-
 }
-?>

@@ -275,7 +275,8 @@ function editarItem(input) {
                             "</div>" +
                         "</div>" +
                     "</div>"
-                    ); //End append
+                    );
+//            $('#textoItens').scrollView();//End append
         }, //End Success
         error: function() {
             alert('!Erro ao editar categoria.');

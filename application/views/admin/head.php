@@ -93,6 +93,7 @@ Login::segurancaPagina();
                     <img src="<?php echo base_url() . 'assets\img\logo.png' ?>">
                 </div>
             </div>
+            
         </header>
     </body>
 </html>

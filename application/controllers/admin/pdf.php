@@ -17,18 +17,32 @@ class Pdf extends CI_Controller {
     public function geraPDF() {
         $this->load->helper(array('dompdf', 'file'));
         $this->load->model('pdfmodel');
-        $item='';
-        $query = $this->pdfmodel->obterTodos();
+        $item = '';
+        $query = $this->pdfmodel->obterCompras();
+        $total = 0;
+
+            $nome = '';
+            $email = '';
+            $dataCompra = '';
+
         foreach ($query->result() as $row) {
-            $item += "<tr>
-                        <td>".$row->item_nome."</td>
-                        <td>".$row->item_nome."</td>
-                        <td>".$row->item_nome."</td>
-                        <td>".$row->item_nome."</td>
-                        <td>".$row->item_nome."</td>
+            $item .= "<tr>
+                        <td>" . $row->item_nome . "</td>
+                        <td>" . $row->item_qtd . "</td>
+                        <td>" . number_format($row->item_preco_atual, 2, ',', '.') . "</td>
+                        <td> R$ " . number_format($row->item_qtd * $row->item_preco_atual, 2, ',', '.') . "</td>
+                        <td>" . $row->item_mercado . "</td>
                     </tr>";
+            $total += $row->item_preco_atual;
+            $codigo = $row->com_codigo;
+            $nome = $row->cli_nome;
+            $email = $row->cli_email;
+            $dataCompra = $row->com_data;
         }
-        $nome_arquivo = 'Mando Entrega - ' . date('d-m-Y H:i:s');
+
+        date_default_timezone_set('America/Santiago');
+
+        $nome_arquivo = 'Mando Entrega - ' . date('d/m/Y') . ' ' . date('H:i:s');
         $HTML = '<html>
                     <head>
                       <style="text/css">
@@ -157,13 +171,14 @@ class Pdf extends CI_Controller {
                       </div>
                         <div>
                             <hr>
-                            <p><b>MANDO ENTREGADOR, gerado em '.date('d/m/Y').' '.date('H:i:s').'</b></p>
+                            <p><b>Guia para entrega, gerado em ' . date('d/m/Y') . ' ' . date('H:i:s') . '<br>Código da compra: ' . $codigo . '</b></p>
                             <p><b>Informações do Cliente:</b></p>
                             <p>
-                                Cliente:<br>
-                                Endereço:<br>
-                                Hora Compra:<br>
-                                Prazo para entrega:<br>
+                                Cliente: ' . $nome . '<br>
+                                E-mail: ' . $email . '<br>
+                                Endereço:' . '' . '<br>
+                                Hora Compra:' . $dataCompra . '<br>
+                                Prazo para entrega:' . $dataCompra . '<br>
                             </p>
                             <hr>
                         </div>
@@ -175,11 +190,11 @@ class Pdf extends CI_Controller {
                                     <td>Quantidade</td>
                                     <td>(R$)Preço unitário</td>
                                     <td>(R$)Total</td>
-                                    <td>Observação</td>
-                                </tr>'.
-                                    $item
-                            .'</table>
-                            <p><b>Total compra: </b></p>
+                                    <td>Mercado</td>
+                                </tr>' .
+                $item
+                . '</table>
+                            <p><b>Total compra: R$ ' . number_format($row->item_qtd * $total, 2, ',', '.') . '</b></p>
                             <br>
                             <hr>
                             <p>

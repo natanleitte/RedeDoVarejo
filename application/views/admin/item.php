@@ -3,6 +3,23 @@
 <html lang="en">
     <head>
     <input type="hidden" id="url" value="<?php base_url() ?>"/>
+    <script type="text/javascript" src ="<?php echo base_url() . "assets/js/jquery-1.11.0.js" ?>"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#porcentagem').change(function() {
+                var precoCompra = $('#precoCompra').val();
+                var porcentagem = $('#porcentagem').val();
+                precoCompra = parseFloat(precoCompra);
+                porcentagem = parseInt(porcentagem);
+
+                var result = precoCompra + (precoCompra * (porcentagem / 100));
+
+                $('#item_preco_atual').val(result);
+            });
+        });
+    </script>
+
     <!-- Services Section -->
     <section id="services">
         <div class="container">
@@ -39,8 +56,10 @@
                                 }
                                 ?>
                                 <div class='form-inline'>
-                                    <input type="text" name="item_nome" class="form-control" placeholder="Nome Item">
-                                    <input type="text" name="item_preco_atual" class="form-control" placeholder="$Preço">
+                                    <input type="text" name="item_nome" class="form-control" placeholder="Nome Item"><p></p>                                    </p>
+                                    <input type="text" name="precoCompra" id="precoCompra" class="form-control" placeholder="$Preço Compra">
+                                    <input type="text" name="porcentagem" id="porcentagem" class="form-control" placeholder="%Porcentagem"><p></p>
+                                    <input type="text" name="item_preco_atual" id="item_preco_atual" class="form-control" placeholder="$Preço Final">
                                     <input type="text" name="item_preco_antigo" class="form-control" placeholder="$Preço Antigo">
                                 </div>
                                 <div class='form-inline'>
@@ -53,7 +72,7 @@
                                         }
                                         ?>
                                     </select>
-                                    Mercado: <select class="form-control" name="item_mercado">
+                                    <label>Mercado:</label> <select class="form-control" name="item_mercado">
                                         <option value="Atacadão">Atacadão</option>
                                         <option value="Assai">Assai</option>
                                         <option value="Forte Atacadista">Forte Atacadista</option>
@@ -99,8 +118,44 @@
                 <div class="row">
                     <div class="col-lg-12"><br></div>
                 </div>
+                <br/>
+                <div class="class">
+                    <div class="form-inline">
+                        <label>Selecione os filtros para gerar PDF:</label>
+                        <hr>
+                        Categoria:
+                        <select class="form-control" name="cat_codigo">
+                            <option id="-1">Selecione um valor</option>
+                            <?php
+                            foreach ($categoria->result() as $row) {
+                                echo "<option id='" . $row->cat_codigo . "'>" . $row->cat_nome . "</option>";
+                            }
+                            ?>
+                        </select>
+                        Produto:
+                        <select class="form-control" name="pro_codigo">
+                            <option id="-1">Selecione um valor</option>
+                            <?php
+                            foreach ($produto->result() as $row) {
+                                echo "<option id='" . $row->pro_codigo . "'>" . $row->pro_nome . "</option>";
+                            }
+                            ?>
+                        </select>
+                        Ativo:
+                        <select class="form-control" name="item_status">
+                            <option id="-1">Selecione um valor</option>
+                            <option id="1">Ativo</option>
+                            <option id="0">Inativo</option>
+                        </select>
+                        <?php echo form_open_multipart('index.php/admin/item/geraPDF'); ?>
+                        &nbsp;&nbsp;<button type="submit" class="btn btn-info">Gerar</button>
+                        <?php echo form_close(); ?>
+                        <hr>
+                    </div>
+                </div>
+                <br/>
                 <div class="row">
-                    <div class="col-lg-12 text-center bg-light-gray">
+                    <div id="textoItens" class="col-lg-12 text-center bg-light-gray">
                         <h2 class="section-heading">Itens</h2>
                     </div>
                 </div>
@@ -145,6 +200,30 @@
                             <td><b>Excluir</b></td>
                         </tr>
                         <?php
+                        $this->load->model('itemmodel');
+
+//Total de registros por página
+                        $totalRegistros = 10;
+
+//Utiliza a variavel "pagina" para identificar a página atual
+                        $pagina = $this->input->get('pagina');
+                        $pc = !$pagina ? "1" : $pagina;
+
+//Determina o valor inicial das buscas limitadas
+                        $inicio = $pc - 1;
+                        $inicio = $inicio * $totalRegistros;
+
+                        $busca = "SELECT * ";
+                        $busca .= "FROM item LEFT JOIN produto ON item.pro_codigo = produto.pro_codigo ";
+                        $busca .= "LEFT JOIN tipo_medida ON item.tpmed_codigo = tipo_medida.tpmed_codigo ";
+                        $busca .= "ORDER BY pro_nome ASC, item_nome DESC ";
+                        $busca .= "LIMIT " . $inicio . ', ' . $totalRegistros;
+
+                        $item = $this->itemmodel->obterConsulta($busca);
+
+//Verifica o número total de paginas
+                        $tp = $totalRegistroConsulta / $totalRegistros;
+
                         foreach ($item->result() as $row) {
                             echo "<tr>";
                             echo "<td>" . $row->item_nome . "</td>";
@@ -174,7 +253,31 @@
                         }
                         ?>
                     </table>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-left">
+                            <?php
+// agora vamos criar os botões "Anterior e próximo"
+                            $anterior = $pc - 1;
+                            $proximo = $pc + 1;
 
+                            echo "<li>";
+                            if ($pc > 1) {
+                                echo form_open('index.php/admin/item/item?pagina=' . $anterior);
+                                echo "<button class='btn btn-x1'><< Anterior</button>";
+                                echo form_close();
+                            }
+                            echo "</li>";
+
+                            echo "<li>";
+                            if ($pc < $tp) {
+                                echo form_open('index.php/admin/item/item?pagina=' . $proximo);
+                                echo "<button class='btn btn-x1'>Próximo >></button>";
+                                echo form_close();
+                            }
+                            echo "</li>";
+                            ?>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- jQuery Version 1.11.0 -->
@@ -198,38 +301,4 @@
                 <script src="<?php echo base_url() . 'assets/js/agency.js' ?>"></script>
 
 
-                </body>
-
                 </html>
-
-                <!--<html>
-                    <body>
-                        <h1>Teste</h1>
-                
-                        <form method="post" action="index.php/testando/functionTeste"  name="sentMessage" id="contactForm">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="cat_nome">Nome da categoria</label>
-                                        <input type="text" class="form-control" placeholder="Nome da Categoria" id="cat_nome" >
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="cat_nome">Descrição da Categoria</label>
-                                        <textarea type="text" class="form-control" placeholder="Descrição da Categoria" id="cat_descricao" ></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <div class="row">
-                                <input type="submit" /> 
-                                <button type="button" class="btn btn-xl">Salvar</button>
-                            </div>
-                        </form>
-                <?php
-//        $categoria->cat_codigo;
-//            echo $categoria;
-                ?>
-                </body>
-            </html>-->
