@@ -35,7 +35,7 @@ class Item extends CI_Controller {
 
         // Caminho de onde a imagem ficará
         $queryImg = $this->itemmodel->obtemPathNew($pro_codigo);
-        $imagem_dir = "assets/img/img-itens/" . $this->removeAscento($queryImg['categoria']) . "/" . $this->removeAscento($queryImg['produto']) . "/";
+        $imagem_dir = "assets/img/img-itens/" . utf8_decode($queryImg['categoria']) . "/" . utf8_decode($queryImg['produto']) . "/";
 
         //Configurações da imagem
         $config['upload_path'] = $imagem_dir;
@@ -170,7 +170,7 @@ class Item extends CI_Controller {
             return $data;
         } else {
             $imagemNome = $this->itemmodel->obtemNomeImg($data['item_codigo']);
-            $imagem_dir = "assets/img/img-itens/" . $this->removeAscento($pathOld['categoria']) . "/" . $this->removeAscento($pathOld['produto']) . "/" . $imagemNome;
+            $imagem_dir = "assets/img/img-itens/" . utf8_decode($pathOld['categoria']) . "/" . utf8_decode($pathOld['produto']) . "/" . $imagemNome;
             //Remove o arquivo antigo
             unlink($imagem_dir);
             $data['item_img'] = Item::insereImagem($data['pro_codigo']);
@@ -185,45 +185,13 @@ class Item extends CI_Controller {
 
         $pathOld = $this->itemmodel->obtemPathOld($itemCodigo);
         $imagemNome = $this->itemmodel->obtemNomeImg($itemCodigo);
-        $imagem_dir = "assets/img/img-itens/" . $this->removeAscento($pathOld['categoria']) . "/" . $this->removeAscento($pathOld['produto']) . "/" . $imagemNome;
+        $imagem_dir = "assets/img/img-itens/" . utf8_decode($pathOld['categoria']) . "/" . utf8_decode($pathOld['produto']) . "/" . $imagemNome;
 
         //Remove o arquivo antigo
         unlink($imagem_dir);
 
         $this->itemmodel->deleteItem($itemCodigo);
         header('Location:' . base_url() . 'index.php/admin/item/item?succsses=' . urlencode('Item excluído com sucesso!'));
-    }
-
-    function removeAscento($string) {
-        $map = array(
-            'á' => 'a',
-            'à' => 'a',
-            'ã' => 'a',
-            'â' => 'a',
-            'é' => 'e',
-            'ê' => 'e',
-            'í' => 'i',
-            'ó' => 'o',
-            'ô' => 'o',
-            'õ' => 'o',
-            'ú' => 'u',
-            'ü' => 'u',
-            'ç' => 'c',
-            'Á' => 'A',
-            'À' => 'A',
-            'Ã' => 'A',
-            'Â' => 'A',
-            'É' => 'E',
-            'Ê' => 'E',
-            'Í' => 'I',
-            'Ó' => 'O',
-            'Ô' => 'O',
-            'Õ' => 'O',
-            'Ú' => 'U',
-            'Ü' => 'U',
-            'Ç' => 'C'
-        );
-        return strtr($string, $map); // funciona corretamente
     }
 
     public function geraPDF() {
@@ -259,81 +227,83 @@ class Item extends CI_Controller {
             }
         }
 
-        $HTML = $this->geraHTML($item);
+        $HTML = $this->geraHTML($item->result());
         pdf_create($HTML, "Tabela de Itens");
     }
 
-    function geraHTML($item) {
-        return '<html>
-                    <head>
-                      <style="text/css">
-                        body {
-                          font-family: Calibri, DejaVu Sans, Arial;
-                          margin: 0;
-                          padding: 0;
-                          border: none;
-                          font-size: 10px;
-                        }
-                        #tabela {
-                            align: center
-                        }
-                        #exemplo {
-                          width: 100%;
-                          height: auto;
-                          overflow: hidden;
-                          padding: 5px 0;
-                          text-align: center;
-                          background-color: #FF3333;
-                          font-size: 17px;
-                          color: #FFF;
-                        </style>
-                            </head>
-                            <body>
-                              
-                                <label>Informações da Compra:</label>
-                                    <table class="tabela">
-                                        <tr>
-                                            <td><b>Nome Item</b></td>
-                                            <td><b>Nome Produto</b></td>
-                                            <td><b>Mercado</b></td>
-                                            <td><b>Descrição</b></td>
-                                            <td><b>Observação</b></td>
-                                            <td><b>Medida</b></td>
-                                            <td><b>Tipo da Medida</b></td>
-                                            <td><b>Preço Antigo</b></td>
-                                            <td><b>Preço Atual</b></td>
-                                            <td><b>Data de Promoção</b></td>
-                                            <td><b>Novidade?</b></td>
-                                            <td><b>Status</b></td>
-                                            <td><b>Editar</b></td>
-                                            <td><b>Excluir</b></td>
-                                        </tr>';
-        foreach ($item->result() as $row) {
-            echo "<tr>";
-            echo "<td>" . $row->item_nome . "</td>";
+    public function geraHTML($item) {
+        foreach ($item as $row) {
+            $texto .= "<tr>"+
+            "<td>" . $row->item_nome . "</td>".
             //echo "<td>" . $row->pro_codigo . "</td>";
-            echo "<td>" . $row->pro_nome . "</td>";
-            echo "<td>" . $row->item_mercado . "</td>";
+            "<td>" . $row->pro_nome . "</td>".
+            "<td>" . $row->item_mercado . "</td>".
             //echo "<td>" . $row->item_codigo . "</td>";
-            echo "<td>" . $row->item_descricao . "</td>";
-            echo "<td>" . $row->item_observacao . "</td>";
-            echo "<td>" . $row->item_medida . "</td>";
-            echo "<td>" . $row->tpmed_nome . "</td>";
-            echo "<td>" . 'R$' . number_format($row->item_preco_antigo, 2, ',', '.') . "</td>";
-            echo "<td>" . 'R$' . number_format($row->item_preco_atual, 2, ',', '.') . "</td>";
-            echo "<td>" . date('d/m/Y', strtotime($row->item_dt_promocao)) . "</td>";
-            echo "<td>" . (($row->item_novo == 1) ? 'Sim' : 'Não') . "</td>";
+            "<td>" . $row->item_descricao . "</td>".
+            "<td>" . $row->item_observacao . "</td>".
+            "<td>" . $row->item_medida . "</td>".
+            "<td>" . $row->tpmed_nome . "</td>".
+            "<td>" . 'R$' . number_format($row->item_preco_antigo, 2, ',', '.') . "</td>".
+            "<td>" . 'R$' . number_format($row->item_preco_atual, 2, ',', '.') . "</td>".
+            "<td>" . date('d/m/Y', strtotime($row->item_dt_promocao)) . "</td>".
+            "<td>" . (($row->item_novo == 1) ? 'Sim' : 'Não') . "</td>".
             //                            echo "<td>" . $row->item_imagem_nome . "</td>";
-            echo "<td>" . (($row->item_status == 1) ? 'Ativo' : 'Inativo') . "</td>";
-            echo "</tr>";
+            "<td>" . (($row->item_status == 1) ? 'Ativo' : 'Inativo') . "</td>".
+            "</tr>";
         }
-        echo '</table>
-                                    <p><b>Total compra: R$ ' . number_format($row->item_qtd * $total, 2, ',', '.') . '</b></p>
-                                    <br>
-                                    <hr>
-                                </div>
-                            </body>
-                        </html>';
+        $texto2 = '<html>
+        <head>
+        <style = "text/css">
+        body {
+            font-family: Calibri, DejaVu Sans, Arial;
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-size: 10px;
+        }
+        #tabela {
+        align: center
+        }
+        #exemplo {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        padding: 5px 0;
+        text-align: center;
+        background-color: #FF3333;
+        font-size: 17px;
+        color: #FFF;
+        </style>
+        </head>
+        <body>
+
+        <label>Informações da Compra:</label>
+        <table class = "tabela">
+        <tr>
+        <td><b>Nome Item</b></td>
+        <td><b>Nome Produto</b></td>
+        <td><b>Mercado</b></td>
+        <td><b>Descrição</b></td>
+        <td><b>Observação</b></td>
+        <td><b>Medida</b></td>
+        <td><b>Tipo da Medida</b></td>
+        <td><b>Preço Antigo</b></td>
+        <td><b>Preço Atual</b></td>
+        <td><b>Data de Promoção</b></td>
+        <td><b>Novidade?</b></td>
+        <td><b>Status</b></td>
+        <td><b>Editar</b></td>
+        <td><b>Excluir</b></td>
+        </tr>' .
+                $texto
+                . '<br>
+        </table>
+        <hr>
+        </div>
+        </body>
+        </html>';
+
+        return $texto2;
     }
 
 }

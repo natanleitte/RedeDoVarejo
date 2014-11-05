@@ -26,6 +26,7 @@ class Categoria extends CI_Controller {
             if ($i == 1) {
                 //pega o post de cat_nome
                 $data['cat_nome'] = trim($this->input->post('cat_nome'));
+
                 $valida = trim($this->input->post('cat_nome'));
                 $cat_status = $this->input->post('cat_status');
                 $data['cat_status'] = (!strcmp($cat_status, "on")) ? 1 : 0;
@@ -56,7 +57,9 @@ class Categoria extends CI_Controller {
                 header('Location:' . base_url() . 'index.php/admin/categoria/categoria?error=' . urlencode('Categoria já existe!'));
             } else {
                 // Realiza a inserção da pasta com o nome da nova categoria
-                mkdir("assets/img/img-itens/" . $this->removeAscento($data['cat_nome']), 0777);
+                $pathNome = utf8_decode($data['cat_nome']);
+                mkdir("assets/img/img-itens/" . $pathNome, 0777);
+                
 
                 // invoca método da model que insere no banco
                 $this->categoriamodel->inserir($data);
@@ -92,7 +95,7 @@ class Categoria extends CI_Controller {
 
         //Recebe os novos valores dos campos
         $data['cat_nome'] = trim($this->input->post('cat_nome'));
-        $pathNew = trim($this->input->post('cat_nome'));
+        $pathNew = utf8_decode(trim($this->input->post('cat_nome')));
         $data['cat_codigo'] = $this->input->post('cat_codigo');
         $data['cat_status'] = $this->input->post('cat_status');
 
@@ -109,9 +112,10 @@ class Categoria extends CI_Controller {
             // Renomeia a pasta de categoria
             $query2 = $this->categoriamodel->obterConsulta('SELECT cat_nome FROM categoria WHERE cat_codigo=' . $data['cat_codigo']);
             foreach ($query2->result() as $row) {
-                $pathOld = $row->cat_nome;
+                $pathOld = utf8_decode($row->cat_nome);
             }
-            rename("assets/img/img-itens/" . $this->removeAscento($pathOld), "assets/img/img-itens/" . $this->removeAscento($pathNew));
+            
+            rename("assets/img/img-itens/" . $pathOld, "assets/img/img-itens/" . $pathNew);
 
             //Realiza a consulta (Editar Produto)
             $this->categoriamodel->obterConsulta($query);
@@ -138,11 +142,12 @@ class Categoria extends CI_Controller {
             //Verifica se não existem itens que pertencem a esta categoria
             $queryItem = $this->categoriamodel->obterConsulta("SELECT item_codigo, item_nome, item_img FROM item WHERE pro_codigo=" . $produtoID);
 
-            $pathOld = $data['cat_nome'];
+            $pathOld = utf8_decode($data['cat_nome']);
             if ($queryItem->num_rows() > 0) {
                 foreach ($queryItem->result() as $row) {
                     $imagemNome = $row->item_img;
-                    $imagem_dir = "assets/img/img-itens/" . $this->removeAscento($pathOld) . "/" . $this->removeAscento($queryPro->row('pro_nome')) . "/" . $imagemNome;
+                    $imagem_dir = "assets/img/img-itens/" . $pathOld . "/" . utf8_decode($queryPro->row('pro_nome')) . "/" . $imagemNome;
+                    
                     //Remove o arquivo antigo
                     unlink($imagem_dir);
 
@@ -152,7 +157,7 @@ class Categoria extends CI_Controller {
             }
 
             //Deleta pasta dos produtos
-            rmdir("assets/img/img-itens/" . $this->removeAscento($pathOld) . "/" . $this->removeAscento($queryPro->row('pro_nome')));
+            rmdir("assets/img/img-itens/" . $pathOld . "/" . utf8_decode($queryPro->row('pro_nome')));
 
             //Realiza a consulta (Excluir Produto)
             $this->categoriamodel->obterConsulta("DELETE FROM produto WHERE pro_codigo = " . $produtoID);
@@ -162,42 +167,9 @@ class Categoria extends CI_Controller {
         $this->categoriamodel->obterConsulta('DELETE FROM categoria WHERE cat_codigo = ' . $data['cat_codigo']);
 
         //Deleta pasta dos produtos
-        rmdir("assets/img/img-itens/" . $this->removeAscento($data['cat_nome']));
+        rmdir("assets/img/img-itens/" . utf8_decode($data['cat_nome']));
 
         //Redireciona para a pagina principal
         header('Location:' . base_url() . 'index.php/admin/categoria/categoria?edit=' . urlencode('Exclusão realizada com sucesso!'));
     }
-
-    function removeAscento($string) {
-        $map = array(
-            'á' => 'a',
-            'à' => 'a',
-            'ã' => 'a',
-            'â' => 'a',
-            'é' => 'e',
-            'ê' => 'e',
-            'í' => 'i',
-            'ó' => 'o',
-            'ô' => 'o',
-            'õ' => 'o',
-            'ú' => 'u',
-            'ü' => 'u',
-            'ç' => 'c',
-            'Á' => 'A',
-            'À' => 'A',
-            'Ã' => 'A',
-            'Â' => 'A',
-            'É' => 'E',
-            'Ê' => 'E',
-            'Í' => 'I',
-            'Ó' => 'O',
-            'Ô' => 'O',
-            'Õ' => 'O',
-            'Ú' => 'U',
-            'Ü' => 'U',
-            'Ç' => 'C'
-        );
-        return strtr($string, $map); // funciona corretamente
-    }
-
 }
