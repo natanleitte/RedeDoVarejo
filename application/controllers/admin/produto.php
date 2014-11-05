@@ -32,16 +32,16 @@ class Produto extends CI_Controller {
             if ($i == 1) {
                 //pega os valores
                 $data['cat_codigo'] = $this->input->post('cat_codigo');
-                $data['pro_nome'] = $this->input->post('pro_nome');
-                $valida = $this->input->post('pro_nome');
+                $data['pro_nome'] = trim($this->input->post('pro_nome'));
+                $valida = trim($this->input->post('pro_nome'));
                 $pro_status = $this->input->post('pro_status');
                 $data['pro_status'] = (!strcmp($pro_status, "on")) ? 1 : 0;
             } else {
                 $elemento = "pro_nome" . $i . "";
                 $strStatus = "pro_status" . $i . "";
                 $data['cat_codigo'] = $this->input->post('cat_codigo');
-                $data['pro_nome'] = $this->input->post($elemento);
-                $valida = $this->input->post($elemento);
+                $data['pro_nome'] = trim($this->input->post($elemento));
+                $valida = trim($this->input->post($elemento));
                 $pro_status = $this->input->post($strStatus);
                 $data['pro_status'] = (!strcmp($pro_status, "on")) ? 1 : 0;
             }
@@ -60,7 +60,7 @@ class Produto extends CI_Controller {
                 // Cria a pasta com o nome do novo produto na categoria selecionada
                 $consulta = "SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo'];
                 $categoria = $this->produtomodel->obterConsulta($consulta);
-                mkdir("assets/img/categoria/" . $categoria->row('cat_nome') . "/" . $data['pro_nome'], 0777);
+                mkdir("assets/img/img-itens/" . $this->removeAscento($categoria->row('cat_nome')) . "/" . $this->removeAscento($data['pro_nome']), 0777);
 
                 // Insere no banco
                 $this->produtomodel->inserir($data);
@@ -71,25 +71,72 @@ class Produto extends CI_Controller {
         }
     }
 
+    function removeAscento($string) {
+        $map = array(
+            'á' => 'a',
+            'à' => 'a',
+            'ã' => 'a',
+            'â' => 'a',
+            'é' => 'e',
+            'ê' => 'e',
+            'í' => 'i',
+            'ó' => 'o',
+            'ô' => 'o',
+            'õ' => 'o',
+            'ú' => 'u',
+            'ü' => 'u',
+            'ç' => 'c',
+            'Á' => 'A',
+            'À' => 'A',
+            'Ã' => 'A',
+            'Â' => 'A',
+            'É' => 'E',
+            'Ê' => 'E',
+            'Í' => 'I',
+            'Ó' => 'O',
+            'Ô' => 'O',
+            'Õ' => 'O',
+            'Ú' => 'U',
+            'Ü' => 'U',
+            'Ç' => 'C'
+        );
+        return strtr($string, $map); // funciona corretamente
+    }
+
     function excluir() {
         // Load Model
         $this->load->model('produtomodel');
+        $this->load->model('itemmodel');
 
         //Pega o código do produto
         $data['pro_codigo'] = $this->input->post('pro_codigo');
-        $data['pro_nome'] = $this->input->post('pro_nome');
+        $data['pro_nome'] = trim($this->input->post('pro_nome'));
         $data['cat_codigo'] = $this->input->post('cat_codigo');
 
-        //Realiza a consulta (Excluir Produto)
-        $this->produtomodel->obterConsulta('DELETE FROM produto WHERE pro_codigo = ' . $data['pro_codigo']);
+        //Verifica se não existe itens para este produto
+        $queryItem = $this->produtomodel->obterConsulta('SELECT item_img, item_codigo FROM item WHERE pro_codigo=' . $data['pro_codigo']);
+        //Verifica a categoria
+        $queryCat = $this->produtomodel->obterConsulta('SELECT cat_nome FROM categoria WHERE cat_codigo=' . $data['cat_codigo']);
+
+        if ($queryItem->num_rows() > 0) {
+            foreach ($queryItem->result() as $row) {
+                $pathOld = $queryCat->row('cat_nome');
+                $imagemNome = $row->item_img;
+                $imagem_dir = "assets/img/img-itens/" . $this->removeAscento($pathOld) . "/" . $this->removeAscento($data['pro_nome']) . "/" . $imagemNome;
+
+                //Remove o arquivo antigo
+                unlink($imagem_dir);
+
+                //Exclui do banco
+                $this->produtomodel->obterConsulta('DELETE FROM item WHERE item_codigo = ' . $row->item_codigo);
+            }
+        }
 
         //Deleta pasta dos produtos
-        $consulta = "SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo'];
-        $categoria = $this->produtomodel->obterConsulta($consulta);
+        rmdir("assets/img/img-itens/" . $this->removeAscento($pathOld) . "/" . $this->removeAscento($data['pro_nome']));
 
-        foreach ($categoria->result() as $row) {
-            rmdir("assets/img/categoria/" . $row->cat_nome . "/" . $data['pro_nome']);
-        }
+        //Realiza a consulta (Excluir Produto)
+        $this->produtomodel->obterConsulta("DELETE FROM produto WHERE pro_codigo = " . $data['pro_codigo']);
 
         // Retorna para a página informando o erro
         header('Location:' . base_url() . 'index.php/admin/produto/produto?sucess=' . urlencode('Exclusão realizada com sucesso!'));
@@ -102,9 +149,11 @@ class Produto extends CI_Controller {
         //Pega o código do produto
         $data['pro_codigo'] = $this->input->post('pro_codigo');
 
+
+
         //Recebe os novos valores dos campos
-        $data['pro_nome'] = $this->input->post('pro_nome');
-        $pathNew = $this->input->post('pro_nome');
+        $data['pro_nome'] = trim($this->input->post('pro_nome'));
+        $pathNew = trim($this->input->post('pro_nome'));
         $data['cat_codigo'] = $this->input->post('cat_codigo');
         $data['pro_status'] = $this->input->post('pro_status');
 
@@ -124,7 +173,7 @@ class Produto extends CI_Controller {
             // Renomeia a pasta do produto
             $query2 = $this->produtomodel->obterConsulta("SELECT pro_nome FROM produto WHERE pro_codigo= " . $data['pro_codigo']);
             $pathOld = $query2->row('pro_nome');
-            rename("assets/img/categoria/" . $data['categoria'] . "/" . $pathOld, "assets/img/categoria/" . $data['categoria'] . "/" . $pathNew);
+            rename("assets/img/img-itens/" . $this->removeAscento($data['categoria']) . "/" . $this->removeAscento($pathOld), "assets/img/img-itens/" . $this->removeAscento($data['categoria']) . "/" . $this->removeAscento($pathNew));
 
             //Realiza a consulta (Editar Produto)
             $this->produtomodel->obterConsulta($consulta);
