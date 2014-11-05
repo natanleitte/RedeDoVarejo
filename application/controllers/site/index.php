@@ -508,12 +508,6 @@ class Index extends CI_Controller {
     
     function minha_conta()
     {
-        if($this->is_logged_in() == false)
-        {
-            redirect(base_url() . 'index.php/site/index/login');
-//            $this->login();
-        }
-        
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
 
@@ -583,6 +577,8 @@ class Index extends CI_Controller {
     
     function categoria()
     {
+         $cat_codigo = $this->input->get('cat_codigo'); // recupera a informação via get
+
         $this->load->model('itemModel');
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
@@ -591,11 +587,13 @@ class Index extends CI_Controller {
         $data['categorias'] = $this->categoriaModel->obterTodos();
         $data['produtos'] = $this->produtoModel->obterTodos();
 
-//        $data['cat'] = $this->categoriaModel->obter($cat_codigo);
+        $data['cat'] = $this->categoriaModel->obter($cat_codigo);
         $data['itens'] = $this->itemModel->obterTodos();
 
         $data['tipo_medida'] = $this->tipoMedidaModel->obterTodos();
 //        $data['itens'] = $this->itemModel->obterTodos();
+
+
 
         $this->load->view('site/header', $data);
         $this->load->view('site/categoria', $data);
