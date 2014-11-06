@@ -1,4 +1,4 @@
- <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -49,10 +49,10 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-//$db['default']['username'] = 'root';//Local
-$db['default']['username'] = 'jorge';//Produção
-//$db['default']['password'] = '';//Local
-$db['default']['password'] = 'Leaf193915';//Producao
+$db['default']['username'] = 'root';//Local
+//$db['default']['username'] = 'jorge';//Produção
+$db['default']['password'] = '';//Local
+//$db['default']['password'] = 'Leaf193915';//Producao
 $db['default']['database'] = 'rededovarejo';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

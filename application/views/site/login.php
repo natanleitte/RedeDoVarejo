@@ -5,8 +5,8 @@
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li class="active"> Authentication </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/" ?>">Home</a> </li>
+        <li class="active"> Autenticação </li>
       </ul>
     </div>
   </div><!-- /.row -->

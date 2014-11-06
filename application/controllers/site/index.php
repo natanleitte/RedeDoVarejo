@@ -28,6 +28,8 @@ class Index extends CI_Controller {
         $data['itens'] = $this->itemModel->obterTodos();        
         $data['tipo_medida'] = $this->tipoMedidaModel->obterTodos();
 
+//        $email = $this->session->userdata('email');
+//        echo $email;
 
 
         $this->load->view('site/header', $data);
@@ -141,7 +143,10 @@ class Index extends CI_Controller {
     }
 
     function carrinho() {
-
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
         //load models para a header
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
@@ -235,6 +240,11 @@ class Index extends CI_Controller {
     }
     
     function finalizar_compra2(){
+        
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
          //load models para a header
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
@@ -258,6 +268,11 @@ class Index extends CI_Controller {
     }
     
     function finalizar_compra3(){
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
+        
          //load models para a header
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
@@ -281,6 +296,11 @@ class Index extends CI_Controller {
     
     function adicionarEndereco()
     {
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
+        
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
         $this->load->model('enderecoModel');
@@ -508,6 +528,11 @@ class Index extends CI_Controller {
     
     function minha_conta()
     {
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
+        
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
 
@@ -522,10 +547,14 @@ class Index extends CI_Controller {
     
     function minhas_compras()
     {
+        if($this->is_logged_in() == false)
+        {
+            redirect(base_url() . 'index.php/site/index/login');
+        }
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
         $this->load->model('compraModel');
-        $this->load->model('compraItemModel');
+        $this->load->model('compraitemmodel');
 
 
         //data para header
@@ -535,7 +564,7 @@ class Index extends CI_Controller {
         $cli_codigo = $this->session->userdata('cli_codigo');
 
         $data['compras'] = $this->compraModel->obterPorCliente($cli_codigo);
-        $data['compra_itens'] = $this->compraItemModel->obterTodos();
+        $data['compra_itens'] = $this->compraitemmodel->obterTodos();
         
         $this->load->view('site/header', $data);
         $this->load->view('site/minhas_compras');

@@ -13,7 +13,28 @@ foreach ($categorias->result() as $categoria) {
     }
 }
 
-$urlImg = "assets/img/img-itens/" . $cat_nome . "/" . $pro_nome;
+$pro_nome_url = strtr(
+ 
+    $pro_nome,
+ 
+    array (
+ 
+      'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
+      'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+      'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
+      'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
+      'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
+      'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
+      'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
+      'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+      'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+      'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
+      'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
+    )
+);
+
+//$pro_nome_url =  preg_replace( '/[`^~\'"]/', null, iconv( 'UTF-8', 'ASCII//TRANSLIT', $pro_nome ) );
+$urlImg = "assets/img/img-itens/" . $cat_nome . "/" . $pro_nome_url;
 $urlCarrinho = "index.php/site/index/addAoCarrinho"
 ?> <!-- prefixo da URL do Layout -->
 <!DOCTYPE html>
@@ -613,6 +634,8 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
 <?php
 echo "<ul class='nav nav-pills nav-stacked tree'>";
 foreach ($categorias->result() as $categoria) {
+    if($categoria->cat_status == 1)
+    {
     if($cat_codigo == $categoria->cat_codigo)
     {
         echo "<li class='active dropdown-tree open-tree' > <a  class='dropdown-tree-a' > " . $categoria->cat_nome . "</a>";
@@ -622,12 +645,13 @@ foreach ($categorias->result() as $categoria) {
     }
     echo "<ul class='category-level-2 dropdown-menu-tree'>";
     foreach ($produtos->result() as $produto) {
-        if ($produto->cat_codigo == $categoria->cat_codigo) {
+        if ($produto->cat_codigo == $categoria->cat_codigo && $produto->pro_status == 1) {
             echo "<li> <a  href='" . base_url() . "index.php/site/index/produto/?pro_codigo=" . $produto->pro_codigo . "'>" . $produto->pro_nome . "</a> </li>";
         }
     }
     echo "</ul>";
     echo "</li>";
+    }
 }
 echo "</ul>";
 ?>
@@ -965,13 +989,13 @@ foreach ($prod->result() as $pro) {
                 <?php
                     foreach($itens->result() as $item)
                     {
-                        if($item->pro_codigo == $pro_codigo)
+                        if($item->pro_codigo == $pro_codigo && $item->item_status == 1)
                         {
                           echo "<div class='item col-sm-4 col-lg-4 col-md-4 col-xs-6'>";
                           echo "<div class='product'>";
-                          echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
-                          echo "<i class='glyphicon glyphicon-heart'></i>";
-                          echo "</a>";
+//                          echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
+//                          echo "<i class='glyphicon glyphicon-heart'></i>";
+//                          echo "</a>";
                           echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . "'</a>";
                           if($item->item_novo == 1)
                           {
@@ -1002,6 +1026,7 @@ foreach ($prod->result() as $pro) {
                           }
                           else
                           {
+                            echo "<div class='price'> <span> &nbsp</span> </div>";   
                             echo "<div class='price'> <span> R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                               
@@ -1016,273 +1041,11 @@ foreach ($prod->result() as $pro) {
                         }
                     }
                     ?>
-<!--                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-                        
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="<?php echo base_url() . $urlImg  ?>"></a>
-                            <div class="promotion"> <span class="new-product"> NEW</span> <span class="discount">15% OFF</span> </div>
-                        </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">aliquam erat volutpat</a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
 
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/31.jpg"></a>
-                            <div class="promotion"> <span class="discount">15% OFF</span> </div>
-                        </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">ullamcorper suscipit lobortis </a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/34.jpg"></a>
-                            <div class="promotion"> <span class="new-product"> NEW</span> </div>
-                        </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">demonstraverunt lectores </a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> <span class="old-price">$75</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/35.jpg"></a> </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">humanitatis per</a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/33.jpg"></a> </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">Eodem modo typi</a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/10.jpg"></a> </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">sequitur mutationem </a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/37.jpg"></a> </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">consuetudium lectorum.</a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> <span class="old-price">$75</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/16.jpg"></a> </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">parum claram</a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> <span class="old-price">$75</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/19.jpg"></a> </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">duis dolore </a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/15.jpg"></a>
-                            <div class="promotion"> <span class="new-product"> NEW</span> <span class="discount">15% OFF</span> </div>
-                        </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">aliquam erat volutpat</a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/14.jpg"></a>
-                            <div class="promotion"> <span class="discount">15% OFF</span> </div>
-                        </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">ullamcorper suscipit lobortis </a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>
-                /.item
-                <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-                    <div class="product">
-                        <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
-                            <i class="glyphicon glyphicon-heart"></i>
-                        </a>
-
-                        <div class="image"> <a href="product-details.html"><img class="img-responsive" alt="img" src="images/product/17.jpg"></a>
-                            <div class="promotion"> <span class="new-product"> NEW</span> </div>
-                        </div>
-                        <div class="description">
-                            <h4><a href="product-details.html">demonstraverunt lectores </a></h4>
-                            <div class="grid-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            </div>
-                            <div class="list-description">
-                                <p> Sed sed rutrum purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus lacus, iaculis in ante vitae, viverra hendrerit ante. Aliquam vel fermentum elit. Morbi rhoncus, neque in vulputate facilisis, leo tortor sollicitudin odio, quis pellentesque lorem nisi quis enim. In dolor mi, hendrerit at blandit vulputate, congue a purus. Sed eget turpis sit amet orci euismod accumsan. Praesent sit amet placerat elit. </p>
-                            </div>
-                            <span class="size">XL / XXL / S </span> </div>
-                        <div class="price"> <span>$25</span> </div>
-                        <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
-                    </div>
-                </div>-->
                 <!--/.item--> 
             </div> <!--/.categoryProduct || product content end-->
 
-            <div class="w100 categoryFooter">
+<!--            <div class="w100 categoryFooter">
                 <div class="pagination pull-left no-margin-top">
                     <ul class="pagination no-margin-top">
                         <li> <a href="#">«</a></li>
@@ -1297,7 +1060,7 @@ foreach ($prod->result() as $pro) {
                 <div class="pull-right pull-right  col-sm-4 col-xs-12 no-padding text-right text-left-xs">
                     <p>Showing 1–450 of 12 results</p>
                 </div>
-            </div>
+            </div>-->
         </div> <!--/.categoryFooter-->
     </div><!--/right column end-->
 </div><!-- /.row  --> 

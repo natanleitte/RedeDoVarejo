@@ -967,13 +967,33 @@ echo "</ul>";
                                 $cat_nome = $categoria->cat_nome;
                             }
                            }
-                           
+                           //*** TIRA ACENTOS DO NOME DOS PRODUTOS ***//
+                               $pro_nome_url = strtr(
+ 
+                                $pro_nome,
+ 
+                                array (
+ 
+                                'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
+                                'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+                                'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
+                                'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
+                                'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
+                                'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
+                                'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
+                                'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+                                'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+                                'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
+                                'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
+                                )
+                            );
+                            //*** FIM - TIRA ACENTOS DO NOME DOS PRODUTOS ***//
                           echo "<div class='item col-sm-4 col-lg-4 col-md-4 col-xs-6'>";
                           echo "<div class='product'>";
                           echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
                           echo "<i class='glyphicon glyphicon-heart'></i>";
                           echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/". $pro_nome . "/" . $item->item_img . "'</a>";
+                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . $cat_nome . "/". $pro_nome_url . "/" . $item->item_img . "'</a>";
                           if($item->item_novo == 1)
                           {
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
@@ -989,13 +1009,14 @@ echo "</ul>";
 //                          echo "</div>";
 //                          echo "<span class='size'>XL / XXL / S </span>";
                           echo "</div>";
-                          if($item->item_preco_antigo != null)
+                          if($item->item_preco_antigo != null && $item->item_preco_antigo != 0)
                           {
                             echo "<div class='price'> <span> De: R$" . $item->item_preco_antigo . "</span> </div>";
                             echo "<div class='price'> <span> Por: R$" . $item->item_preco_atual . "</span> </div>";
                           }
                           else
                           {
+                            echo "<div class='price'> <span> &nbsp</span> </div>";
                             echo "<div class='price'> <span> R$" . $item->item_preco_atual . "</span> </div>";
                           }
                           
@@ -1004,7 +1025,7 @@ echo "</ul>";
                           echo "<div class='action-control'> <a href='" . base_url() . $urlCarrinho . "/?item_codigo=". $item->item_codigo . 
                                   "&item_preco=" . $item->item_preco_atual . 
                                   "&item_nome=" . $item->item_nome .
-                                  "&item_img=" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . ".jpg" . "' "
+                                  "&item_img=" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome_url . "/" . $item->item_img . ".jpg" . "' "
                                   . "class='btn btn-primary'> <span class='add2cart'><i class='glyphicon glyphicon-shopping-cart'> </i> Comprar </span> </a> </div>";
                           echo "</div>";
                           echo "</div>";

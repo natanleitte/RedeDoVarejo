@@ -83,7 +83,8 @@ class Cliente extends CI_Controller {
                     $cli_codigo = $cliente->cli_codigo;
                     $cli_nome = $cliente->cli_nome;
                     $this->insereNaSessao($email, $senha, $cli_codigo, $cli_nome);
-                    redirect(base_url() . 'index.php/site/index/');
+                    
+//                    redirect(base_url() . 'index.php/site/index/');
 
                     return;
                 }
@@ -105,7 +106,8 @@ class Cliente extends CI_Controller {
                );
 
         $this->session->set_userdata($novoUsuario);
-                            echo "LOGIN";
+
+        echo "LOGIN";
 
     }
     
