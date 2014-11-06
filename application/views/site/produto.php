@@ -996,7 +996,7 @@ foreach ($prod->result() as $pro) {
 //                          echo "<a data-placement='left' data-original-title='Add to Wishlist' data-toggle='tooltip' class='add-fav tooltipHere'>";
 //                          echo "<i class='glyphicon glyphicon-heart'></i>";
 //                          echo "</a>";
-                          echo "<div class='image'> <a href='product-details.html'><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . "'</a>";
+                          echo "<div class='image'> <a><img class='img-responsive' alt='img' src='" . base_url() . $urlImg . "/" . $item->item_img . "'</a>";
                           if($item->item_novo == 1)
                           {
                             echo "<div class='promotion'> <span class='new-product'> NOVO</span> </div>";
