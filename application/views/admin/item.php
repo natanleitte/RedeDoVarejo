@@ -121,33 +121,33 @@
                 <br/>
                 <div class="class">
                     <div class="form-inline">
+                        <?php echo form_open_multipart('index.php/admin/item/geraPDF'); ?>
                         <label>Selecione os filtros para gerar PDF:</label>
                         <hr>
                         Categoria:
                         <select class="form-control" name="cat_codigo">
-                            <option id="-1">Selecione um valor</option>
+                            <option value="-1">Selecione um valor</option>
                             <?php
                             foreach ($categoria->result() as $row) {
-                                echo "<option id='" . $row->cat_codigo . "'>" . $row->cat_nome . "</option>";
+                                echo "<option value='" . $row->cat_codigo . "'>" . $row->cat_nome . "</option>";
                             }
                             ?>
                         </select>
                         Produto:
                         <select class="form-control" name="pro_codigo">
-                            <option id="-1">Selecione um valor</option>
+                            <option value="-1">Selecione um valor</option>
                             <?php
                             foreach ($produto->result() as $row) {
-                                echo "<option id='" . $row->pro_codigo . "'>" . $row->pro_nome . "</option>";
+                                echo "<option value='" . $row->pro_codigo . "'>" . $row->pro_nome . "</option>";
                             }
                             ?>
                         </select>
                         Ativo:
                         <select class="form-control" name="item_status">
-                            <option id="-1">Selecione um valor</option>
-                            <option id="1">Ativo</option>
-                            <option id="0">Inativo</option>
+                            <option value="-1">Selecione um valor</option>
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
                         </select>
-                        <?php echo form_open_multipart('index.php/admin/item/geraPDF'); ?>
                         &nbsp;&nbsp;<button type="submit" class="btn btn-info">Gerar</button>
                         <?php echo form_close(); ?>
                         <hr>
@@ -181,9 +181,10 @@
                     <table class="table table-striped table-bordered table-responsive">
 
                         <tr>
-                            <td><b>Nome Item</b></td>
+                            
                             <!--<td><b>Codigo Produto</b></td>-->
                             <td><b>Nome Produto</b></td>
+							<td><b>Nome Item</b></td>
                             <!--<td><b>Codigo Item</b></td>-->
                             <td><b>Mercado</b></td>
                             <td><b>Descrição</b></td>
@@ -203,7 +204,7 @@
                         $this->load->model('itemmodel');
 
 //Total de registros por página
-                        $totalRegistros = 10;
+                        $totalRegistros = 50;
 
 //Utiliza a variavel "pagina" para identificar a página atual
                         $pagina = $this->input->get('pagina');
@@ -226,9 +227,9 @@
 
                         foreach ($item->result() as $row) {
                             echo "<tr>";
-                            echo "<td>" . $row->item_nome . "</td>";
                             //echo "<td>" . $row->pro_codigo . "</td>";
                             echo "<td>" . $row->pro_nome . "</td>";
+							echo "<td>" . $row->item_nome . "</td>";
                             echo "<td>" . $row->item_mercado . "</td>";
                             //echo "<td>" . $row->item_codigo . "</td>";
                             echo "<td>" . $row->item_descricao . "</td>";

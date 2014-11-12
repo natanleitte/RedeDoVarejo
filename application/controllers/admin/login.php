@@ -22,7 +22,7 @@ class Login extends CI_Controller {
             //Guarda as informações na sessão
             $_SESSION['loginUsuario'] = $login;
             $_SESSION['senhaUsuario'] = $senha;
-            redirect("index.php/admin/categoria/categoria");
+            header("Location:" . base_url() . "index.php/admin/categoria/categoria");
         } else {
             $mensagem = 'Senha ou Login incorretos!';
             Login::expulsaVisitante($mensagem);

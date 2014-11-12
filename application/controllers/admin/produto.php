@@ -60,7 +60,7 @@ class Produto extends CI_Controller {
                 // Cria a pasta com o nome do novo produto na categoria selecionada
                 $consulta = "SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo'];
                 $categoria = $this->produtomodel->obterConsulta($consulta);
-                mkdir("assets/img/img-itens/" . utf8_decode($categoria->row('cat_nome')) . "/" . utf8_decode($data['pro_nome']), 0777);
+                mkdir("assets/img/img-itens/" . $this->removeAscento($categoria->row('cat_nome')) . "/" . $this->removeAscento($data['pro_nome']), 0777);
 
                 // Insere no banco
                 $this->produtomodel->inserir($data);
@@ -85,12 +85,13 @@ class Produto extends CI_Controller {
         $queryItem = $this->produtomodel->obterConsulta('SELECT item_img, item_codigo FROM item WHERE pro_codigo=' . $data['pro_codigo']);
         //Verifica a categoria
         $queryCat = $this->produtomodel->obterConsulta('SELECT cat_nome FROM categoria WHERE cat_codigo=' . $data['cat_codigo']);
-
+        
+        $pathOld = $queryCat->row('cat_nome');
+        
         if ($queryItem->num_rows() > 0) {
             foreach ($queryItem->result() as $row) {
-                $pathOld = $queryCat->row('cat_nome');
                 $imagemNome = $row->item_img;
-                $imagem_dir = "assets/img/img-itens/" . utf8_decode($pathOld) . "/" . utf8_decode($data['pro_nome']) . "/" . $imagemNome;
+                $imagem_dir = "assets/img/img-itens/" . $this->removeAscento($pathOld) . "/" . $this->removeAscento($data['pro_nome']) . "/" . $imagemNome;
 
                 //Remove o arquivo antigo
                 unlink($imagem_dir);
@@ -101,7 +102,7 @@ class Produto extends CI_Controller {
         }
 
         //Deleta pasta dos produtos
-        rmdir("assets/img/img-itens/" . utf8_decode($pathOld) . "/" . utf8_decode($data['pro_nome']));
+        rmdir("assets/img/img-itens/" . $this->removeAscento($pathOld) . "/" . $this->removeAscento($data['pro_nome']));
 
         //Realiza a consulta (Excluir Produto)
         $this->produtomodel->obterConsulta("DELETE FROM produto WHERE pro_codigo = " . $data['pro_codigo']);
@@ -116,8 +117,6 @@ class Produto extends CI_Controller {
 
         //Pega o código do produto
         $data['pro_codigo'] = $this->input->post('pro_codigo');
-
-
 
         //Recebe os novos valores dos campos
         $data['pro_nome'] = trim($this->input->post('pro_nome'));
@@ -136,13 +135,24 @@ class Produto extends CI_Controller {
 
             //Obtem pasta dos produtos
             $query = $this->produtomodel->obterConsulta("SELECT cat_nome FROM categoria WHERE cat_codigo = " . $data['cat_codigo']);
-            $data['categoria'] = $query->row('cat_nome');
+            $pathNew_cat = $query->row('cat_nome');
 
             // Renomeia a pasta do produto
-            $query2 = $this->produtomodel->obterConsulta("SELECT pro_nome FROM produto WHERE pro_codigo= " . $data['pro_codigo']);
-            $pathOld = $query2->row('pro_nome');
-            rename("assets/img/img-itens/" . utf8_decode($data['categoria']) . "/" . utf8_decode($pathOld), "assets/img/img-itens/" . utf8_decode($data['categoria']) . "/" . utf8_decode($pathNew));
+            $query3 = $this->produtomodel->obterConsulta("SELECT pro_nome, cat_codigo FROM produto WHERE pro_codigo= " . $data['pro_codigo']);
+            $pathOld = $query3->row('pro_nome');
 
+            //Obtem pasta dos produtos
+            $query2 = $this->produtomodel->obterConsulta("SELECT cat_nome FROM categoria WHERE cat_codigo = " . $query3->row('cat_codigo'));
+            $pathOld_cat = $query2->row('cat_nome');
+
+            //Remove a pasta para a nova categoria
+            if ($pathOld_cat != $pathNew_cat) {
+                $this->copyr($data['pro_codigo'], $pathOld_cat, $pathNew_cat, $pathOld, $pathNew);
+            } else {
+                $img_old = "assets/img/img-itens/" . $this->removeAscento($pathOld_cat) . "/" . $this->removeAscento($pathOld);
+                $img_new = "assets/img/img-itens/" . $this->removeAscento($pathNew_cat) . "/" . $this->removeAscento($pathNew);
+                rename($img_old, $img_new);
+            }
             //Realiza a consulta (Editar Produto)
             $this->produtomodel->obterConsulta($consulta);
 
@@ -151,7 +161,7 @@ class Produto extends CI_Controller {
         }
     }
 
-    public function jsonProduto() {
+    function jsonProduto() {
         //carrega model
         $this->load->model('produtomodel');
 
@@ -169,6 +179,46 @@ class Produto extends CI_Controller {
             );
         }
         echo json_encode($array);
+    }
+
+    function removeAscento($string) {
+        $map = array(
+            'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
+            'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+            'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
+            'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
+            'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
+            'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
+            'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
+            'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+            'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
+            'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
+        );
+        return strtr($string, $map); // funciona corretamente
+    }
+
+    function copyr($pro_codigo, $pathOld_cat, $pathNew_cat, $pathOld, $pathNew) {
+        $this->load->model('produtomodel');
+
+        $query = $this->produtomodel->obterConsulta("SELECT item_img "
+                . "FROM item i "
+                . "LEFT JOIN produto c ON i.pro_codigo = c.pro_codigo "
+                . "WHERE i.pro_codigo = " . $pro_codigo);
+
+        $img_old = "assets/img/img-itens/" . $this->removeAscento($pathOld_cat) . "/" . $this->removeAscento($pathOld);
+        $img_new = "assets/img/img-itens/" . $this->removeAscento($pathNew_cat) . "/" . $this->removeAscento($pathNew);
+
+        mkdir($img_new, 0777);
+
+        foreach ($query->result() as $row) {
+            copy($img_old . "/" . $row->item_img, $img_new . "/" . $row->item_img);
+        }
+
+        foreach ($query->result() as $row) {
+            unlink($img_old . "/" . $row->item_img);
+        }
+        rmdir($img_old);
     }
 
 }
