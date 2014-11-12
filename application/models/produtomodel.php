@@ -19,6 +19,7 @@ class ProdutoModel extends CI_Model {
 
     function obterTodos() {
         $this->load->database();
+        $this->db->order_by("pro_nome", "asc"); 
         return $this->db->get('produto');
     }
 

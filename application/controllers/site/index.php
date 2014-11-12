@@ -629,4 +629,59 @@ class Index extends CI_Controller {
         $this->load->view('site/footer', $data); //Tirei porque estava BUGANDO
     }
     
+    function politica_venda()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/politica_venda');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function como_comprar()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/como_comprar');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function entrega()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/entrega');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function formas_pagamento()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/formas_pagamento');
+        $this->load->view('site/footer', $data);
+    }
 }

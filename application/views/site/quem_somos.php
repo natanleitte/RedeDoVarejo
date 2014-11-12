@@ -35,7 +35,27 @@
           </h1>
           
           <p class="lead text-center">
-            O espaço online do Supermercado Rede do Varejo foi feito para você encontrar mais do que os produtos para a sua casa. Aqui tem sempre a comodidade de fazer compras sem enfrentar trânsito, fazendo o pedido na hora que quiser e com entrega programada. Através do delivery da Rede do Varejo você leva pra casa marcas exclusivas de produtos nacionais e importados, carnes exóticas, queijos das melhores regiões, vinhos e bebidas de todo o mundo. Tudo selecionado e embalado de um jeitinho especial.
+            O espaço online do Supermercado Rede do
+
+Varejo foi feito para você encontrar mais do 
+
+que os produtos para a sua casa. Aqui tem 
+
+sempre a comodidade de fazer compras sem 
+
+enfrentar trânsito, fazendo o pedido na hora 
+
+que quiser e com entrega programada. Através 
+
+do delivery do Supermercado Rede do Varejo 
+
+você leva pra casa marcas exclusivas de 
+
+produtos nacionais e importados. Tudo 
+
+selecionado e embalado de um jeitinho 
+
+especial.
           </p>
           
           

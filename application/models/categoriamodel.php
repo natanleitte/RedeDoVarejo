@@ -14,6 +14,7 @@ class CategoriaModel extends CI_Model {
     
     function obterTodos(){
         $this->load->database();
+        $this->db->order_by("cat_nome", "asc"); 
         return $this->db->get('categoria');
     }
     

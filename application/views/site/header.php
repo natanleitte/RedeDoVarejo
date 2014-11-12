@@ -502,6 +502,10 @@
                                     <ul>
                                         <li> <a href="<?php echo base_url()?>index.php/site/index/quem_somos"> <strong>Quem Somos</strong> </a> </li>
                                         <li> <a href="<?php echo base_url()?>index.php/site/index/termos_condicoes"> <strong>Termos e condições</strong> </a> </li>
+                                        <li> <a href="<?php echo base_url()?>index.php/site/index/politica_venda"> <strong>Política de Venda</strong> </a> </li>
+                                        <li> <a href="<?php echo base_url()?>index.php/site/index/como_comprar"> <strong>Como Comprar</strong> </a> </li>
+                                        <li> <a href="<?php echo base_url()?>index.php/site/index/formas_pagamento"> <strong>Formas de Pagamento</strong> </a> </li>                                        
+                                        <li> <a href="<?php echo base_url()?>index.php/site/index/entrega"> <strong>Entrega</strong> </a> </li>
                                         <li> <a href="#"> <strong>Áreas Atendidas</strong> </a> </li>
                                     </ul>
                                 </li>

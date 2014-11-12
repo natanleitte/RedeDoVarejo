@@ -25,10 +25,10 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
               <div class="col-lg-5 col-md-4 col-sm-6 col-xs-8   pull-left sliderText white hidden-xs">
                 <div class="inner">
                   <div class=" ">
-                    <h1 class="uppercase xlarge">QUINTA VERDE</h1>
-                    <h3 class="hidden-xs"> As melhores frutas e verduras da região.</h3>
+                    <h1 class="uppercase xlarge">QUALIDADE</h1>
+                    <h3 class="hidden-xs"> Produtos selecionados com carinho.</h3>
                   </div>
-                  <a class="btn btn-danger btn-lg">CLIQUE E CONFIRA!<span class="arrowUnicode">►</span></a>
+                  <a class="btn btn-danger btn-lg" href="#">CLIQUE E CONFIRA!<span class="arrowUnicode">►</span></a>
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                 <div class="inner">
                   <div class=" ">
                     <h1 class="uppercase xlarge"> O MELHOR PREÇO!</h1>
-                    <h3 class="hidden-xs">  Pediu CHEGOU!  </h3>
+                    <h3 class="hidden-xs">  clicou, comprou, CHEGOU!  </h3>
                     
                   </div>
                   <a class="btn btn-danger btn-lg">CLIQUE E CONFIRA!<span class="arrowUnicode">►</span></a> </div>
@@ -61,9 +61,9 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
               <div class="col-lg-5 col-md-4 col-sm-6 col-xs-8   pull-right sliderText white hidden-xs">
                 <div class="inner">
                     <h1><strong>ENTREGA EM DOMICÍLIO</strong></h1>
-                  <h3 class="price "> Entregamos em até <strong>2 horas</strong></h3>
-                  <p class="hidden-xs">Nossa meta é a satisfação do cliente, por isto nos dedicamos em oferecer um ótimo serviço de entrega. </p>
-                  <a href="category.html" class="btn btn-primary">CLIQUE E CONFIRA! <span class="arrowUnicode">►</span></a> </div>
+                  <h3 class="price "> Entrega <strong>Programada</strong></h3>
+                  <p class="hidden-xs" >Com a entrega programada, você escolhe a melhor hora de receber sua compra.</p>
+                  <a class="btn btn-primary" href="<?php echo base_url();?>index.php/site/index/entrega">CLIQUE E CONFIRA! <span class="arrowUnicode">►</span></a> </div>
               </div>
             </div>
           </div>

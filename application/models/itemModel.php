@@ -26,6 +26,7 @@ class itemModel extends CI_Model {
 
     function obterTodos() {
         $this->load->database();
+        $this->db->order_by("item_nome", "asc"); 
         return $this->db->get('item');
     }
 
@@ -44,6 +45,7 @@ class itemModel extends CI_Model {
     {
         $this->load->database();       
         $this->db->like('item_nome', $item_nome);
+        $this->db->or_like('item_descricao', $item_nome);
         return $this->db->get('item');       
     }
 

@@ -23,12 +23,37 @@ function mudaPagina(id)
 
 function mudaPaginaProximo()
 {
-    var ultimaPagina = $("#ultimaPagina").val();
-    var paginaAtual = $("#paginaAtual").val();
+    
+    var ultimaPagina = parseInt($("#ultimaPagina").val());
+    ultimaPagina = parseInt(ultimaPagina);
+    var paginaAtual =  parseInt($("#paginaAtual").val());
+    
+//    alert(ultimaPagina);
+//    alert(paginaAtual);
 
-    if(paginaAtual != ultimaPagina)
+    if(paginaAtual !== ultimaPagina)
     {
-        mudaPagina(paginaAtual )   
+        
+        paginaAtual = parseInt(paginaAtual);
+        paginaAtual = paginaAtual + 1;
+//        alert(paginaAtual);
+        mudaPagina(paginaAtual)   
+    }    
+        
+    
+}
+
+function mudaPaginaAnterior()
+{
+    var paginaAtual =  parseInt($("#paginaAtual").val());
+
+    if(paginaAtual !== 1)
+    {
+        
+        paginaAtual = parseInt(paginaAtual);
+        paginaAtual = paginaAtual - 1;
+//        alert(paginaAtual);
+        mudaPagina(paginaAtual)   
     }    
         
     
@@ -193,7 +218,8 @@ foreach ($prod->result() as $pro) {
                                 }
                                 else
                                 {
-                                    echo "<div style='display: none;' id='pagina" . $countProdutos/9 . "'>"; //Div da paginação
+                                    $idDaPagina = (int) ($countProdutos/9) + 1;
+                                    echo "<div  style='display: none;' id='pagina" . $idDaPagina . "'>"; //Div da paginação
                                 }
                             }
                           echo "<div class='item col-sm-4 col-lg-4 col-md-4 col-xs-6'>";
@@ -226,7 +252,7 @@ foreach ($prod->result() as $pro) {
                           echo "</div>";
                           if($item->item_preco_antigo != null && $item->item_preco_antigo != 0)
                           {
-                            echo "<div class='price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
+                            echo "<div class='old-price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
                             echo "<div class='price'> <span> Por: R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                           else
@@ -268,9 +294,11 @@ foreach ($prod->result() as $pro) {
                         
                         <?php
                             
-                            echo "<li id='paginaAnterior'> <a href='#'>« Anterior</a></li>";
+                            echo "<li id='paginaAnterior'> <a onclick='javascript:mudaPaginaAnterior();'>« Anterior</a></li>";
                             
-                            for($i = 1 ; $i < $countProdutos - 1; $i++){
+                            //vai contar se há elementos restantes para mostrar na ultima pagina
+                            $inc = 0;
+                            for($i = 1 ; $i < $countProdutos - 1; $i++, $inc++){
                                 if($i % 9 == 0)
                                 {
                                     if($i / 9 == 1)
@@ -281,11 +309,31 @@ foreach ($prod->result() as $pro) {
                                     {
                                         echo "<li id='idPagina". $i/9 ."'><a  onclick='javascript:mudaPagina(" . $i / 9 . ")'>" . $i / 9 . "</a></li>";
                                     }
+                                    $inc = 0;
                                 }
                             }
+                            //Se tenho elementos para a ultima pagina, mas não tem 9 elementos para mostrar
+                            if($inc != 0)
+                            {
+                                $inc = $countProdutos;
+                                while($inc % 9 != 0)
+                                {
+                                    $inc++;
+                                }
+                                $inc = $inc/9;   
+                                echo "<li id='idPagina". $inc ."'><a  onclick='javascript:mudaPagina(" . $inc . ")'>" . $inc . "</a></li>";
+                            }
+                            
                             
                             echo "<li id='paginaProximo'> <a onclick='javascript:mudaPaginaProximo();'>Próximo »</a></li>";
-                            echo "<input type='hidden' id='ultimaPagina' value='" . $countProdutos/9 . "'>";
+                            if($inc != 0)
+                            {
+                                echo "<input type='hidden' id='ultimaPagina' value='" . $inc . "'>";                            
+                            }
+                            else
+                            {
+                                echo "<input type='hidden' id='ultimaPagina' value='" . $countProdutos / 9 . "'>";                            
+                            }
                         ?>
                         
                     </ul>
