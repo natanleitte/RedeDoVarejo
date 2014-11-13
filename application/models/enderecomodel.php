@@ -11,7 +11,7 @@ class EnderecoModel extends CI_Model {
         $this->load->database();
         $this->db->insert('endereco', $data);
         
-        echo "inseriu";
+//        echo "inseriu";
     }
     
     function obterTodos(){

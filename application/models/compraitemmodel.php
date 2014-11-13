@@ -18,9 +18,9 @@ class CompraitemModel extends CI_Model {
 //    }
     
     function inserirEspec($com_codigo, $item_codigo, $item_qtd) {
-        echo $com_codigo . "<br>";
-        echo $item_codigo . "<br>";
-        echo $item_qtd . "<br>";
+//        echo $com_codigo . "<br>";
+//        echo $item_codigo . "<br>";
+//        echo $item_qtd . "<br>";
         $this->load->database();
         $this->db->set('com_codigo', $com_codigo);
         $this->db->set('item_codigo', $item_codigo);

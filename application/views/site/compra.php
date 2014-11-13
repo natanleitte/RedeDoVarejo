@@ -5,9 +5,9 @@ $urlImg = "assets/img/img-itens/";
   <div class="row">
     <div class="breadcrumbDiv col-lg-12">
       <ul class="breadcrumb">
-        <li> <a href="index.html">Home</a> </li>
-        <li> <a href="cart.html">Cart</a> </li>
-        <li class="active"> Checkout </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/"?>">Home</a> </li>
+        <li> <a href="<?php echo base_url() . "index.php/site/index/minhas_compras"?>">Minhas Compras</a> </li>
+        <li class="active"> Minha Compra </li>
       </ul>
     </div>
   </div>
@@ -38,6 +38,7 @@ $urlImg = "assets/img/img-itens/";
                     <?php
                     foreach($compra->result() as $com)
                     {
+                        $com_valor_total = $com->com_valor_total;
                         if($com->pag_codigo == 1)
                         {
                             echo "<span> Aguardando Pagamento </span>";
@@ -138,11 +139,31 @@ $urlImg = "assets/img/img-itens/";
                                                 }
                                             }
                                             
+                                            $pro_nome_url = strtr(
+ 
+                                            $pro_nome,
+
+                                            array (
+
+                                              'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
+                                              'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+                                              'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
+                                              'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
+                                              'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
+                                              'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
+                                              'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
+                                              'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+                                              'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+                                              'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
+                                              'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
+                                            )
+                                            );
+                                            
                                             echo "<tr class = 'CartProduct'>";
-                                            echo "<td class = 'CartProductThumb'><div> <a href = 'product-details.html'><img src='" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome . "/" . $item->item_img . "' alt = 'img'></a> </div></td>";
+                                            echo "<td class = 'CartProductThumb'><div> <a><img src='" . base_url() . $urlImg . $cat_nome . "/" . $pro_nome_url . "/" . $item->item_img . "' alt = 'img'></a> </div></td>";
                                             echo "<td ><div class = 'CartDescription'>";
-                                            echo "<h4> <a href = 'product-details.html'>" . $item->item_nome . "</a> </h4>";
-                                            echo "<span class = 'size'>12 x 1.5 L</span>";
+                                            echo "<h4> <a >" . $item->item_nome . "</a> </h4>";
+//                                            echo "<span class = 'size'>12 x 1.5 L</span>";
                                             echo "<div class = 'price'> <span>R$ ". number_format($item->item_preco_atual, 2, ',', '.') ."</span></div>";
                                             echo "</div></td>";
                                             echo "<td class='delete'><div class='price '>R$ " . number_format($item->item_preco_atual, 2, ',', '.') ."</div></td>";
@@ -170,10 +191,10 @@ $urlImg = "assets/img/img-itens/";
                             </tr>
                             <tr style="" >
                               <td>Frete</td>
-                              <td  class="price"><span class="success">Free shipping!</span></td>
+                              <td  class="price"><span class="success">R$ <?php echo number_format($com_valor_total - $totalCompra, 2, ',', '.'); ?></span></td>
                             </tr>
                               <td > Total </td>
-                              <td id="total-price" class="price">R$ <?php echo number_format($totalCompra, 2, ',', '.'); ?></td>
+                              <td id="total-price" class="price">R$ <?php echo number_format($com_valor_total, 2, ',', '.'); ?></td>
                             </tr>
                             <tbody>
                             </tbody>
@@ -243,15 +264,15 @@ $urlImg = "assets/img/img-itens/";
                             <table id="cart-summary" class="std table">
                                     <tbody><tr >
                                       <td>Total da Compra</td>
-                                      <td class="price" ><?php echo $totalCompra; ?> </td>
+                                      <td class="price" >R$ <?php echo number_format($totalCompra, 2, ',', '.'); ?> </td>
                                     </tr>
                                     <tr  style="">
                                       <td>Frete</td>
-                                      <td class="price" ><span class="success">Free shipping!</span></td>
+                                      <td class="price" ><span class="success">R$ <?php echo number_format($com_valor_total - $totalCompra, 2, ',', '.'); ?></span></td>
                                     </tr>
                                     <tr >
                                       <td > Total </td>
-                                      <td class=" site-color" id="total-price"><?php echo $totalCompra; ?></td>
+                                      <td class=" site-color" id="total-price">R$ <?php echo number_format($com_valor_total, 2, ',', '.'); ?></td>
                                     </tr>
                                     
                                                                          

@@ -111,7 +111,7 @@ class Index extends CI_Controller {
         $item_nome = $this->input->get('item_nome'); // recupera a informação via get
         $item_img = $this->input->get('item_img'); // recupera a informação via get
 
-        echo $item_codigo . $item_img . $item_nome . $item_preco;
+//        echo $item_codigo . $item_img . $item_nome . $item_preco;
         
         //Esta linha serve para permitir que produtos com acentuação no nome sejam aceitos.
         $this->cart->product_name_rules = "'\d\D'";
@@ -173,9 +173,25 @@ class Index extends CI_Controller {
 
         redirect(base_url() . 'index.php/site/index/carrinho');
     }
+    
+    function atualizaCarrinho()
+    {
+        $countId = 0;
+        foreach ($this->cart->contents() as $item)
+        {
+//            echo $this->input->post('qtdItem'.$countId);
+            $data = array(
+               'rowid' => $item['rowid'],
+               'qty'   => $this->input->post('qtdItem'.$countId)
+            );
+            $this->cart->update($data); 
+            $countId++;
+        }
+        redirect(base_url() . 'index.php/site/index/carrinho');        
+    }
 
     function contemItem($item_codigo) {
-        echo "contemItem";
+//        echo "contemItem";
         foreach ($this->cart->contents() as $item) {
             if ($item['id'] == $item_codigo) {
                 return $item['qty'];
@@ -453,9 +469,10 @@ class Index extends CI_Controller {
     
     function salvarCompra()
     {
-        $this->load->model('compraModel');
-        $this->load->model('compraItemModel');
-
+        $this->load->model('compramodel');
+        $this->load->model('compraitemmodel');
+        $bairro_frete = $this->input->get('bairro_frete');
+//        echo $bairro_frete;
 //        $this->load->model('compraItemModel');
 
         $totalCompra = 0;
@@ -466,19 +483,19 @@ class Index extends CI_Controller {
         $data['cli_codigo'] = $cli_codigo;
         $data['ent_codigo'] = 1;
         $data['pag_codigo'] = 1;
-        $data['com_valor_total'] = $totalCompra;
-        $com_codigo = $this->compraModel->inserir($data);
+        $data['com_valor_total'] = ($totalCompra + $bairro_frete);
+        $com_codigo = $this->compramodel->inserir($data);
         
         foreach ($this->cart->contents() as $item) {
 //            $this->inserirCompraItem($com_codigo, $item['id'], $item['qty']);
               
 //              echo "com_codigo" . $com_codigo . " item_codigo" . $item_codigo . " item_qtd" . $item_qtd . " <br>";
               
-             $com_item_codigo = $this->compraItemModel->inserirEspec($com_codigo, $item['id'], $item['qty']);
+             $com_item_codigo = $this->compraitemmodel->inserirEspec($com_codigo, $item['id'], $item['qty']);
 //             echo "com_item_codigo " . $com_item_codigo . "<br>"; 
         }
         $this->cart->destroy();
-        echo $com_codigo;
+//        echo $com_codigo;
         
         //redireciona para visualizar a compra
         redirect(base_url() . 'index.php/site/index/compra/?com_codigo=' . $com_codigo);
@@ -629,7 +646,49 @@ class Index extends CI_Controller {
         $this->load->view('site/footer', $data); //Tirei porque estava BUGANDO
     }
     
-    function politica_venda()
+    function como_comprar()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/como_comprar');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function entrega()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/entrega');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function formas_pagamento()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/formas_pagamento');
+        $this->load->view('site/footer', $data);
+    }
+    
+      function politica_venda()
     {
         $this->load->model('categoriaModel');
         $this->load->model('produtoModel');
@@ -684,48 +743,6 @@ class Index extends CI_Controller {
         
         $this->load->view('site/header', $data);
         $this->load->view('site/areas_atendidas');
-        $this->load->view('site/footer', $data);
-    }
-    
-    function como_comprar()
-    {
-        $this->load->model('categoriaModel');
-        $this->load->model('produtoModel');
-
-        //data para header
-        $data['categorias'] = $this->categoriaModel->obterTodos();
-        $data['produtos'] = $this->produtoModel->obterTodos();
-        
-        $this->load->view('site/header', $data);
-        $this->load->view('site/como_comprar');
-        $this->load->view('site/footer', $data);
-    }
-    
-    function entrega()
-    {
-        $this->load->model('categoriaModel');
-        $this->load->model('produtoModel');
-
-        //data para header
-        $data['categorias'] = $this->categoriaModel->obterTodos();
-        $data['produtos'] = $this->produtoModel->obterTodos();
-        
-        $this->load->view('site/header', $data);
-        $this->load->view('site/entrega');
-        $this->load->view('site/footer', $data);
-    }
-    
-    function formas_pagamento()
-    {
-        $this->load->model('categoriaModel');
-        $this->load->model('produtoModel');
-
-        //data para header
-        $data['categorias'] = $this->categoriaModel->obterTodos();
-        $data['produtos'] = $this->produtoModel->obterTodos();
-        
-        $this->load->view('site/header', $data);
-        $this->load->view('site/formas_pagamento');
         $this->load->view('site/footer', $data);
     }
 }

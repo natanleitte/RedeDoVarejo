@@ -160,7 +160,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                           echo "</div>";
                           if($item->item_preco_antigo != null && $item->item_preco_antigo != 0)
                           {
-                            echo "<div class='price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
+                            echo "<div class='old-price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
                             echo "<div class='price'> <span> Por: R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                           else
@@ -197,10 +197,10 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
     <div class="row ">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="parallax-content clearfix">
-            <h1 class="parallaxPrce"> SUA COMPRA EM ATÉ <strong>2 Horas</strong> </h1>
-          <h2 class="uppercase">ETENDA NOSSA FORMA DE ENTREGA </ br></h2>
+            <h1 class="parallaxPrce"> SUA COMPRA EM TEMPO <strong>MÍNIMO</strong> </h1>
+          <h2 class="uppercase">ENTENDA NOSSA FORMA DE ENTREGA </ br></h2>
           <div style="clear:both"></div>
-          <a class="btn btn-discover "> <i class="glyphicon glyphicon-collapse"></i> CONFIRA</a> </div>
+          <a class="btn btn-discover " href="<?php echo base_url(); ?>index.php/site/index/entrega"> <i class="glyphicon glyphicon-collapse"></i> CONFIRA</a> </div>
       </div>
     </div>
     <!--/.row--> 
@@ -294,7 +294,7 @@ $urlCarrinho = "index.php/site/index/addAoCarrinho"
                           
                           if($item->item_preco_antigo != null)
                           {
-                            echo "<div class='price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
+                            echo "<div class='old-price'> <span> De: R$" . number_format($item->item_preco_antigo, 2, ',', '.') . "</span> </div>";
                             echo "<div class='price'> <span> Por: R$" . number_format($item->item_preco_atual, 2, ',', '.') . "</span> </div>";
                           }
                           else

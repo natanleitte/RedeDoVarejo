@@ -83,13 +83,13 @@
                                     }                                 
                                     echo "<td ><div class = 'CartDescription'>";
                                     echo "<h4> <a href = 'product-details.html'>" . $item['name'] . "</a> </h4>";
-                                    echo "<span class = 'size'>12 x 1.5 L</span>";
-                                    echo "<div class = 'price'> <span>". $item['price'] ."</span></div>";
+//                                    echo "<span class = 'size'>12 x 1.5 L</span>";
+                                    echo "<div class = 'price'> <span>". number_format($item['price'], 2, ',', '.') ."</span></div>";
                                     echo "</div></td>";
-                                    echo "<td class='delete'><div class='price '>" . $item['price'] ."</div></td>";
+                                    echo "<td class='delete'><div class='price '>" . number_format($item['price'], 2, ',', '.') ."</div></td>";
                                     echo "<td class='hidden-xs'>" . $item['qty'] ."</td>";
                                     echo "<td >0</td>";
-                                    echo "<td class = 'price'>" . $item['price'] * $item['qty'] . "</td>";
+                                    echo "<td class = 'price'>" . number_format($item['price'] * $item['qty'], 2, ',', '.') . "</td>";
                                     echo "</tr>";
                                     $totalCompra += ($item['price'] * $item['qty']);
                                     }
@@ -134,7 +134,7 @@
                           <table class="std table" id="cart-summary">
                             <tr >
                               <td > Total </td>
-                              <td id="total-price" class="price">R$ <?php echo $totalCompra; ?> </td>
+                              <td id="total-price" class="price">R$ <?php echo number_format($totalCompra, 2, ',', '.') ?> </td>
                             </tr>
                             <tbody>
                             </tbody>
@@ -205,7 +205,7 @@
                                     <tbody>
                                     <tr >
                                       <td>Total da compra</td>
-                                      <td class="price" >R$ <?php echo $totalCompra ?></td>
+                                      <td class="price" >R$ <?php echo number_format($totalCompra, 2, ',', '.') ?></td>
                                     </tr>
                                     <tr  style="">
                                       <?php
@@ -221,7 +221,16 @@
                                         }
                                       ?>
                                       <td>Frete</td>
-                                      <td class="price" ><span class="success">R$ <?php echo $bairro_frete; ?>.00</span></td>
+                                      <?php
+                                        if($bairro_frete != null)
+                                        {
+                                            echo "<td class='price' ><span class='success'>R$" . number_format($bairro_frete, 2, ',', '.') . "</span></td>";
+                                        }
+                                        else
+                                        {
+                                            echo "<td class='price' ><span class='success'> À calcular </span></td>";
+                                        }
+                                      ?>
                                     </tr>
 <!--                                    <tr class="cart-total-price ">
                                       <td>Total (tax excl.)</td>
@@ -233,7 +242,7 @@
                                     </tr>-->
                                     <tr >
                                       <td > Total </td>
-                                      <td class=" site-color" id="total-price"> R$ <?php echo $totalCompra + $bairro_frete ?></td>
+                                      <td class=" site-color" id="total-price"> R$ <?php echo number_format($bairro_frete + $totalCompra, 2, ',', '.') ?></td>
                                     </tr>
                                     
                                                                          

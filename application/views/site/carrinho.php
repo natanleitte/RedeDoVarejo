@@ -1,5 +1,26 @@
 <?php $prefixLayout = "assets/site/"; ?>
-<script src="<?php echo base_url() . $prefixLayout . 'assets/js/carrinho.js' ?>"></script>
+<!--<script src="<?php echo base_url() . $prefixLayout . 'assets/js/carrinho.js' ?>"></script>-->
+
+<script>
+
+function removeDoCarrinho(countId)
+{
+//    $( "#removeDoCarrinhoForm" ).submit();
+    var base_url = $('#baseUrl').val();
+    var rowid = $("#row_id" + countId).val();
+//    alert(rowid);
+    $.ajax({
+      type: "POST",
+      url: base_url + 'index.php/site/index/removeDoCarrinho',
+      data: {rowid: rowid},
+      success: function(data){
+          window.location = base_url + 'index.php/site/index/carrinho';
+      },
+      dataType: 'text'
+    });
+}
+
+</script>
 
 
 <?php
@@ -34,7 +55,7 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
 
     <!-- /.Fixed navbar  -->
 
-
+    <input type="hidden" id="baseUrl" value="<?php echo base_url(); ?>">;
     <div class="container main-container headerOffset">
     <div class="row">
     <div class="breadcrumbDiv col-lg-12">
@@ -74,6 +95,9 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
 
                                     <?php
                                     $totalCompra = 0;
+                                    $countId = 0;
+                                    $attributes = array('id' => 'removeDoCarrinhoForm');
+                                    echo form_open('index.php/site/index/atualizaCarrinho', $attributes);
                                     foreach ($this->cart->contents() as $item) {
                                     echo "<tr class = 'CartProduct'>";
                                     if ($this->cart->has_options($item['rowid']) == TRUE)
@@ -85,20 +109,23 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     }                                 
                                     echo "<td ><div class = 'CartDescription'>";
                                     echo "<h4> <a href = 'product-details.html'>" . $item['name'] . "</a> </h4>";
-                                    echo "<span class = 'size'>12 x 1.5 L</span>";
+//                                    echo "<span class = 'size'>12 x 1.5 L</span>";
                                     echo "<div class = 'price'> <span>R$ ". number_format($item['price'], 2, ',', '.') ."</span></div>";
                                     echo "</div></td>";
-                                    $attributes = array('id' => 'removeDoCarrinhoForm');
-                                    echo form_open('index.php/site/index/removeDoCarrinho', $attributes); //abre form pra remover do Carrinho 
-                                    echo "<input type='hidden' name='rowid' value='" . $item['rowid'] . "'/>";
-                                    echo "<td class = 'delete'><a onclick='removeDoCarrinho()' title = 'Delete'> <i class = 'glyphicon glyphicon-trash fa-2x'></i></a></td>";
-                                    echo form_close(); //fecha form pra remover do Carrinho 
-                                    echo "<td ><input class = 'quanitySniper' type = 'text' value = '" . $item['qty'] . "' name = 'quanitySniper'></td>";
+//                                    $attributes = array('id' => 'removeDoCarrinhoForm');
+//                                    echo form_open('index.php/site/index/removeDoCarrinho', $attributes); //abre form pra remover do Carrinho 
+                                    echo "<input type='hidden' id='row_id" . $countId . "' name='row_id' value='" . $item['rowid'] . "'>";
+                                    echo "<td class = 'delete'><a onclick='removeDoCarrinho(" . $countId . ")' title = 'Delete'> <i class = 'glyphicon glyphicon-trash fa-2x'></i></a></td>";
+//                                    echo form_close(); //fecha form pra remover do Carrinho 
+                                    echo "<td ><input name='qtdItem" . $countId . "' class = 'quanitySniper' type = 'text' value = '" . $item['qty'] . "' ></td>";
+//                                    echo "<td ><input id='qtdItem" . $countId . "' class = 'quanitySniper' type = 'text' value = '" . $item['qty'] . "' name = 'quanitySniper'></td>";                                    
                                     echo "<td >0</td>";
                                     echo "<td class = 'price'> R$ " . number_format($item['price'] * $item['qty'], 2, ',', '.') . "</td>";
                                     echo "</tr>";
                                     $totalCompra += ($item['price'] * $item['qty']);
+                                    $countId++;
                                     }
+
                                     ?>
 <!--                                    <tr class = "CartProduct">
                                     <td class = "CartProductThumb"><div> <a href = "product-details.html"><img src = "images/product/a2.jpg" alt = "img"></a> </div></td>
@@ -142,6 +169,8 @@ foreach ($this->cart->product_options($item['rowid']) as $option_name => $option
                                     <div class = "pull-right">
                                     <button type = "submit" class = "btn btn-default"> <i class = "fa fa-undo"></i> &nbsp;
                                     Atualizar carrinho </button>
+                                    <?php echo form_close(); //fecha form pra remover do Carrinho ?>
+    
                                     </div>
                                     </div>
                                     </div> <!--/ cartFooter -->

@@ -207,7 +207,7 @@
           <tbody>
 <!--            <tr >
               <td>Total</td>
-              <td class = "price" > R$ <?php echo $totalCompra ?></td>
+              <td class = "price" > R$ <?php // echo $totalCompra ?></td>
             </tr>-->
             <tr  style="">
               <td>Frete</td>
@@ -223,7 +223,7 @@
             </tr>-->
             <tr >
               <td > Total </td>
-              <td class=" site-color" id="total-price">R$ <?php echo $totalCompra ?></td>
+              <td class=" site-color" id="total-price">R$ <?php echo number_format($totalCompra, 2, ',', '.') ?></td>
             </tr>
           </tbody>
           <tbody>

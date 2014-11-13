@@ -1,8 +1,18 @@
+<script type="text/javascript" src="<?php echo base_url() . 'assets/site/assets/js/jquery/1.8.3/jquery.js' ?>"></script> 
+
 <script>
 $( document ).ready(function() {
+//    alert('asdkfjs');
   // Handler for .ready() called.
   var totalCompra = $("#totalCompra").val();
-  if(totalCompra < 50)
+  var bairroFrete = $("#bairoFrete").val();
+//  alert(totalCompra);
+//  alert(bairroFrete);
+//  alert(parseInt(totalCompra) + parseInt(bairroFrete));
+
+  
+    
+  if((parseInt(totalCompra) + parseInt(bairroFrete)) < 50)
   {
   $("#msgAlerta").append("<div class='alert alert-warning alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
 <strong>Atenção!</strong> A compra precisa ter um valor total de, pelo menos, R$ 50, 00.");
@@ -12,8 +22,9 @@ $( document ).ready(function() {
 function verificaValor()
 {
     var totalCompra = $("#totalCompra").val();
-    
-  if(totalCompra < 50)
+    var bairroFrete = $("#bairoFrete").val();
+//    alert(bairroFrete);
+  if((parseInt(totalCompra) + parseInt(bairroFrete)) < 50)
   {
   $("#msgAlerta").append("<div class='alert alert-danger alert-dismissable'> <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>\n\
 <strong>Atenção!</strong> A compra precisa ter um valor total de, pelo menos, R$ 50, 00.");
@@ -21,8 +32,9 @@ function verificaValor()
   }
   else
   {
+//      alert(bairroFrete);
       var urlSubmit = $("#urlSubmit").val();
-      window.location.href = urlSubmit + 'index.php/site/index/salvarCompra';
+      window.location.href = urlSubmit + 'index.php/site/index/salvarCompra/?bairro_frete=' + bairroFrete;
   }
    return false; 
 }
@@ -206,6 +218,7 @@ function verificaValor()
                                         }
                                       ?>
                                       <td>Frete</td>
+                                      <input type="hidden" id="bairoFrete" value="<?php echo $bairro_frete; ?>">
                                       <td class="price" ><span class="success">R$ <?php echo number_format($bairro_frete, 2, ',', '.'); ?></span></td>
                                     </tr>
 <!--                                    <tr class="cart-total-price ">

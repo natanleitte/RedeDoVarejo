@@ -31,7 +31,7 @@ class ClienteModel extends CI_Model {
     //atualiza cliente
     function atualizar($cli_codigo, $data)
     {
-        echo $cli_codigo;
+//        echo $cli_codigo;
         $this->load->database();
         $this->db->where('cli_codigo', $cli_codigo);
         $this->db->update('cliente', $data); 

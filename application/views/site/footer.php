@@ -39,7 +39,10 @@
             <?php
             foreach($categorias->result() as $categoria)
             {
-                echo "<li> <a href='" .base_url() . "index.php/site/index/categoria'>" . $categoria->cat_nome . "</a> </li>";
+                if($categoria->cat_status == 1)
+                {
+                    echo "<li> <a href='" .base_url() . "index.php/site/index/categoria'>" . $categoria->cat_nome . "</a> </li>";                
+                }
 
             }
             ?>

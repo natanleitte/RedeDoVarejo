@@ -330,11 +330,11 @@
                                             }
                                             echo "<td style='40%'><div class='miniCartDescription'>";
                                             echo "<h4> <a href='product-details.html'>" . $item['name'] . "</a> </h4>";
-                                            echo "<span class='size'> 12 x 1.5 L </span>";
-                                            echo "<div class='price'> <span> R$ " . $item['price'] . "</span> </div>";
+//                                            echo "<span class='size'> 12 x 1.5 L </span>";
+                                            echo "<div class='price'> <span> R$ " . number_format($item['price'], 2, ',', '.') . "</span> </div>";
                                             echo "</div></td>";
                                             echo "<td  style='10%' class='miniCartQuantity'><a > X" . $item['qty'] . "</a></td>";
-                                            echo "<td  style='15%' class='miniCartSubtotal'><span>" . $item['price'] * $item['qty'] . "</span></td>";
+                                            echo "<td  style='15%' class='miniCartSubtotal'><span>" . number_format($item['price'] * $item['qty'], 2, ',', '.') . "</span></td>";
                                             //echo "<td  style='5%' class='delete'><a > x </a></td>";
                                             echo "<td  style='5%' class='delete'><a > <i class = 'glyphicon glyphicon-trash fa-1x'></i> </a></td>";
 
@@ -361,7 +361,7 @@
                             </table>-->
                         </div> <!--/.miniCartTable-->
                          <div class="miniCartFooter miniCartFooterInMobile text-right">
-                                    <h3 class="text-right subtotal"> Subtotal: R$ <?php echo $totalCompra ?> </h3>
+                                    <h3 class="text-right subtotal"> Subtotal: R$ <?php echo number_format($totalCompra, 2, ',', '.') ?> </h3>
                                     <a class="btn btn-sm btn-danger" href="<?php echo base_url() . "index.php/site/index/carrinho"?>"> 
                                         <i class="fa fa-shopping-cart"> </i> VER </a> 
                                     <a class="btn btn-sm btn-primary" href="<?php echo base_url() . "index.php/site/index/finalizar_compra1"?>"> FINALIZAR </a> 
@@ -500,19 +500,30 @@
                                     <!-- megamenu-content -->
 
                                     <ul>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/quem_somos"> <strong>Quem Somos</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/termos_condicoes"> <strong>Termos e condições</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/politica_venda"> <strong>Política de Venda</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/politica_troca"> <strong>Política de Troca</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/como_comprar"> <strong>Como Comprar</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/formas_pagamento"> <strong>Formas de Pagamento</strong> </a> </li>                                        
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/entrega"> <strong>Entrega</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/areas_atendidas"> <strong>Áreas Atendidas</strong> </a> </li>
-                                        <li> <a href="<?php echo base_url()?>index.php/site/index/seguranca"> <strong>Segurança</strong> </a> </li>
+<!--                                        <li> <a href="<?php // echo base_url()?>index.php/site/index/quem_somos"> <strong>Quem Somos</strong> </a> </li>
+                                        <li> <a href="<?php // echo base_url()?>index.php/site/index/termos_condicoes"> <strong>Termos e condições</strong> </a> </li>
+                                        <li> <a href="<?php // echo base_url()?>index.php/site/index/politica_venda"> <strong>Política de Venda</strong> </a> </li>
+                                        <li> <a href="<?php // echo base_url()?>index.php/site/index/como_comprar"> <strong>Como Comprar</strong> </a> </li>
+                                        <li> <a href="<?php // echo base_url()?>index.php/site/index/formas_pagamento"> <strong>Formas de Pagamento</strong> </a> </li>                                        
+                                        <li> <a href="<?php // echo base_url()?>index.php/site/index/entrega"> <strong>Entrega</strong> </a> </li>
+                                        <li> <a href="#"> <strong>Áreas Atendidas</strong> </a> </li>-->
+                                        
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/quem_somos"> <strong>Quem Somos</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/termos_condicoes"> <strong>Termos e condições</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/politica_venda"> <strong>Política de Venda</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/politica_troca"> <strong>Política de Troca</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/como_comprar"> <strong>Como Comprar</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/formas_pagamento"> <strong>Formas de Pagamento</strong> </a> </li>                                        
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/entrega"> <strong>Entrega</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/areas_atendidas"> <strong>Áreas Atendidas</strong> </a> </li>
+                                       <li> <a href="<?php echo base_url()?>index.php/site/index/seguranca"> <strong>Segurança</strong> </a> </li>
+                                        
                                     </ul>
                                 </li>
                             </ul>
                         </li>
+                        
+                        
                         
                         <!--<li> <a href="#"> Receitas </a> </li>-->
                         <li> <a href="<?php echo base_url()?>index.php/site/index/contato"> Contato </a> </li>
@@ -549,16 +560,16 @@
                                              {
                                                 foreach ($this->cart->product_options($item['rowid']) as $option_name => $option_value)
                                                 {
-                                                    echo "<td style='20' class='miniCartProductThumb'><div> <a href='product-details.html'> <img src='". $option_value . "' alt='img'> </a> </div></td>";
+                                                    echo "<td style='width: 20%' class='miniCartProductThumb'><div> <a href='product-details.html'> <img src='". $option_value . "' alt='img'> </a> </div></td>";
                                                 }
                                             }
                                             echo "<td style='40%'><div class='miniCartDescription'>";
                                             echo "<h4> <a href='product-details.html'>" . $item['name'] . "</a> </h4>";
-                                            echo "<span class='size'> 12 x 1.5 L </span>";
-                                            echo "<div class='price'> <span> R$ " . $item['price'] . "</span> </div>";
+//                                            echo "<span class='size'> 12 x 1.5 L </span>";
+                                            echo "<div class='price'> <span> R$ " . number_format($item['price'], 2, ',', '.') . "</span> </div>";
                                             echo "</div></td>";
                                             echo "<td  style='10%' class='miniCartQuantity'><a > X" . $item['qty'] . "</a></td>";
-                                            echo "<td  style='15%' class='miniCartSubtotal'><span>" . $item['price'] * $item['qty'] . "</span></td>";
+                                            echo "<td  style='15%' class='miniCartSubtotal'><span>" . number_format($item['price'] * $item['qty'], 2, ',', '.') . "</span></td>";
                                             //echo "<td  style='5%' class='delete'><a > x </a></td>";
                                             echo "<td  style='5%' class='delete'><a > <i class = 'glyphicon glyphicon-trash fa-1x'></i> </a></td>";
 
@@ -572,7 +583,7 @@
 
 
                                 <div class="miniCartFooter text-right">
-                                    <h3 class="text-right subtotal"> Subtotal: R$ <?php echo $totalCompra ?> </h3>
+                                    <h3 class="text-right subtotal"> Subtotal: R$ <?php echo number_format($totalCompra, 2, ',', '.') ?> </h3>
                                     <a class="btn btn-sm btn-danger" href="<?php echo base_url() . "index.php/site/index/carrinho"?>"> 
                                         <i class="fa fa-shopping-cart"> </i> VER </a> 
                                     <a class="btn btn-sm btn-primary" href="<?php echo base_url() . "index.php/site/index/finalizar_compra1"?>"> FINALIZAR </a> 
@@ -617,7 +628,7 @@
         ================================================== --> 
 
         <!-- Placed at the end of the document so the pages load faster --> 
-        <script type="text/javascript" src="<?php echo base_url() . $prefixLayout . 'assets/js/jquery/1.8.3/jquery.js' ?>"></script> 
+        <!--<script type="text/javascript" src="<?php // echo base_url() . $prefixLayout . 'assets/js/jquery/1.8.3/jquery.js' ?>"></script>--> 
         <script src="<?php echo base_url() . $prefixLayout . 'assets/bootstrap/js/bootstrap.min.js' ?>"></script> 
 
         <!-- include jqueryCycle plugin --> 

@@ -1,3 +1,5 @@
+<!--<script type="text/javascript" src="<?php // echo base_url() . 'assets/site/assets/js/jquery/1.8.3/jquery.js' ?>"></script>-->
+
 <script>
 $( document ).ready(function() {
 //  alert("teste");
@@ -53,12 +55,14 @@ function mudaPaginaAnterior()
         paginaAtual = parseInt(paginaAtual);
         paginaAtual = paginaAtual - 1;
 //        alert(paginaAtual);
-        mudaPagina(paginaAtual)   
+        mudaPagina(paginaAtual);   
     }    
         
     
 }
 </script>
+
+
 <?php
 //pega o nome da categoria pra formar a url 
 foreach ($prod->result() as $pro) {
@@ -388,7 +392,7 @@ foreach ($prod->result() as $pro) {
 ================================================== --> 
 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/jquery/1.8.3/jquery.js"></script> 
+<!--<script type="text/javascript" src="<?php echo base_url();?>assets/site/assets/js/jquery/1.8.3/jquery.js"></script>--> 
 <script src="<?php echo base_url();?>assets/site/assets/bootstrap/js/bootstrap.min.js"></script> 
 
 <!-- include jqueryCycle plugin --> 
