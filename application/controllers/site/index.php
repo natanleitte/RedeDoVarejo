@@ -642,6 +642,50 @@ class Index extends CI_Controller {
         $this->load->view('site/politica_venda');
         $this->load->view('site/footer', $data);
     }
+
+    function politica_troca()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/politica_troca');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function seguranca()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/seguranca');
+        $this->load->view('site/footer', $data);
+    }
+    
+    function areas_atendidas()
+    {
+        $this->load->model('categoriaModel');
+        $this->load->model('produtoModel');
+        $this->load->model('bairromodel');
+
+        //data para header
+        $data['categorias'] = $this->categoriaModel->obterTodos();
+        $data['produtos'] = $this->produtoModel->obterTodos();
+        $data['bairro'] = $this->bairromodel->obterTodos();
+        
+        $this->load->view('site/header', $data);
+        $this->load->view('site/areas_atendidas');
+        $this->load->view('site/footer', $data);
+    }
     
     function como_comprar()
     {

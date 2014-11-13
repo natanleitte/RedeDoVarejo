@@ -26,7 +26,7 @@
                 </ul>
             </ul>
     </p>
-            
+            <img src="<?php echo base_url() . 'assets/site/assets/bandera-cartoes/bandeira-cartoes.png' ?>" alt="TSHOP">
           </div>
         </div>
       </div>

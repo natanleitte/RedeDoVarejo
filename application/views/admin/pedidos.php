@@ -116,7 +116,7 @@
                             echo "<td>" . $row->cli_nome . "</td>";
                             echo "<td>" . $row->cli_email . "</td>";
                             echo "<td>" . $row->item_qtd . "</td>";
-                            echo "<td> 'R$' " . number_format($row->comp_total, 2, ',', '.') . "</td>";
+                            echo "<td> R$ " . number_format($row->comp_total, 2, ',', '.') . "</td>";
                             echo "<td>" . $row->com_data . "</td>";
                             echo "<td>"
                             . "<select class='form-control' name='status_entrega'>
